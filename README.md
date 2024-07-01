@@ -20,7 +20,7 @@ git branch -M main
 git push -uf origin main
 ```
 
-## Integrate with your tools
+## Integrate with your tools Yanis
 
 - [ ] [Set up project integrations](https://gitlab.com/eni-encheres1/eni-encheres/-/settings/integrations)
 
