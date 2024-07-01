@@ -10,5 +10,4 @@ Deuxième étape :
 Troisième étape :
 	aller sur gitlab
 	merge request
-	l’assigner à Yanis GRECO (et me le dire)
-	puis ensuite je valide et le code est poussé sur le depot
+	l’assigner à quelqu'un
