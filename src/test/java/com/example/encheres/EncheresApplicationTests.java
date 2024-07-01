@@ -1,13 +1,13 @@
-package eni.projet.enchere;
+package com.example.encheres;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class EnchereApplicationTests {
+class EncheresApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void contextLoads() {
+    }
 
 }
