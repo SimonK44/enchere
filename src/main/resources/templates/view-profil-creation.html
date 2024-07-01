@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="css/header-footer.css" />
+	<link rel="stylesheet" href="css/form-inscription.css" />
+	<title>ENI-Enchères</title>
+</head>
+<body>	
+	<div th:replace="~{/fragments/fragment-header :: frag-header}"></div>
+	<main>
+		<form th:action="@{/login}" method="POST">
+			<h1>Mon profil</h1>
+			<div class="form-row">
+				<div class="form-col">
+					<label for="inputPseudo">Pseudo :</label>				
+					<input id="inputPseudo" type="text" name="pseudo" />
+				</div>
+				<div class="form-col">
+					<label for="inputPrenom">Nom :</label>
+					<input id="inputPrenom" type="text" name="prenom"/>					
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="form-col">
+					<label for="inputNom">Prénom :</label>
+					<input id="inputNom" type="text" name="nom"/>					
+				</div>
+				<div class="form-col">
+					<label for="inputEmail">Email :</label>
+					<input id="inputEmail" type="email" name="email"/>				
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="form-col">
+					<label for="inputTelephone">Téléphone :</label>
+					<input id="inputTelephone" type="text" name="telephone"/>						
+				</div>
+				<div class="form-col">
+					<label for="inputRue">Rue :</label>
+					<input id="inputRue" type="text" name="rue"/>						
+				</div>
+			</div>			
+			<div class="form-row">
+				<div class="form-col">
+					<label for="inputCp">Code postal :</label>
+					<input id="inputCp" type="text" name="cp"/>						
+				</div>
+				<div class="form-col">
+					<label for="inputVille">Ville :</label>
+					<input id="inputVille" type="text" name="ville"/>					
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="form-col">
+					<label for="inputPassord">Mot de passe :</label>
+					<input id="inputPassord" type="password" name="password"/>					
+				</div>
+				<div class="form-col">
+					<label for="confirmPassword">Confirmation :</label>
+					<input id="confirmPassword" type="password" name="confirmPassword"/>					
+				</div>
+			</div>
+			<div class="form-actions">
+				<button type="submit">Creer</button>
+				<button type="reset">Annuler</button>
+			</div>
+		</form>	
+	</main>
+	<div th:replace="~{/fragments/fragment-footer :: frag-footer}"></div>
+</body>
+</html>

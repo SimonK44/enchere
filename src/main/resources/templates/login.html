@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="css/header-footer.css" />
+	<link rel="stylesheet" href="css/form-connexion.css" />
+	<title>ENI-Enchères</title>
+</head>
+<body>	
+	<div th:replace="~{/fragments/fragment-header :: frag-header}"></div>
+	<main>
+		<form th:action="@{/login}" method="POST">
+			<h1>Connexion</h1>
+<!-- 			<div th:if="${param.error}">Erreur : login ou mot de passe incorrect</div> -->
+<!-- 			<div th:if="${param.logout}">Vous vous êtes déconnecté</div> -->
+			<ul class="">
+				<li>
+					<label for="inputIndentifiant">Identifiant :</label>				
+					<input id="inputIndentifiant" type="text" name="identifiant" />
+				</li>
+				<li>
+					<label for="inputPassord">Mot de passe :</label>
+					<input id="inputPassord" type="password" name="password"/>					
+				</li>				
+				<li>
+					<button type="submit">Connexion</button>
+				</li>				
+				<li>	
+					<div class="checkbox">			
+						<input type="checkbox" id="remember"/>
+						<label for="remember">Se souvenir de moi</label>
+					</div>	
+				</li>
+				<li>
+					<a href="">Mot de passe oublié</a>
+				</li>
+				<li>
+					<button type="submit">Créer un compte</button>
+				</li>
+			</ul>		
+		</form>	
+	</main>
+	<div th:replace="~{/fragments/fragment-footer :: frag-footer}"></div>
+</body>
+</html>

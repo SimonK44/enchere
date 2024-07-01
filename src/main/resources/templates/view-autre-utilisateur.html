@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="css/header-footer.css" />
+	<link rel="stylesheet" href="css/profil.css" />
+	<title>ENI-Enchères</title>
+</head>
+<body>	
+	<div th:replace="~{/fragments/fragment-header :: frag-header}"></div>
+	<main>
+		<form th:action="@{/login}" method="POST">			
+			<div class="form-row">
+				<label for="inputPseudo">Pseudo :</label>				
+				<input id="inputPseudo" type="text" name="pseudo" readonly />
+			</div>		
+			<div class="form-row">
+				<label for="inputPrenom">Nom :</label>
+				<input id="inputPrenom" type="text" name="prenom" readonly />					
+			</div>
+			<div class="form-row">
+				<label for="inputNom">Prénom :</label>
+				<input id="inputNom" type="text" name="nom" readonly />					
+			</div>
+			<div class="form-row">
+				<label for="inputEmail">Email :</label>
+				<input id="inputEmail" type="email" name="email" readonly />				
+			</div>			
+			<div class="form-row">
+				<label for="inputTelephone">Téléphone :</label>
+				<input id="inputTelephone" type="text" name="telephone" readonly />						
+			</div>
+			<div class="form-row">
+				<label for="inputRue">Rue :</label>
+				<input id="inputRue" type="text" name="rue" readonly />						
+			</div>	
+			<div class="form-row">
+				<label for="inputCp">Code postal :</label>
+				<input id="inputCp" type="text" name="cp" readonly />						
+			</div>
+			<div class="form-row">
+				<label for="inputVille">Ville :</label>
+				<input id="inputVille" type="text" name="ville" readonly />					
+			</div>			
+			<div class="form-actions">
+				<button type="submit">Modifier</button>
+			</div>
+		</form>	
+	</main>
+	<div th:replace="~{/fragments/fragment-footer :: frag-footer}"></div>
+</body>
+</html>
