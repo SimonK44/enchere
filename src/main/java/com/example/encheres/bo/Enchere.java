@@ -1,0 +1,53 @@
+package eni.projet.enchere.bo;
+
+import java.time.LocalDate;
+
+public class Enchere {
+
+	
+	private Utilisateur utilisateur;
+	private ArticleVendu articleVendu;
+	
+	private LocalDate dateEnchere;
+	private float montantEnchere;
+	public Enchere(Utilisateur utilisateur, ArticleVendu articleVendu, LocalDate dateEnchere, float montantEnchere) {
+		
+		this.utilisateur = utilisateur;
+		this.articleVendu = articleVendu;
+		this.dateEnchere = dateEnchere;
+		this.montantEnchere = montantEnchere;
+	}
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
+	}
+	public ArticleVendu getArticleVendu() {
+		return articleVendu;
+	}
+	public void setArticleVendu(ArticleVendu articleVendu) {
+		this.articleVendu = articleVendu;
+	}
+	public LocalDate getDateEnchere() {
+		return dateEnchere;
+	}
+	public void setDateEnchere(LocalDate dateEnchere) {
+		this.dateEnchere = dateEnchere;
+	}
+	public float getMontantEnchere() {
+		return montantEnchere;
+	}
+	public void setMontantEnchere(float montantEnchere) {
+		this.montantEnchere = montantEnchere;
+	}
+	@Override
+	public String toString() {
+		return "Enchere [utilisateur=" + utilisateur + ", articleVendu=" + articleVendu + ", dateEnchere=" + dateEnchere
+				+ ", montantEnchere=" + montantEnchere + "]";
+	}
+	
+	
+	
+	
+}
