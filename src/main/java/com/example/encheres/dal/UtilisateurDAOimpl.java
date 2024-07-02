@@ -24,7 +24,8 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 	private static final String FIND_ALL = "SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS";
     private static final String COUNT_BY_NOM_PRENOM    = "SELECT COUNT(*) WHERE nom = :nom AND prenom = :prenom";
     private static final String COUNT_BY_PSEUDO    = "SELECT COUNT(*) WHERE pseudo = :pseudo";
-	/**
+    
+/**
  * constructeur de UtlisateurDAOimpl	
  * @param jdbcTemplate
  */
@@ -33,12 +34,12 @@ public UtilisateurDAOimpl(NamedParameterJdbcTemplate jdbcTemplate) {
 	}
 
 /**
- * creation d' un utilisateur	
+ * creation d'un utilisateur	
  */
 	@Override
 	public void create(Utilisateur utilisateur) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
-//		
+		
 		mapParameterSource.addValue("pseudo",utilisateur.getPseudo());
 		mapParameterSource.addValue("nom",utilisateur.getNom());
 		mapParameterSource.addValue("prenom",utilisateur.getPrenom());
