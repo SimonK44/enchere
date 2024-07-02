@@ -1,12 +1,12 @@
 /* Reset some default browser styles */
-body, h1, p, label, input, button, div {
+main, h1, p, label, input, button, div {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
 /* Basic styles */
-body {
+main {
     font-family: 'Arial', sans-serif;
     background-color: #f8f8f8;
     color: #333;
@@ -59,10 +59,10 @@ main label {
     display: block;
 }
 
-main input[type="text"], 
-main input[type="number"], 
-main input[type="tel"], 
-main input[type="date"], 
+main input[type="text"],
+main input[type="number"],
+main input[type="tel"],
+main input[type="date"],
 main select {
     width: 100%;
     padding: 10px;
@@ -72,10 +72,10 @@ main select {
     font-size: 16px;
 }
 
-main input[type="text"]:focus, 
-main input[type="number"]:focus, 
-main input[type="tel"]:focus, 
-main input[type="date"]:focus, 
+main input[type="text"]:focus,
+main input[type="number"]:focus,
+main input[type="tel"]:focus,
+main input[type="date"]:focus,
 main select:focus {
     border-color: #4CAF50;
     outline: none;
@@ -98,7 +98,7 @@ button:hover {
 }
 
 /* Align the text */
-p {
+.textLabel {
     margin-bottom: 10px;
     font-size: 1.2em;
     color: #555;
