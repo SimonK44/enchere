@@ -24,6 +24,7 @@ main {
 
 .checkbox {
 	display: flex;	
+	align-self: center;
 }
 
 

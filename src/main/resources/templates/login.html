@@ -4,15 +4,15 @@
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="css/header-footer.css" />
 	<link rel="stylesheet" href="css/form-connexion.css" />
-	<title>ENI-Enchères</title>
+	<title>ENI - Enchères</title>
 </head>
 <body>	
 	<div th:replace="~{/fragments/fragment-header :: frag-header}"></div>
 	<main>
 		<form th:action="@{/login}" method="POST">
 			<h1>Connexion</h1>
-<!-- 			<div th:if="${param.error}">Erreur : login ou mot de passe incorrect</div> -->
-<!-- 			<div th:if="${param.logout}">Vous vous êtes déconnecté</div> -->
+			<div th:if="${param.error}">Erreur : login ou mot de passe incorrect</div>
+			<div th:if="${param.logout}">Vous vous êtes déconnecté</div>
 			<ul class="">
 				<li>
 					<label for="inputIndentifiant">Identifiant :</label>				

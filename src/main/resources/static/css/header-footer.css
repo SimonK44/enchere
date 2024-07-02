@@ -9,6 +9,16 @@ header {
     align-items: center;
     background-color: #333;
     padding: 10px 20px;
+    padding-top: auto;
+    padding-bottom: auto;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    background-color: #333;
+    padding: 10px 20px;
+    color: white;
 }
 
 #nav-title {
@@ -38,6 +48,7 @@ nav ul li a {
 
 nav ul li a:hover {
     background-color: #575757;
+    color: white;
 }
 
 .navbar-toggle {
