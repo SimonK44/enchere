@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/header-footer.css" />
+    <link rel="stylesheet" href="css/encher-detail.css" />
+    <title>ENI-Enchères</title>
+</head>
+<body>
+  <div th:replace="~{/fragments/fragment-header :: frag-header}"></div>
+    <main>
+      <h1>Détail vente</h1>
+      <div>
+        <div>
+           <img src="image/maison.jpg" alt="image produit" />
+        </div>
+        <div>
+          <p>PC Gamer pour travailler</p>
+          <label for="description">Description</label>
+          <input type="text" id="description" name="description" />
+
+          <div class="dropdown">
+            <label for="categorie">Catégorie :</label>
+            <select id="categorie" name="categorie">
+              <option value="toutes">Toutes</option>
+              <option value="informatique">Informatique</option>
+              <option value="ameublement">Ameublement</option>
+              <option value="vetement">Vêtement</option>
+              <option value="sportLoisirs">Sport&Loisirs</option>
+            </select>
+          </div>
+
+          <label for="meilleurOffre"> Meilleur offtre : </label>
+          <input type="number" id="prix" name="prix" />
+
+          <label for="prix">Mise à prix</label>
+          <input type="number" id="prix" name="prix" />
+
+          <label for="dateFin">Fin de l'enchère</label>
+          <input type="date" id="dateFin" name="dateFin" />
+          <div>
+            <label>Retrait</label>
+            <input type="text" id="adresse" name="adresse" />
+          </div>
+          <label for="vendeur">Vendeur : </label>
+          <input type="number" id="vendeur" name="vendeur" />
+
+          <label for="propostion">Ma proposition : </label>
+          <input type="number" id="propostion" name="propostion" />
+          <div>
+            <button>Enchérir</button>
+          </div>
+        </div>
+      </div>
+    </main>
+   <div th:replace="~{/fragments/fragment-footer :: frag-footer}"></div>
+    
+  </body>
+</html>
