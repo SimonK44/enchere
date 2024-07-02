@@ -1,9 +1,10 @@
-package eni.projet.enchere.bll;
+package com.example.encheres.bll;
 
 import org.springframework.stereotype.Service;
 
-import eni.projet.enchere.bo.Utilisateur;
-import eni.projet.enchere.dal.UtilisateurDAO;
+import com.example.encheres.bo.Utilisateur;
+import com.example.encheres.dal.UtilisateurDAO;
+
 
 @Service
 public class UtilisateurServiceImpl implements UtilisateurService {

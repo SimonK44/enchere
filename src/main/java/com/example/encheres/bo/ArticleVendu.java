@@ -1,4 +1,4 @@
-package eni.projet.enchere.bo;
+package com.example.encheres.bo;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

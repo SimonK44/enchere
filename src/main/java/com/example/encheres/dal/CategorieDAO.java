@@ -1,8 +1,8 @@
-package eni.projet.enchere.dal;
+package com.example.encheres.dal;
 
 import java.util.List;
 
-import eni.projet.enchere.bo.Categorie;
+import com.example.encheres.bo.Categorie;
 
 public interface CategorieDAO {
 

@@ -1,4 +1,4 @@
-package eni.projet.enchere.bo;
+package com.example.encheres.bo;
 
 public class Categorie {
 	

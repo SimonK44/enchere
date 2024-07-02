@@ -1,4 +1,4 @@
-package eni.projet.enchere.dal;
+package com.example.encheres.dal;
 
 import java.util.List;
 
@@ -7,9 +7,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import eni.projet.enchere.bo.ArticleVendu;
-import eni.projet.enchere.bo.Enchere;
-import eni.projet.enchere.bo.Utilisateur;
+import com.example.encheres.bo.Enchere;
 
 @Repository
 public class EnchereDAOImpl implements EnchereDAO {
@@ -31,7 +29,7 @@ private NamedParameterJdbcTemplate jdbcTemplate;
 	public void create(Enchere enchere) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
 //		
-		mapParameterSource.addValue("noUtilisateur",enchere.getUtilisateur().getNoUtlisateur());
+		mapParameterSource.addValue("noUtilisateur",enchere.getUtilisateur().getNoUtilisateur());
 		mapParameterSource.addValue("noArticle",enchere.getArticleVendu().getNoArticle());
 		mapParameterSource.addValue("dateEnchere",enchere.getDateEnchere());
 		mapParameterSource.addValue("montantEnchere",enchere.getMontantEnchere());
@@ -55,7 +53,7 @@ MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
 	public void update(Enchere enchere) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
 //		
-		mapParameterSource.addValue("noUtilisateur",enchere.getUtilisateur().getNoUtlisateur());
+		mapParameterSource.addValue("noUtilisateur",enchere.getUtilisateur().getNoUtilisateur());
 		mapParameterSource.addValue("noArticle",enchere.getArticleVendu().getNoArticle());
 		mapParameterSource.addValue("dateEnchere",enchere.getDateEnchere());
 		mapParameterSource.addValue("montantEnchere",enchere.getMontantEnchere());
