@@ -1,12 +1,12 @@
 /* Reset some default browser styles */
-body, h1, ul, li, form, fieldset, legend, label, input, textarea, select, button {
+main, h1, ul, li, form, fieldset, legend, label, input, textarea, select, button {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
 /* Basic styles */
-body {
+main {
     font-family: Arial, sans-serif;
     line-height: 1.6;
     background-color: #f8f8f8;
