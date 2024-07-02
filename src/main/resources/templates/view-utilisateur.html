@@ -9,7 +9,7 @@
 <body>	
 	<div th:replace="~{/fragments/fragment-header :: frag-header}"></div>
 	<main>
-		<form th:action="@{/login}" method="POST">			
+		<form th:action="@{/afficher}" method="POST">			
 			<div class="form-row">
 				<label for="inputPseudo">Pseudo :</label>				
 				<input id="inputPseudo" type="text" name="pseudo" readonly />
@@ -43,7 +43,7 @@
 				<input id="inputVille" type="text" name="ville" readonly />					
 			</div>			
 			<div class="form-actions">
-				<button type="submit">Modifier</button>
+				<button data-th-href="@{/modifier}">Modifier</button>
 			</div>
 		</form>	
 	</main>
