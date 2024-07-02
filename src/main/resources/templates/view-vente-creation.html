@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/header-footer.css" />
+    <link rel="stylesheet" href="css/vente-creation.css" />
+    <title>ENI-Enchères</title>
+  </head>
+  <body>
+  <div th:replace="~{/fragments/fragment-header :: frag-header}"></div>
+  
+  <main>
+    <h1>Nouvelle vente</h1>
+    <div class="image-container">
+      <img src="https://dummyimage.com/640x360/fff/aaa" alt="Description de l'image" />
+      
+    </div>
+    <div class="form-container">
+      <form th:action="@{/creation-vente}" method="POST">
+        <ul>
+          <li>
+            <label for="article">Article</label>
+            <input id="article" type="text" />
+          </li>
+          <li>
+            <label for="description">Description</label>
+            <textarea id="description" rows="5" cols="33"></textarea>
+          </li>
+          <li>
+            <label for="categorie">Catégorie :</label>
+            <select id="categorie" name="categorie">
+              <option value="toutes">Toutes</option>
+              <option value="informatique">Informatique</option>
+              <option value="ameublement">Ameublement</option>
+              <option value="vetement">Vêtement</option>
+              <option value="sportLoisirs">Sport&Loisirs</option>
+            </select>
+          </li>
+          <li>
+            <label for="photo">Photo de l'article</label>
+            <input type="file" id="photo" name="photo" />
+          </li>
+          <li>
+            <label for="prix">Mise à prix</label>
+            <input type="number" id="prix" name="prix" />
+          </li>
+          <li>
+            <label for="dateDebut">Début de l'enchère</label>
+            <input type="date" id="dateDebut" name="dateDebut" />
+          </li>
+          <li>
+            <label for="dateFin">Fin de l'enchère</label>
+            <input type="date" id="dateFin" name="dateFin" />
+          </li>
+          <li>
+            <fieldset>
+              <legend>Retrait</legend>
+              <label for="rue">Rue :</label>
+              <input type="text" id="rue" name="rue" />
+              <label for="codePostal">Code postal :</label>
+              <input type="number" id="codePostal" name="codePostal" />
+              <label for="ville">Ville :</label>
+              <input type="text" id="ville" name="ville" />
+            </fieldset>
+          </li>
+        </ul>
+        <div>
+          <button type="submit">Enregistrer</button>
+          <button type="reset">Annuler</button>
+        </div>
+      </form>
+    </div>
+  </main>
+ <div th:replace="~{/fragments/fragment-footer :: frag-footer}"></div>
+ </body>
+</html>
