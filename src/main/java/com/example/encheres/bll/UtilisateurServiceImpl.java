@@ -30,8 +30,12 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	@Override
 	public void modifierUtilisateur(Utilisateur utilisateur) {
-		utilisateurDAO.update(utilisateur);
+		boolean isValid = controleModifierNomPrenom(utilisateur.getNoUtilisateur(), utilisateur.getNom(),utilisateur.getPrenom());
+		isValid &= controleModifierPseudo(utilisateur.getNoUtilisateur(),utilisateur.getPseudo());
 		
+		if (isValid) {
+			utilisateurDAO.update(utilisateur);
+		}
 	}
 
 	@Override
@@ -57,5 +61,23 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		}
 		return isValid;
 	}
+	
+	private boolean controleModifierNomPrenom (int no_utilisateur,String nom, String prenom) {
+		boolean isValid = false;
+		
+		if (utilisateurDAO.CountByNomPrenomModifier(no_utilisateur,nom, prenom) == 0 ) {
+		   isValid = true;
+		}
+		return isValid;
+	}
+	
+	private boolean controleModifierPseudo (int no_utilisateur,String pseudo) {
+		boolean isValid = false;
+		
+		if (utilisateurDAO.CountByPseudoModifier(no_utilisateur,pseudo) == 0 ) {
+		   isValid = true;
+		}
+		return isValid;
+	}	
 
 }
