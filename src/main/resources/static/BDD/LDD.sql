@@ -22,15 +22,16 @@ ALTER TABLE CATEGORIES ADD constraint categorie_pk PRIMARY KEY (no_categorie)
 CREATE TABLE ENCHERES (
     no_utilisateur   INTEGER NOT NULL,
     no_article       INTEGER NOT NULL,
-    date_enchere     datetime NOT NULL,
-	montant_enchere  INTEGER NOT NULL
+    montant_enchere  INTEGER NOT NULL,	
+    date_enchere     datetime NOT NULL
+    
 
 )
 
-ALTER TABLE ENCHERES ADD constraint enchere_pk PRIMARY KEY (no_utilisateur, no_article)
+ALTER TABLE ENCHERES ADD constraint enchere_pk PRIMARY KEY (no_utilisateur, no_article, montant_enchere)
 
 CREATE TABLE RETRAITS (
-	no_article       INTEGER IDENTITY(1,1) NOT NULL,
+    no_article       INTEGER NOT NULL,
     rue              VARCHAR(50) NOT NULL,
     code_postal      VARCHAR(15) NOT NULL,
     ville            VARCHAR(30) NOT NULL
@@ -48,7 +49,7 @@ CREATE TABLE UTILISATEURS (
     rue              VARCHAR(50) NOT NULL,
     code_postal      VARCHAR(10) NOT NULL,
     ville            VARCHAR(30) NOT NULL,
-    mot_de_passe     VARCHAR(30) NOT NULL,
+    mot_de_passe     VARCHAR(68) NOT NULL,
     credit           INTEGER NOT NULL,
     administrateur   bit NOT NULL
 )
