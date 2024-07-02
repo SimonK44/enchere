@@ -37,12 +37,12 @@ public UtilisateurDAOimpl(NamedParameterJdbcTemplate jdbcTemplate) {
 	}
 
 /**
- * creation d' un utilisateur	
+ * creation d'un utilisateur	
  */
 	@Override
 	public void create(Utilisateur utilisateur) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
-//		
+		
 		mapParameterSource.addValue("pseudo",utilisateur.getPseudo());
 		mapParameterSource.addValue("nom",utilisateur.getNom());
 		mapParameterSource.addValue("prenom",utilisateur.getPrenom());
