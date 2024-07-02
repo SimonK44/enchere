@@ -1,4 +1,4 @@
-body {
+main {
     margin: 0;
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
@@ -23,7 +23,7 @@ main {
 /* } */
 
 .checkbox {
-	display: flex;	
+	display: flex;
 	align-self: center;
 }
 
@@ -55,13 +55,13 @@ form div {
     text-align: center;
 }
 
-ul {
+.ul-login {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-ul li {
+.ul-login li {
     margin-bottom: 15px;
 }
 
