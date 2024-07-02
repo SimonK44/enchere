@@ -1,8 +1,8 @@
-package eni.projet.enchere.dal;
+package com.example.encheres.dal;
 
 import java.util.List;
 
-import eni.projet.enchere.bo.Enchere;
+import com.example.encheres.bo.Enchere;
 
 public interface EnchereDAO {
 	

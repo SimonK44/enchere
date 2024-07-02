@@ -1,4 +1,4 @@
-package eni.projet.enchere.dal;
+package com.example.encheres.dal;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import eni.projet.enchere.bo.ArticleVendu;
+import com.example.encheres.bo.ArticleVendu;
 
 @Repository
 public class ArticleVenduDAOImpl implements ArticleVenduDAO {
