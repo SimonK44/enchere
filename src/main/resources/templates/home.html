@@ -1,12 +1,114 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <title>Home Page</title>
-  </head>
-  <body>
-    <h1>Welcome to the Home Page</h1>
-    kim
-    simon
-    <p th:text="${message}"></p>
-  </body>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/header-footer.css" />
+    <link rel="stylesheet" href="css/home.css" />
+    <title>ENI-Enchères</title>
+</head>
+<body>
+  <div th:replace="~{/fragments/fragment-header :: frag-header}"></div>
+    <main>
+        <h1>Liste des enchères</h1>
+        <div class="filter-container">
+            <div class="filters">
+                <h2>Filtres :</h2>
+                <div>
+                    <input type="text" placeholder="Rechercher">
+                </div> 
+                <div class="dropdown">
+                    <label for="categorie">Catégorie :</label>
+                    <select id="categorie" name="categorie">
+                        <option value="toutes">Toutes</option>
+                        <option value="informatique">Informatique</option>
+                        <option value="ameublement">Ameublement</option>
+                        <option value="vetement">Vêtement</option>
+                        <option value="sportLoisirs">Sport&Loisirs</option>
+                    </select>
+                </div>
+            </div>
+            <button class="search-button">Rechercher</button>
+        </div>
+        <fieldset>
+        	<div>
+            <div>
+                <input type="radio" id="achat" name="transactionType" value="achat" checked onchange="toggleCriteria()"/>
+                <label for="achat">Achat</label>
+            </div>
+            <div>
+                <input type="radio" id="ventes" name="transactionType" value="ventes" onchange="toggleCriteria()"/>
+                <label for="ventes">Mes ventes</label>
+            </div>
+           </div> 
+            
+            <div id="achatCriteria" class="criteria">
+                <form action="">   
+                <input type="checkbox" id="encheresOuvertes" name="encheresOuverte" value="ouvertes">
+                <label for="encheresOuverte">Enchères ouvertes</label><br>
+                <input type="checkbox" id="encheresEnCours" name="encheresEnCours" value="encours">
+                <label for="encheresEnCours">Mes enchères en cours</label><br>
+                <input type="checkbox" id="encheresRemportees" name="encheresRemportees" value="remportees">
+                <label for="encheresRemportees">Mes enchères remportées</label><br>
+            </form>
+        </div>
+        <div id="ventesCriteria" class="criteria" style="display: none;">
+            <form action="">   
+                <input type="checkbox" id="venteCours" name="venteCours" value="venteCours">
+                <label for="venteCours">Mes ventes en cours</label><br>
+                <input type="checkbox" id="venteNonDebute" name="venteNonDebute" value="venteNonDebute">
+                <label for="venteNonDebute">Ventes non débutées</label><br>
+                <input type="checkbox" id="venteTerminees" name="venteTerminees" value="venteTerminees">
+                <label for="venteTerminees">Ventes terminées</label><br>
+            </form>
+        </div>
+            
+        </fieldset>
+       
+        <div class="auction-items">
+        <div class="auction-item">
+            <div>
+                <img class="rectangle" src="image/maison.jpg" alt="image produit" />
+            </div>
+            <div>
+                <p>Fauteuil</p>
+                <p>Prix : <span>310</span> points</p>
+                <p>Fin de l'enchère : <span>01/09/2018</span></p>
+                <p>Vendeur : <span>NineJae</span></p>
+            </div>
+        </div>
+         <div class="auction-item">
+            <div>
+                <img class="rectangle" src="image/maison.jpg" alt="image produit" />
+            </div>
+            <div>
+                <p>Fauteuil</p>
+                <p>Prix : <span>310</span> points</p>
+                <p>Fin de l'enchère : <span>01/09/2018</span></p>
+                <p>Vendeur : <span>NineJae</span></p>
+            </div>
+        </div>
+        </div>
+    </main>
+    <div th:replace="~{/fragments/fragment-footer :: frag-footer}"></div>
+
+    <script>
+        function toggleCriteria() {
+            const achatCriteria = document.getElementById('achatCriteria');
+            const ventesCriteria = document.getElementById('ventesCriteria');
+            const isAchatChecked = document.getElementById('achat').checked;
+
+            if (isAchatChecked) {
+                achatCriteria.style.display = 'block';
+                ventesCriteria.style.display = 'none';
+            } else {
+                achatCriteria.style.display = 'none';
+                ventesCriteria.style.display = 'block';
+            }
+        }
+
+        // Initialize criteria display based on the default selected radio button
+        window.onload = toggleCriteria;
+    </script>
+</body>
 </html>
