@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/header-footer.css" />
     <link rel="stylesheet" href="css/resultat-retrait.css" />
     <title>ENI-Enchères</title>
-</head>s
+</head>
   <body>
     <div th:replace="~{/fragments/fragment-header :: frag-header}"></div>
-  
+
     <main>
       <h1><span>Jojo</span> a remporté l'enchère</h1>
       <div>
@@ -17,9 +17,9 @@
            <img src="image/maison.jpg" alt="image produit" />
         </div>
         <div>
-          <p>Rocket stove pour riz et pâtes</p>
+          <p class="textLabel">Rocket stove pour riz et pâtes</p>
           <label for="description">Description : </label>
-          <textarea id="description" rows="5" cols="33"></textarea>
+          <textarea id="description" rows="5" cols="33" disabled></textarea>
 
           <label for="meilleurOffre"> Meilleur offtre : </label>
           <input
@@ -27,19 +27,20 @@
             id="prix"
             name="prix"
             value="210 pts par jojo44"
+            disabled
           />
 
           <label for="prix">Mise à prix : </label>
-          <input type="number" id="prix" name="prix" value="185 points" />
+          <input type="number" id="prix" name="prix" value="185 points" disabled/>
           <label for="date">Fin de l'enchère : </label>
-          <input type="date" id="dateFin" name="dateFin" />
+          <input type="date" id="dateFin" name="dateFin" disabled/>
 
           <div>
             <label>Retrait : </label>
-            <input type="text" id="adresse" name="adresse" />
+            <input type="text" id="adresse" name="adresse" disabled/>
           </div>
           <label for="vendeur">Vendeur : </label>
-          <input type="number" id="vendeur" name="vendeur" />
+          <input type="number" id="vendeur" name="vendeur" disabled/>
 
           <div>
             <button>Retrait effectué</button>
@@ -47,6 +48,6 @@
         </div>
       </div>
     </main>
-      <div th:replace="~{/fragments/fragment-footer :: frag-footer}"></div>  
+    <div th:replace="~{/fragments/fragment-footer :: frag-footer}"></div>
   </body>
 </html>
