@@ -52,16 +52,17 @@ form .form-actions {
     margin-top: 20px;
 }
 
-form .form-actions button {
+form .form-actions a {
     padding: 10px 20px;
     background-color: #333;
     color: #fff;
     border: none;
+    text-decoration: none;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
-form .form-actions button:hover {
+form .form-actions a:hover {
     background-color: #555;
 }
