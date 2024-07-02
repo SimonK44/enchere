@@ -4,12 +4,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-//@Controller
+@Controller
 public class HomeController {
 
-    @GetMapping("/")
+    @GetMapping({"/","home","encheres","listes-articles"})
     public String home(Model model) {
         model.addAttribute("message", "Bienvenue à Enchères!");
-        return "home";        
+        return "home";
     }
 }
