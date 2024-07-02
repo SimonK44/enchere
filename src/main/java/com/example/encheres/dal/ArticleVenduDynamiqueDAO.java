@@ -1,9 +1,9 @@
-package eni.projet.enchere.dal;
+package com.example.encheres.dal;
 
 import java.time.LocalDate;
 import java.util.List;
 
-import eni.projet.enchere.bo.ArticleVendu;
+import com.example.encheres.bo.ArticleVendu;
 
 
 public interface ArticleVenduDynamiqueDAO {

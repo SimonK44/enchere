@@ -1,6 +1,4 @@
-package eni.projet.enchere.dal;
-
-import java.util.List;
+package com.example.encheres.dal;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -9,7 +7,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import eni.projet.enchere.bo.Retrait;
+import com.example.encheres.bo.Retrait;
 
 
 @Repository

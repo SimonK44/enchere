@@ -1,7 +1,6 @@
-package eni.projet.enchere.bll;
+package com.example.encheres.bll;
 
-import eni.projet.enchere.bo.Utilisateur;
-
+import com.example.encheres.bo.Utilisateur;
 
 public interface UtilisateurService {
 	void creerUtilisateur ( Utilisateur utilisateur);

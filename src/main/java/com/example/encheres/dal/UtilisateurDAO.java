@@ -1,8 +1,8 @@
-package eni.projet.enchere.dal;
+package com.example.encheres.dal;
 
 import java.util.List;
 
-import eni.projet.enchere.bo.Utilisateur;
+import com.example.encheres.bo.Utilisateur;
 
 public interface UtilisateurDAO {
 	
