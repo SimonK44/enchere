@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.example.encheres.bo.Utilisateur;
 
 
 @Controller
+@SessionAttributes({"utilisateurSession"})
 @RequestMapping("/utilisateurs")
 public class UtilisateurControlleur {
 
@@ -34,14 +36,7 @@ public class UtilisateurControlleur {
 		model.addAttribute("utilisateur", utilisateur);
 		
 		return "view-profil-creation";
-	}
-
-	@GetMapping("/afficher")
-
-	public String afficherUtilisateurParId() {
-
-		return "view-utilisateur";
-	}
+	}	
 
 	@GetMapping("/modifier")
 	public String modifierUtilisateurParId() {
@@ -49,16 +44,13 @@ public class UtilisateurControlleur {
 		return "view-profil-modification";
 	}
 
-
-
-
-	public String afficherUtilisateurParId(@RequestParam(name = "noUtilisateur",
-															required = false) int idUtilisateur,
-															Model model) {
+	@GetMapping("/afficher")
+	public String afficherUtilisateurParId() {
 		
-		Utilisateur u = this.utilisateurService.lectureUtilisateur(idUtilisateur);
-		
-		model.addAttribute("utilisateur", u); // 1 objet utilisateur avec tous ses paramètres
+//		Utilisateur u = this.utilisateurService.lectureUtilisateur(idUtilisateur);
+//		System.out.println(u.getNoUtilisateur());
+//		
+//		model.addAttribute("utilisateur", u); // 1 objet utilisateur avec tous ses paramètres
 		
 		return "view-utilisateur";
 	}	

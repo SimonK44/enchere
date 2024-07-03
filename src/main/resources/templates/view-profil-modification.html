@@ -2,14 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-	<link rel="stylesheet" href="css/header-footer.css" />
-	<link rel="stylesheet" href="css/form-inscription.css" />
+	<link rel="stylesheet" th:href="@{/css/header-footer.css}" />
+	<link rel="stylesheet" th:href="@{/css/form-inscription.css}" />
 	<title>ENI-Enchères</title>
 </head>
 <body>	
 	<div th:replace="~{/fragments/fragment-header :: frag-header}"></div>
 	<main>
-		<form th:action="@{/utilisateurs/modifier}" method="POST">
+		<form th:action="@{/modifier}" method="POST">
 			<h1>Mon profil</h1>
 			<div class="form-row">
 				<div class="form-col">

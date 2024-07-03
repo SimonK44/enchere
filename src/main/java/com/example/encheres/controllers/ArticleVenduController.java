@@ -18,7 +18,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.web.bind.annotation.SessionAttributes;
+
 @Controller
+@SessionAttributes({"utilisateurSession"})
 public class ArticleVenduController {
 	private ArticleVenduService articleVenduService;
 	private CategorieService categorieService;
