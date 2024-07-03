@@ -42,7 +42,7 @@ public UtilisateurDAOimpl(NamedParameterJdbcTemplate jdbcTemplate) {
 	@Override
 	public void create(Utilisateur utilisateur) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
-		
+// ajout parametres pour la requete			
 		mapParameterSource.addValue("pseudo",utilisateur.getPseudo());
 		mapParameterSource.addValue("nom",utilisateur.getNom());
 		mapParameterSource.addValue("prenom",utilisateur.getPrenom());
@@ -59,7 +59,7 @@ public UtilisateurDAOimpl(NamedParameterJdbcTemplate jdbcTemplate) {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 				
 		jdbcTemplate.update(CREATE, mapParameterSource, keyHolder);
-		
+// recuperation de la clef pour la table utilisateur		
 		if (keyHolder != null && keyHolder.getKey() != null) {
 			utilisateur.setNoUtilisateur(keyHolder.getKey().intValue());
 			
@@ -72,7 +72,7 @@ public UtilisateurDAOimpl(NamedParameterJdbcTemplate jdbcTemplate) {
 	@Override
 	public Utilisateur read(int noUtilisateur) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
-		
+// ajout parametre pour la requete			
 		mapParameterSource.addValue("noUtlisateur",noUtilisateur);		
 		
 		return jdbcTemplate.queryForObject(READ, mapParameterSource,new BeanPropertyRowMapper<>(Utilisateur.class));
@@ -83,7 +83,7 @@ public UtilisateurDAOimpl(NamedParameterJdbcTemplate jdbcTemplate) {
 	@Override
 	public void update(Utilisateur utilisateur) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
-		
+// ajout parametre pour la requete			
 		mapParameterSource.addValue("noUtlisateur",utilisateur.getNoUtilisateur());			
 		mapParameterSource.addValue("pseudo",utilisateur.getPseudo());
 		mapParameterSource.addValue("pseudo",utilisateur.getPseudo());
@@ -96,51 +96,61 @@ public UtilisateurDAOimpl(NamedParameterJdbcTemplate jdbcTemplate) {
 		mapParameterSource.addValue("Ville",utilisateur.getVille());
 		mapParameterSource.addValue("motDePasse",utilisateur.getMotDePasse());
 		mapParameterSource.addValue("credit",utilisateur.getCredit());
-		mapParameterSource.addValue("administrateur",utilisateur.isAdministrateur());
-		
+		mapParameterSource.addValue("administrateur",utilisateur.isAdministrateur());		
 		
 		jdbcTemplate.update(UPDATE, mapParameterSource);
 		
 	}
-
+/**
+ *  suppression d' utilisateur
+ */
 	@Override
 	public void delete(int noUtlisateur) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
-		
+// ajout parametre pour la requete			
 		mapParameterSource.addValue("noUtlisateur",noUtlisateur);	
+		
 		jdbcTemplate.update(DELETE, mapParameterSource);
 		
 	}
-
+/**
+ *  liste de tous les utilisateurs
+ */
 	@Override
 	public List<Utilisateur> findAll() {		
 		return jdbcTemplate.query(FIND_ALL ,new BeanPropertyRowMapper<>(Utilisateur.class));	
 	}
 
-
+/**
+ *  controle avec un count des doublons nom/prenom en creation
+ */
 	@Override
 	public int CountByNomPrenom(String nom, String prenom) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
-		
+// ajout parametres pour la requete			
 		mapParameterSource.addValue("nom",nom);		
 		mapParameterSource.addValue("prenom",prenom);		
 		
 		return jdbcTemplate.queryForObject(COUNT_BY_NOM_PRENOM , mapParameterSource, Integer.class) ;
 	}
-
+/**
+ * controle avec un count des doublons pseudo en creation
+ */
 	@Override
 	public int CountByPseudo(String pseudo) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();	
-		
+// ajout parametre pour la requete			
 		mapParameterSource.addValue("pseudo",pseudo);					
 		
 		return jdbcTemplate.queryForObject(COUNT_BY_PSEUDO , mapParameterSource, Integer.class) ;
 	}
-
+/**
+ * controle avec un count des doublons nom/prenom en modification
+ */
 	@Override
 	public int CountByNomPrenomModifier(int noUtilisateur, String nom, String prenom) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
-		
+// ajout parametre pour la requete			
 		mapParameterSource.addValue("no_utilisateur",noUtilisateur);	
 		mapParameterSource.addValue("nom",nom);		
 		mapParameterSource.addValue("prenom",prenom);		
@@ -148,10 +158,13 @@ public UtilisateurDAOimpl(NamedParameterJdbcTemplate jdbcTemplate) {
 		return jdbcTemplate.queryForObject(COUNT_BY_NOM_PRENOMMODIFIER , mapParameterSource, Integer.class) ;
 	}
 
+/**
+ * 	controle avec un count des doublons pseudo en modification
+ */
 	@Override
 	public int CountByPseudoModifier(int noUtilisateur, String pseudo) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();	
-		
+// ajout parametre pour la requete			
 		mapParameterSource.addValue("no_utilisateur",noUtilisateur);	
 		mapParameterSource.addValue("pseudo",pseudo);					
 		

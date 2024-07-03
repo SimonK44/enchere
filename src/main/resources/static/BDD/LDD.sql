@@ -1,4 +1,4 @@
--- Script de création de la base de données ENCHERES
+-- Script de crï¿½ation de la base de donnï¿½es ENCHERES
 --   type :      SQL Server 2012
 --
 
