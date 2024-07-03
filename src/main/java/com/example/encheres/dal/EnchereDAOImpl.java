@@ -20,15 +20,19 @@ private NamedParameterJdbcTemplate jdbcTemplate;
 	private static final String DELETE   = "DELETE FROM ENCHERE WHERE no_utilisateur = :noUtilisateur and no_article = :noArticle";
 	private static final String FIND_BY_UTILISATEUR = "SELECT no_utilisateur, no_article,date_enchere,montant_enchere FROM ENCHERES WHERE no_utilisateur = :noUtilisateur";
 	private static final String FIND_BY_ARTICLE     = "SELECT no_utilisateur, no_article,date_enchere,montant_enchere FROM ENCHERES WHERE no_article = :noArticle";
+	private static final String MONTANT_MAX = "SELECT MAX(montant_enchere ) FROM  ENCHERES where no_article = :noArticle;";
 	
 	public EnchereDAOImpl(NamedParameterJdbcTemplate jdbcTemplate) {		
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
+/**
+ * creation enchere	
+ */
 	@Override
 	public void create(Enchere enchere) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
-//		
+// ajout parametres pour la requete		
 		mapParameterSource.addValue("noUtilisateur",enchere.getUtilisateur().getNoUtilisateur());
 		mapParameterSource.addValue("noArticle",enchere.getArticleVendu().getNoArticle());
 		mapParameterSource.addValue("dateEnchere",enchere.getDateEnchere());
@@ -37,22 +41,26 @@ private NamedParameterJdbcTemplate jdbcTemplate;
 		jdbcTemplate.update(CREATE, mapParameterSource);
 		
 	}
-
+/**
+ * lecture enchere
+ */
 	@Override
 	public Enchere read(int noUtilisateur, int noArticle) {
-MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
-		
+		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
+// ajout parametres pour la requete			
 		mapParameterSource.addValue("noUtilisateur",noUtilisateur);	
 		mapParameterSource.addValue("noArticle",noArticle);	
 		
 		return jdbcTemplate.queryForObject(READ, mapParameterSource,new BeanPropertyRowMapper<>(Enchere.class));
 
 	}
-
+/**
+ * MAJ enchere
+ */
 	@Override
 	public void update(Enchere enchere) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
-//		
+// ajout parametres pour la requete			
 		mapParameterSource.addValue("noUtilisateur",enchere.getUtilisateur().getNoUtilisateur());
 		mapParameterSource.addValue("noArticle",enchere.getArticleVendu().getNoArticle());
 		mapParameterSource.addValue("dateEnchere",enchere.getDateEnchere());
@@ -60,35 +68,53 @@ MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
 
 		jdbcTemplate.update(UPDATE, mapParameterSource);
 	}
-
+/**
+ *  suppression enchere
+ */
 	@Override
 	public void delete(int noUtilisateur, int noArticle) {
         MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
-		
+     // ajout parametres pour la requete		
 		mapParameterSource.addValue("noUtilisateur",noUtilisateur);	
 		jdbcTemplate.update(DELETE, mapParameterSource);
 		
 	}
-
+/**
+ * liste des encheres par utilisateur
+ */
 	@Override
 	public List<Enchere> findByUtilisateur(int noUtilisateur) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
-//		
+// ajout parametre pour la requete	
 		mapParameterSource.addValue("noUtilisateur",noUtilisateur);
 		
 		return jdbcTemplate.query(FIND_BY_UTILISATEUR ,new BeanPropertyRowMapper<>(Enchere.class));	
 		
 	}
-
+/**
+ *  liste des encheres par articles
+ */
 	@Override
 	public List<Enchere> findByArticle(int noArticle) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
-//		
+// ajout parametre pour la requete			
 		mapParameterSource.addValue("noArticle",noArticle);
 		
 		return jdbcTemplate.query(FIND_BY_ARTICLE ,new BeanPropertyRowMapper<>(Enchere.class));	
 
 	}
+/**
+ *  montant max enchere pour un article vendu
+ */
+@Override
+public int montantMax(int noUtilisateur, int noArticle) {
+	MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
+// ajout parametres pour la requete			
+			mapParameterSource.addValue("noUtilisateur",noUtilisateur);	
+			mapParameterSource.addValue("noArticle",noArticle);	
+			
+			return jdbcTemplate.queryForObject(MONTANT_MAX, mapParameterSource,new BeanPropertyRowMapper<>(Integer.class));
+}
 	
 
 }
