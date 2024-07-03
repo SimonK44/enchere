@@ -107,10 +107,9 @@ public class EnchereDAOImpl implements EnchereDAO {
  *  montant max enchere pour un article vendu
  */
 @Override
-public int montantMax(int noUtilisateur, int noArticle) {
+public int montantMax( int noArticle) {
 	MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
-// ajout parametres pour la requete
-			mapParameterSource.addValue("noUtilisateur",noUtilisateur);
+// ajout parametres pour la requete			
 			mapParameterSource.addValue("noArticle",noArticle);
 
 			return jdbcTemplate.queryForObject(MONTANT_MAX, mapParameterSource,new BeanPropertyRowMapper<>(Integer.class));

@@ -28,8 +28,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			
 			try {
 				utilisateurDAO.create(utilisateur);
-			} catch (DataAccessException e) {
-				// TODO Auto-generated catch block
+			} catch (DataAccessException e) {				
 				be.addError(BusinessException.ERREUR_1);
 				throw be;
 			}
@@ -80,7 +79,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	private boolean controleNomPrenom (String nom, String prenom, BusinessException be) {
 		boolean isValid = false;
 
-		if (utilisateurDAO.CountByNomPrenom(nom, prenom) == 0 ) {
+		if (utilisateurDAO.countByNomPrenom(nom, prenom) == 0 ) {
 		   isValid = true;		   
 		} else {			
 			be.addError(BusinessException.ERREUR_1);
@@ -93,7 +92,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	private boolean controlePseudo (String pseudo, BusinessException be) {
 		boolean isValid = false;
 
-		if (utilisateurDAO.CountByPseudo(pseudo) == 0 ) {
+		if (utilisateurDAO.countByPseudo(pseudo) == 0 ) {
 		   isValid = true;
 		} else {
 			be.addError(BusinessException.ERREUR_2);
@@ -105,7 +104,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	private boolean controleModifierNomPrenom (int no_utilisateur,String nom, String prenom, BusinessException be) {
 		boolean isValid = false;
 
-		if (utilisateurDAO.CountByNomPrenomModifier(no_utilisateur,nom, prenom) == 0 ) {
+		if (utilisateurDAO.countByNomPrenomModifier(no_utilisateur,nom, prenom) == 0 ) {
 		   isValid = true;
 		} else {
 			be.addError(BusinessException.ERREUR_1);
@@ -117,7 +116,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	private boolean controleModifierPseudo(int no_utilisateur,String pseudo, BusinessException be) {
 		boolean isValid = false;
 
-		if (utilisateurDAO.CountByPseudoModifier(no_utilisateur,pseudo) == 0 ) {
+		if (utilisateurDAO.countByPseudoModifier(no_utilisateur,pseudo) == 0 ) {
 		   isValid = true;
 		} else {
 			be.addError(BusinessException.ERREUR_2);

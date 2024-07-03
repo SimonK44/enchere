@@ -21,7 +21,7 @@ public class ArticleVenduDAOImpl implements ArticleVenduDAO {
     private final static String DELETE = "DELETE ARTICLES_VENDUS WHERE no_article = :noArticle";
 	private final static String FIND_BY_UTILISATEUR = "SELECT nom_article, description, date_debut_encheres , date_fin_encheres, prix_initial, prix_vente, no_utilisateur_vendeur,no_utilisateur_acheteur , no_categorie FROM ARTICLES_VENDUS WHERE no_utilisateur_vendeur = :noUtilisateurVendeur";
 	private final static String FIND_BY_CATEGORIE = "SELECT nom_article, description, date_debut_encheres , date_fin_encheres, prix_initial, prix_vente, no_utilisateur_vendeur, no_utilisateur_acheteur , no_categorie FROM ARTICLES_VENDUS WHERE no_categorie = :noCategorie";
-
+    private final static String COUNT_BY_NOARTICLE = "SELECT COUNT(*) FROM ARTICLES_VENDUS WHERE no_article = :noArticle"; 
 
 
 
@@ -110,5 +110,17 @@ public class ArticleVenduDAOImpl implements ArticleVenduDAO {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
 		mapParameterSource.addValue("no_categorie",noCategorie);
 		return jdbcTemplate.query(FIND_BY_CATEGORIE ,new BeanPropertyRowMapper<>(ArticleVendu.class));
+	}
+	
+/**
+ * comptage par no_article	
+ */
+	@Override
+	public int countArticle(int noArticle) {
+		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();	
+		// ajout parametre pour la requete			
+				mapParameterSource.addValue("no_article",noArticle);
+				
+				return jdbcTemplate.queryForObject(COUNT_BY_NOARTICLE , mapParameterSource, Integer.class) ;
 	}
 }
