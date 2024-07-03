@@ -12,6 +12,8 @@ public interface UtilisateurDAO {
 	void delete(int noUtilisateur);
 	List<Utilisateur> findAll();
 	
+	Utilisateur findByPseudo(String pseudo); 
+	
 	int CountByNomPrenom(String nom, String prenom);
 	int CountByPseudo(String pseudo);
 	

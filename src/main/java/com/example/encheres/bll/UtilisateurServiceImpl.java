@@ -126,4 +126,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		return isValid;
 	}
 
+	@Override
+	public Utilisateur findByPseudo(String pseudo) {
+		return utilisateurDAO.findByPseudo(pseudo);
+		
+	}
+
 }
