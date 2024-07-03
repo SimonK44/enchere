@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArticleVendu {
-	
+
 	private int noArticle;
 	private String nomArticle;
 	private String description;
@@ -13,13 +13,13 @@ public class ArticleVendu {
 	private LocalDate dateFinEnchere;
 	private float prixInitial;
 	private float prixVente;
-	
+
 	private Categorie categorie;
-	
+
 	private Utilisateur vendeur;
 	private Utilisateur acheteur;
 	private List<Enchere> encheres;
-	
+
 
 
 public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEnchere,
@@ -34,12 +34,18 @@ public ArticleVendu(int noArticle, String nomArticle, String description, LocalD
 		this.prixInitial = prixInitial;
 		this.prixVente = prixVente;
 		this.categorie = categorie;
-		this.vendeur =  new Utilisateur();
-		this.acheteur =  new Utilisateur();
-		this.encheres = new ArrayList<Enchere>();
+		this.vendeur =  vendeur;
+		this.acheteur =  acheteur;
+		this.encheres = encheres;
 	}
 
-public int getNoArticle() {
+	public ArticleVendu() {
+		this.acheteur =  new Utilisateur();
+		this.encheres = new ArrayList<>();
+		this.categorie = new Categorie();
+	}
+
+	public int getNoArticle() {
 	return noArticle;
 }
 
@@ -129,13 +135,21 @@ public void setCategorie(Categorie categorie) {
 
 @Override
 public String toString() {
-	return "ArticleVendu [noArticle=" + noArticle + ", nomArticle=" + nomArticle + ", description=" + description
-			+ ", dateDebutEnchere=" + dateDebutEnchere + ", dateFinEnchere=" + dateFinEnchere + ", prixInitial="
-			+ prixInitial + ", prixVente=" + prixVente + ", categorie=" + categorie + ", vendeur=" + vendeur
-			+ ", encheres=" + encheres + "]";
+	return "ArticleVendu [noArticle="
+			+ noArticle + ", nomArticle="
+			+ nomArticle + ", description="
+			+ description + ", dateDebutEnchere="
+			+ dateDebutEnchere + ", dateFinEnchere="
+			+ dateFinEnchere + ", prixInitial="
+			+ prixInitial + ", prixVente="
+			+ prixVente + ", categorie="
+			+ categorie + ", acheteur="
+			+ acheteur + ", vendeur="
+			+ vendeur+ ", encheres=" + encheres
+			+ "]";
 }
 
 
-	
-	
+
+
 }
