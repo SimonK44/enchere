@@ -14,10 +14,11 @@ public interface UtilisateurDAO {
 	
 	Utilisateur findByPseudo(String pseudo); 
 	
-	int CountByNomPrenom(String nom, String prenom);
-	int CountByPseudo(String pseudo);
+	int countByNomPrenom(String nom, String prenom);
+	int countByPseudo(String pseudo);
 	
-	int CountByNomPrenomModifier(int noUtilisateur, String nom, String prenom);
-	int CountByPseudoModifier(int noUtilisateur, String pseudo);
+	int countByNomPrenomModifier(int noUtilisateur, String nom, String prenom);
+	int countByPseudoModifier(int noUtilisateur, String pseudo);
+	int countByNoUtilisateur(int noUtilisateur);
 
 }

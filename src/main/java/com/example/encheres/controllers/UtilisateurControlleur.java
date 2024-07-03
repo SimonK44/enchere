@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.encheres.bo.Utilisateur;
+import com.example.encheres.exception.BusinessException;
 
 
 @Controller
@@ -66,7 +67,12 @@ public class UtilisateurControlleur {
 	@PostMapping("/modifier")
 	public String modifUtilisateurParId(@ModelAttribute("utilisateur") Utilisateur utilisateur, BindingResult bindingResult) {
 		
-		this.utilisateurService.modifierUtilisateur(utilisateur);
+		try {
+			this.utilisateurService.modifierUtilisateur(utilisateur);
+		} catch (BusinessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return "view-profil-modification";	
 	}
