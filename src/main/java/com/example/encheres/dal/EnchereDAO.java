@@ -12,6 +12,7 @@ public interface EnchereDAO {
 	void delete(int noUtilisateur, int noArticle);
 	List<Enchere> findByUtilisateur(int noUtilisateur);
 	List<Enchere> findByArticle(int noArticle);
+	int montantMax(int noUtilisateur, int noArticle);
 	
 
 }

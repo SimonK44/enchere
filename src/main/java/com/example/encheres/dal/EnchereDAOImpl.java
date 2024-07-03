@@ -20,6 +20,7 @@ private NamedParameterJdbcTemplate jdbcTemplate;
 	private static final String DELETE   = "DELETE FROM ENCHERE WHERE no_utilisateur = :noUtilisateur and no_article = :noArticle";
 	private static final String FIND_BY_UTILISATEUR = "SELECT no_utilisateur, no_article,date_enchere,montant_enchere FROM ENCHERES WHERE no_utilisateur = :noUtilisateur";
 	private static final String FIND_BY_ARTICLE     = "SELECT no_utilisateur, no_article,date_enchere,montant_enchere FROM ENCHERES WHERE no_article = :noArticle";
+	private static final String MONTANT_MAX = "SELECT MAX(montant_enchere ) FROM  ENCHERES where no_article = :noArticle;";
 	
 	public EnchereDAOImpl(NamedParameterJdbcTemplate jdbcTemplate) {		
 		this.jdbcTemplate = jdbcTemplate;
@@ -102,6 +103,18 @@ private NamedParameterJdbcTemplate jdbcTemplate;
 		return jdbcTemplate.query(FIND_BY_ARTICLE ,new BeanPropertyRowMapper<>(Enchere.class));	
 
 	}
+/**
+ *  montant max enchere pour un article vendu
+ */
+@Override
+public int montantMax(int noUtilisateur, int noArticle) {
+	MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
+// ajout parametres pour la requete			
+			mapParameterSource.addValue("noUtilisateur",noUtilisateur);	
+			mapParameterSource.addValue("noArticle",noArticle);	
+			
+			return jdbcTemplate.queryForObject(MONTANT_MAX, mapParameterSource,new BeanPropertyRowMapper<>(Integer.class));
+}
 	
 
 }
