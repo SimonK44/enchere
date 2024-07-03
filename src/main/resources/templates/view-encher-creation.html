@@ -31,13 +31,9 @@
                   <label for="description">Description :</label>
                   <textarea id="description" name="description" rows="5" cols="33" th:field="*{description}"></textarea>
 
-                  <label for="categorie">Catégorie :</label>
-                  <select id="categorie" name="categorie" th:field="*{categorie.libelle}">
-                      <option value="toutes">Toutes</option>
-                      <option value="informatique">Informatique</option>
-                      <option value="ameublement">Ameublement</option>
-                      <option value="vetement">Vêtement</option>
-                      <option value="sportLoisirs">Sport & Loisirs</option>
+                  <label>Catégorie :</label>
+                  <select id="categorie" th:field="*{categorie}">
+                      <option th:each="categorie : ${categories}" th:value="${categorie.noCategorie}" th:text="${categorie.libelle}"></option>
                   </select>
 
                   <label for="prixInitial">Mise à prix :</label>

@@ -1,6 +1,7 @@
 package com.example.encheres.controllers;
 
 import com.example.encheres.bll.ArticleVenduService;
+import com.example.encheres.bll.CategorieService;
 import com.example.encheres.bo.ArticleVendu;
 import com.example.encheres.bo.Categorie;
 import com.example.encheres.bo.Enchere;
@@ -20,14 +21,17 @@ import java.util.List;
 @Controller
 public class ArticleVenduController {
 	private ArticleVenduService articleVenduService;
+	private CategorieService categorieService;
 	@Autowired
-	public ArticleVenduController(ArticleVenduService articleVenduService) {
+	public ArticleVenduController(ArticleVenduService articleVenduService, CategorieService categorieService) {
 		this.articleVenduService = articleVenduService;
+		this.categorieService = categorieService;
 	}
 
 	@GetMapping("/vendre-article")
 	public String vendreArticle(Model model) {
 		model.addAttribute("article", new ArticleVendu());
+		model.addAttribute("categories", categorieService.findAll());
 		return "view-encher-creation";
 	}
 
