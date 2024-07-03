@@ -3,7 +3,6 @@ package com.example.encheres.controllers;
 import com.example.encheres.bll.UtilisateurService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,25 +38,26 @@ public class UtilisateurControlleur {
 		return "view-profil-creation";
 	}	
 
+	//Affichage de la page modification de profil
 	@GetMapping("/modifier")
 	public String modifierUtilisateurParId() {
-
 		return "view-profil-modification";
 	}
 
+	//Afficher une page de profil simple
 	@GetMapping("/afficher")
-	public String afficherUtilisateurParId() {
+	public String afficherUtilisateurParId(@RequestParam("noUtilisateur") int id, Model model) {
 		
-//		Utilisateur u = this.utilisateurService.lectureUtilisateur(idUtilisateur);
-//		System.out.println(u.getNoUtilisateur());
-//		
-//		model.addAttribute("utilisateur", u); // 1 objet utilisateur avec tous ses paramètres
+		Utilisateur u = this.utilisateurService.lectureUtilisateur(id);
+		System.out.println(u.getNoUtilisateur());
+		
+		model.addAttribute("utilisateur", u); // 1 objet utilisateur avec tous ses paramètres
 		
 		return "view-utilisateur";
 	}	
 	
 	@PostMapping("/modifier")
-	public String modifUtilisateurParId(@ModelAttribute("utilisateur") Utilisateur utilisateur, BindingResult bindingResult) {
+	public String modifUtilisateurParId(@ModelAttribute("utilisateur") Utilisateur utilisateur) {
 		
 		try {
 			this.utilisateurService.modifierUtilisateur(utilisateur);
@@ -73,7 +73,12 @@ public class UtilisateurControlleur {
 	@PostMapping("/creer")
 	public String creerUtilisateur(@ModelAttribute("utilisateur") Utilisateur utilisateur) {	
 		Utilisateur u = new Utilisateur();
-		this.utilisateurService.creerUtilisateur(utilisateur);
+		try {
+			this.utilisateurService.creerUtilisateur(utilisateur);
+		} catch (BusinessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return "redirect:/utilisateurs/afficher";	
 	}			
 
