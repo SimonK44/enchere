@@ -22,7 +22,11 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 	private static final String UPDATE   = "UPDATE UTILISATEURS  SET pseudo = :pseudo, nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, rue = :rue, code_postal : codePostal, ville = : ville, mot_de_passe = :motDePasse, credit = :credit, administrateur = :administrateur WHERE no_utilisateur = noUtilisateur";
 	private static final String DELETE   = "DELETE FROM utilisateurs WHERE no_utilisateur = :noUtilisateur";
 	private static final String FIND_ALL = "SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS";
-   
+	private static final String FIND_BY_PSEUDO = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE pseudo = :pseudo";
+	
+	
+	
+	
 	private static final String COUNT_BY_NOM_PRENOM  = "SELECT COUNT(*) WHERE nom = :nom AND prenom = :prenom";
     private static final String COUNT_BY_PSEUDO      = "SELECT COUNT(*) WHERE pseudo = :pseudo";
     
@@ -170,5 +174,14 @@ public UtilisateurDAOimpl(NamedParameterJdbcTemplate jdbcTemplate) {
 		
 		return jdbcTemplate.queryForObject(COUNT_BY_PSEUDOMODIFIER , mapParameterSource, Integer.class) ;
 	}
+
+@Override
+public Utilisateur findByPseudo(String pseudo) {
+	MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
+	// ajout parametre pour la requete			
+			mapParameterSource.addValue("pseudo",pseudo);		
+			
+			return jdbcTemplate.queryForObject(FIND_BY_PSEUDO, mapParameterSource,new BeanPropertyRowMapper<>(Utilisateur.class));
+}
 
 }

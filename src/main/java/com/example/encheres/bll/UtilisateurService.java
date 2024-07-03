@@ -8,4 +8,5 @@ public interface UtilisateurService {
 	Utilisateur lectureUtilisateur(int noUtilisateur);
 	void modifierUtilisateur(Utilisateur utilisateur) throws BusinessException;
 	void supprimerUtilisateur(int noUtilisateur)      throws BusinessException;
+	Utilisateur findByPseudo( String pseudo);
 }
