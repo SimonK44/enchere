@@ -11,7 +11,11 @@ public interface UtilisateurDAO {
 	void update (Utilisateur utilisateur);
 	void delete(int noUtilisateur);
 	List<Utilisateur> findAll();
+	
 	int CountByNomPrenom(String nom, String prenom);
 	int CountByPseudo(String pseudo);
+	
+	int CountByNomPrenomModifier(int noUtilisateur, String nom, String prenom);
+	int CountByPseudoModifier(int noUtilisateur, String pseudo);
 
 }

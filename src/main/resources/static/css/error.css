@@ -11,7 +11,7 @@ h1 {
     color: red;
 }
 
-a {
+.a-error {
     margin-top: 20px;
     text-decoration: none;
     color: #333;

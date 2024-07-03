@@ -7,7 +7,7 @@ import com.example.encheres.bo.ArticleVendu;
 
 
 public interface ArticleVenduDynamiqueDAO {
-	List<ArticleVendu> findDynamique (int requete, int NoCategorie,LocalDate dateRequete, int noUtilisateur );
+	List<ArticleVendu> findDynamique (int requete, int NoCategorie,LocalDate dateRequete, int noUtilisateurVendeur, int no_UtilisateurAcheteur);
 	
 
 }
