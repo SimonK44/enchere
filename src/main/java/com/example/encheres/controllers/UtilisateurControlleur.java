@@ -10,10 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.encheres.bll.UtilisateurService;
 import com.example.encheres.bo.Utilisateur;
 
-import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/utilisateurs")
