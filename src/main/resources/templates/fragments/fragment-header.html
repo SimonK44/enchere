@@ -4,11 +4,11 @@
     </h1>
     <nav>
         <ul>
-            <li><a href="/login">S'inscrire - Se connecter</a></li>
-            <li><a href="/listes-articles">Enchères</a></li>
-            <li><a href="/vendre-article">Vendre un article</a></li>
-            <li><a href="/monprofil">Mon profil</a></li>
-            <li><a href="/logout">Déconnexion</a></li>
+            <li><a th:href="@{/login}">S'inscrire - Se connecter</a></li>
+            <li><a th:href="@{/listes-articles}">Enchères</a></li>
+            <li><a th:href="@{/vendre-article}">Vendre un article</a></li>
+            <li><a th:href="@{/utilisateurs/afficher}">Mon profil</a></li>
+            <li><a th:href="@{/logout}">Déconnexion</a></li>
         </ul>
     </nav>
     <div class="navbar-toggle">
