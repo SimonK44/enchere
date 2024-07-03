@@ -35,7 +35,6 @@ public class ArticleVenduDAOImpl implements ArticleVenduDAO {
 	public void create(ArticleVendu articleVendu) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
 // ajout parametres pour la requete
-		System.out.println("\n \n Object :" + articleVendu);
 		mapParameterSource.addValue("nomArticle",articleVendu.getNomArticle());
 		mapParameterSource.addValue("description",articleVendu.getDescription());
 		mapParameterSource.addValue("dateDebutEnchere",articleVendu.getDateDebutEnchere());
