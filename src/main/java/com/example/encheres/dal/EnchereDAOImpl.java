@@ -25,10 +25,13 @@ private NamedParameterJdbcTemplate jdbcTemplate;
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
+/**
+ * creation enchere	
+ */
 	@Override
 	public void create(Enchere enchere) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
-//		
+// ajout parametres pour la requete		
 		mapParameterSource.addValue("noUtilisateur",enchere.getUtilisateur().getNoUtilisateur());
 		mapParameterSource.addValue("noArticle",enchere.getArticleVendu().getNoArticle());
 		mapParameterSource.addValue("dateEnchere",enchere.getDateEnchere());
@@ -37,22 +40,26 @@ private NamedParameterJdbcTemplate jdbcTemplate;
 		jdbcTemplate.update(CREATE, mapParameterSource);
 		
 	}
-
+/**
+ * lecture enchere
+ */
 	@Override
 	public Enchere read(int noUtilisateur, int noArticle) {
-MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
-		
+		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
+// ajout parametres pour la requete			
 		mapParameterSource.addValue("noUtilisateur",noUtilisateur);	
 		mapParameterSource.addValue("noArticle",noArticle);	
 		
 		return jdbcTemplate.queryForObject(READ, mapParameterSource,new BeanPropertyRowMapper<>(Enchere.class));
 
 	}
-
+/**
+ * MAJ enchere
+ */
 	@Override
 	public void update(Enchere enchere) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
-//		
+// ajout parametres pour la requete			
 		mapParameterSource.addValue("noUtilisateur",enchere.getUtilisateur().getNoUtilisateur());
 		mapParameterSource.addValue("noArticle",enchere.getArticleVendu().getNoArticle());
 		mapParameterSource.addValue("dateEnchere",enchere.getDateEnchere());
@@ -60,30 +67,36 @@ MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
 
 		jdbcTemplate.update(UPDATE, mapParameterSource);
 	}
-
+/**
+ *  suppression enchere
+ */
 	@Override
 	public void delete(int noUtilisateur, int noArticle) {
         MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
-		
+     // ajout parametres pour la requete		
 		mapParameterSource.addValue("noUtilisateur",noUtilisateur);	
 		jdbcTemplate.update(DELETE, mapParameterSource);
 		
 	}
-
+/**
+ * liste des encheres par utilisateur
+ */
 	@Override
 	public List<Enchere> findByUtilisateur(int noUtilisateur) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
-//		
+// ajout parametre pour la requete	
 		mapParameterSource.addValue("noUtilisateur",noUtilisateur);
 		
 		return jdbcTemplate.query(FIND_BY_UTILISATEUR ,new BeanPropertyRowMapper<>(Enchere.class));	
 		
 	}
-
+/**
+ *  liste des encheres par articles
+ */
 	@Override
 	public List<Enchere> findByArticle(int noArticle) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
-//		
+// ajout parametre pour la requete			
 		mapParameterSource.addValue("noArticle",noArticle);
 		
 		return jdbcTemplate.query(FIND_BY_ARTICLE ,new BeanPropertyRowMapper<>(Enchere.class));	

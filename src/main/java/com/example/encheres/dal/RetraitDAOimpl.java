@@ -24,11 +24,13 @@ public class RetraitDAOimpl implements RetraitDao {
 	public RetraitDAOimpl(NamedParameterJdbcTemplate jdbcTemplate) {		
 		this.jdbcTemplate = jdbcTemplate;
 	}
-
+/**
+ * creation du retrait
+ */
 	@Override
 	public void create(Retrait retrait) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
-//		
+		// ajout parametres pour la requete			
 		mapParameterSource.addValue("rue",retrait.getRue());
 		mapParameterSource.addValue("codePostal",retrait.getCodePostal());
 		mapParameterSource.addValue("ville",retrait.getVille());
@@ -37,27 +39,32 @@ public class RetraitDAOimpl implements RetraitDao {
 		
 		
 		jdbcTemplate.update(CREATE, mapParameterSource, keyHolder);
-		
+// recuperation de la clef		
 		if (keyHolder != null && keyHolder.getKey() != null) {
 			retrait.setNoArticle(keyHolder.getKey().intValue());
 		}
 		
 		
 	}
-
+/**
+ *  lecture du retrait
+ */
+	
 	@Override
 	public Retrait read(int noArticle) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
-		
+// ajout parametre pour la requete			
 		mapParameterSource.addValue("noArticle",noArticle);
 		
 		return jdbcTemplate.queryForObject(READ, mapParameterSource,new BeanPropertyRowMapper<>(Retrait.class));
 	}
-
+/**
+ *  MAJ retrait
+ */
 	@Override
 	public void update(Retrait retrait) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
-		
+// ajout parametres pour la requete			
 		mapParameterSource.addValue("noArticle",retrait.getNoArticle());
 		mapParameterSource.addValue("rue",retrait.getRue());
 		mapParameterSource.addValue("codePostal",retrait.getCodePostal());
@@ -66,11 +73,13 @@ public class RetraitDAOimpl implements RetraitDao {
 		jdbcTemplate.update(UPDATE, mapParameterSource);
 		
 	}
-
+/**
+ * suppression du retrait
+ */
 	@Override
 	public void delete(int noArticle) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
-		
+// ajout parametre pour la requete			
 		mapParameterSource.addValue("noArticle",noArticle);
 		jdbcTemplate.update(DELETE, mapParameterSource);		
 		
