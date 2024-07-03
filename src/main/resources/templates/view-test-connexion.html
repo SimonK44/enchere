@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/style.css" />
+    <title>Test de connexion</title>
+</head>
+<body>
+<div th:replace="~{/fragments/fragment-header :: frag-header}"></div>
+<main>
+    <h1>Test de connexion à la base de données</h1>
+    <div>
+        <p th:text="${message}"></p>
+    </div>
+</main>
+<div th:replace="~{/fragments/fragment-footer :: frag-footer}"></div>
+</body>
+</html>
