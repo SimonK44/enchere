@@ -2,8 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-	<link rel="stylesheet" href="css/header-footer.css" />
-	<link rel="stylesheet" href="css/profil.css" />
+	<link rel="stylesheet" th:href="@{/css/header-footer.css}" />
+	<link rel="stylesheet" th:href="@{/css/profil.css}" />
 	<title>ENI-Enchères</title>
 </head>
 <body>
@@ -39,7 +39,7 @@
 				<input id="inputVille" type="text" name="ville" readonly />
 			</div>
 			<div class="form-actions">
-				<a data-th-href="@{/utilisateurs/modifier}">Modifier</a>
+				<a th:href="@{/utilisateurs/modifier}">Modifier</a>
 			</div>
 		</form>
 	</main>
