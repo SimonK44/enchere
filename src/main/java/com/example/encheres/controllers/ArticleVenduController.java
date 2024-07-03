@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class ArticleVenuController {
+public class ArticleVenduController {
 
 	@GetMapping("/vendre-article")
 	public String vendreArticle() {
