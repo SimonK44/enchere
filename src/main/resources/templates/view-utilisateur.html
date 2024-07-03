@@ -11,32 +11,33 @@
 	<main>
 		<form th:action="@{/utilisateurs/afficher}">
 			<div class="form-row">
+				<input type="hidden" name="noUtilisateur" data-th-value="${utilisateur.noUtilisateur}" />
 				<label for="inputPseudo">Pseudo :</label>
-				<input id="inputPseudo" type="text" name="pseudo" readonly />
+				<input id="inputPseudo" type="text" th:value="${utilisateur.pseudo}" disabled="disabled" />
 
 				<label for="inputPrenom">Nom :</label>
-				<input id="inputPrenom" type="text" name="prenom" readonly />
+				<input id="inputPrenom" type="text" th:value="${utilisateur.prenom}" disabled="disabled" />
 			</div>
 			<div class="form-row">
 				<label for="inputNom">Prénom :</label>
-				<input id="inputNom" type="text" name="nom" readonly />
+				<input id="inputNom" type="text" th:value="${utilisateur.nom}" disabled="disabled" />
 
 				<label for="inputEmail">Email :</label>
-				<input id="inputEmail" type="email" name="email" readonly />
+				<input id="inputEmail" type="email" th:value="${utilisateur.email}" disabled="disabled" />
 			</div>
 			<div class="form-row">
 				<label for="inputTelephone">Téléphone :</label>
-				<input id="inputTelephone" type="text" name="telephone" readonly />
+				<input id="inputTelephone" type="text" th:value="${utilisateur.telephone}" disabled="disabled" />
 
 				<label for="inputRue">Rue :</label>
-				<input id="inputRue" type="text" name="rue" readonly />
+				<input id="inputRue" type="text" th:value="${utilisateur.rue}" disabled="disabled" />
 			</div>
 			<div class="form-row">
 				<label for="inputCp">Code postal :</label>
-				<input id="inputCp" type="text" name="cp" readonly />
+				<input id="inputCp" type="text" th:value="${utilisateur.codePostal}" disabled="disabled" />
 
 				<label for="inputVille">Ville :</label>
-				<input id="inputVille" type="text" name="ville" readonly />
+				<input id="inputVille" type="text" th:value="${utilisateur.ville}" disabled="disabled" />
 			</div>
 			<div class="form-actions">
 				<a th:href="@{/utilisateurs/modifier}">Modifier</a>
