@@ -1,5 +1,7 @@
 package com.example.encheres.bll;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -82,7 +84,17 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			be.addError(BusinessException.ERREUR_0);
 			throw be;
 		}
-
+	}
+	
+	@Override
+	public Utilisateur findByPseudo(String pseudo) {
+		return utilisateurDAO.findByPseudo(pseudo);
+		
+	}
+	
+	@Override
+	public List<Utilisateur> findAll() {
+		return utilisateurDAO.findAll();
 	}
 
 	private boolean controleNomPrenom (String nom, String prenom, BusinessException be) {
@@ -136,18 +148,12 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		return isValid;
 	}
 
-	@Override
-	public Utilisateur findByPseudo(String pseudo) {
-		return utilisateurDAO.findByPseudo(pseudo);
-		
-	}
 	
 	private void cryptMotDePasse(Utilisateur utilisateur) {
 		System.out.println("generation mdp");
 		utilisateur.setMotDePasse(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode(utilisateur.getMotDePasse()));
 		System.out.println(utilisateur.getMotDePasse());
 	}
-	
 	
 
 }
