@@ -33,7 +33,7 @@ public class ArticleVenduImpl implements ArticleVenduService {
 
 	@Override
 	public ArticleVendu lectureArticleVendu(int noArticleVendu) {
-		return null;
+		return this.articleVenduDAO.read(noArticleVendu);
 	}
 
 	@Override
