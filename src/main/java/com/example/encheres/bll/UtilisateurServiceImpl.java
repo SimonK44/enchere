@@ -28,7 +28,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			
 			try {
 				utilisateurDAO.create(utilisateur);
-			} catch (DataAccessException e) {				
+			} catch (DataAccessException e) {	
+				System.out.println("utlisateur service pb Creation");
 				be.addError(BusinessException.ERREUR_1);
 				throw be;
 			}
@@ -83,7 +84,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		if (utilisateurDAO.countByNomPrenom(nom, prenom) == 0 ) {
 		   isValid = true;		   
-		} else {			
+		} else {
+			System.out.println("utlisateur service pb nom prenom");
 			be.addError(BusinessException.ERREUR_1);
 		}
 		
@@ -97,6 +99,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		if (utilisateurDAO.countByPseudo(pseudo) == 0 ) {
 		   isValid = true;
 		} else {
+			System.out.println("utlisateur service pb pseudo");
 			be.addError(BusinessException.ERREUR_2);
 		}
 		
