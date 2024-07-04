@@ -39,13 +39,18 @@ public class ArticleVenduController {
 	public String vendreArticle(Model model) {
 		model.addAttribute("article", new ArticleVendu());
 		model.addAttribute("categories", categorieService.findAll());
+		model.addAttribute("adresse", new Retrait());
 		return "view-encher-creation";
 	}
 
 	@PostMapping("/creer")
-	public String creerArticle(@ModelAttribute("vendre-article") ArticleVendu articleVendu) {
-		this.articleVenduService.create(articleVendu);
-		return "redirect:/utilisateurs/afficher";
+	public String creerArticle(@ModelAttribute("vendre-article") ArticleVendu articleVendu,
+							   @ModelAttribute("adresse") Retrait adresse
+	) {
+
+		System.out.println("before :" + articleVendu);
+		this.articleVenduService.createArticleWithRetrait(articleVendu, adresse);
+		return "redirect:view-encher-detail?id=" + articleVendu.getNoArticle();
 	}
 
 
@@ -76,6 +81,7 @@ public class ArticleVenduController {
 		System.out.println(adresse);
 
 		model.addAttribute("article", article);
+		model.addAttribute("adresse", adresse);
 		return "/view-encher-detail";
 	}
 }
