@@ -1,8 +1,9 @@
 
 -- table categorie
-INSERT INTO CATEGORIES (libelle) VALUES ('Maison');
 INSERT INTO CATEGORIES (libelle) VALUES ('Informatique');
-INSERT INTO CATEGORIES (libelle) VALUES ('jardinage');
+INSERT INTO CATEGORIES (libelle) VALUES ('Ameublement');
+INSERT INTO CATEGORIES (libelle) VALUES ('Vêtement');
+INSERT INTO CATEGORIES (libelle) VALUES ('Sport&Loisirs');
 
 --table role
 INSERT INTO ROLE ( role , is_admin ) VALUES ( 'ROLE_ADMIN' , 1 );
