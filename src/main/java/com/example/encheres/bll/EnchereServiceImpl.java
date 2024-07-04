@@ -30,6 +30,8 @@ public class EnchereServiceImpl implements EnchereService {
 		
 		isValid &= controleUtilisateur(enchere.getUtilisateur().getNoUtilisateur(),be);
 		
+		isValid &= controleMontantMax(enchere.getArticleVendu().getNoArticle(), enchere.getMontantEnchere(),be);
+		
 		if (isValid) {
 			
 		  try {
@@ -99,6 +101,20 @@ public class EnchereServiceImpl implements EnchereService {
 		return isValid;		
 	}
 
-
+/**
+ *  controle que le montant de l' enchere depasse le montant de l' ancienne enchere
+ */
+	private boolean controleMontantMax( int noArticle, float montant, BusinessException be) {
+		boolean isValid = false;
+		
+		if (enchereDAO.montantMax(noArticle) < montant) {
+			isValid = true;
+		} else {
+			be.addError(BusinessException.ERREUR_5);
+		}
+		
+		return isValid;		
+		
+	}
 	
 }
