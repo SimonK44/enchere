@@ -1,28 +1,36 @@
 package com.example.encheres.bll;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.example.encheres.bo.Retrait;
-import com.example.encheres.dal.RetraitDAO;
+import com.example.encheres.dal.RetraitDao;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+@Service
 public class RetraitServiceImpl implements RetraitService {
-	@Autowired
-	private RetraitDAO retraitDAO;
+	private RetraitDao retraitDao;
 
-	@Override
-	public void creerRetrait(Retrait retrait) {
-		retraitDAO.create(retrait);
-		
+	public RetraitServiceImpl(RetraitDao retraitDao) {
+		this.retraitDao = retraitDao;
 	}
 
 	@Override
-	public Retrait lectureRetrait(int noArticle) {
-		return retraitDAO.read(noArticle);
-		
+	public void create(Retrait retrait) {
+
 	}
-	
 
+	@Override
+	public Retrait read(int noArticle) {
+		return this.retraitDao.read(noArticle);
+	}
 
+	@Override
+	public void update(Retrait retrait) {
 
+	}
 
+	@Override
+	public void delete(int noArticle) {
+
+	}
 }

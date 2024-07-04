@@ -2,11 +2,9 @@ package com.example.encheres.controllers;
 
 import com.example.encheres.bll.ArticleVenduService;
 import com.example.encheres.bll.CategorieService;
+import com.example.encheres.bll.RetraitService;
 import com.example.encheres.bll.UtilisateurService;
-import com.example.encheres.bo.ArticleVendu;
-import com.example.encheres.bo.Categorie;
-import com.example.encheres.bo.Enchere;
-import com.example.encheres.bo.Utilisateur;
+import com.example.encheres.bo.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,15 +21,18 @@ public class ArticleVenduController {
 	private ArticleVenduService articleVenduService;
 	private CategorieService categorieService;
 	private UtilisateurService utilisateurService;
+	private RetraitService retraitService;
 	@Autowired
 	public ArticleVenduController(
 			ArticleVenduService articleVenduService,
 			CategorieService categorieService,
-			UtilisateurService utilisateurService
+			UtilisateurService utilisateurService,
+			RetraitService retraitService
 	) {
 		this.articleVenduService = articleVenduService;
 		this.categorieService = categorieService;
 		this.utilisateurService = utilisateurService;
+		this.retraitService = retraitService;
 	}
 
 	@GetMapping("/vendre-article")
@@ -70,6 +71,9 @@ public class ArticleVenduController {
 
 		Utilisateur vendeur = this.utilisateurService.lectureUtilisateur(article.getVendeur().getNoUtilisateur());
 		article.setVendeur(vendeur);
+
+		Retrait adresse = this.retraitService.read(article.getNoArticle());
+		System.out.println(adresse);
 
 		model.addAttribute("article", article);
 		return "/view-encher-detail";
