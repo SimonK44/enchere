@@ -1,8 +1,14 @@
 package com.example.encheres.dal;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
+import com.example.encheres.bo.Categorie;
+import com.example.encheres.bo.Utilisateur;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -11,26 +17,27 @@ import org.springframework.stereotype.Repository;
 
 import com.example.encheres.bo.ArticleVendu;
 
+
 @Repository
 public class ArticleVenduDAOImpl implements ArticleVenduDAO {
 	private NamedParameterJdbcTemplate jdbcTemplate;
 
 	private final static String CREATE = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres , date_fin_encheres, prix_initial, prix_vente, no_utilisateur_vendeur, no_utilisateur_acheteur , no_categorie) VALUES (:nomArticle,:description,:dateDebutEnchere, :dateFinEnchere,:prixInitial, :prixVente ,:noUtilisateurVendeur, NULL, :noCategorie )";
-    private final static String READ   = "SELECT nom_article, description, date_debut_encheres , date_fin_encheres, prix_initial, prix_vente, no_utilisateur_vendeur, no_utilisateur_acheteur , no_categorie FROM ARTICLES_VENDUS WHERE no_article = :noArticle ";
-    private final static String UPDATE = "UPDATE ARTICLES_VENDUS SET nom_article = :nomArticle, description = :description, date_debut_encheres := dateDebutEncheres, date_fin_encheres := dateFinEncheres, prix_initial = :prixInitial, prix_vente = :prixVente, no_utilisateur_vendeur = :noUtilisateurVendeur, no_utilisateur_acheteur = noUtilisateurVendeur, no_categorie :=noCategorie";
-    private final static String DELETE = "DELETE ARTICLES_VENDUS WHERE no_article = :noArticle";
+	private final static String READ   = "SELECT no_article, nom_article, description, date_debut_encheres , date_fin_encheres, prix_initial, prix_vente, no_utilisateur_vendeur, no_utilisateur_acheteur , no_categorie FROM ARTICLES_VENDUS WHERE no_article = :noArticle ";
+	private final static String UPDATE = "UPDATE ARTICLES_VENDUS SET nom_article = :nomArticle, description = :description, date_debut_encheres := dateDebutEncheres, date_fin_encheres := dateFinEncheres, prix_initial = :prixInitial, prix_vente = :prixVente, no_utilisateur_vendeur = :noUtilisateurVendeur, no_utilisateur_acheteur = noUtilisateurVendeur, no_categorie :=noCategorie";
+	private final static String DELETE = "DELETE ARTICLES_VENDUS WHERE no_article = :noArticle";
 	private final static String FIND_BY_UTILISATEUR = "SELECT nom_article, description, date_debut_encheres , date_fin_encheres, prix_initial, prix_vente, no_utilisateur_vendeur,no_utilisateur_acheteur , no_categorie FROM ARTICLES_VENDUS WHERE no_utilisateur_vendeur = :noUtilisateurVendeur";
 	private final static String FIND_BY_CATEGORIE = "SELECT nom_article, description, date_debut_encheres , date_fin_encheres, prix_initial, prix_vente, no_utilisateur_vendeur, no_utilisateur_acheteur , no_categorie FROM ARTICLES_VENDUS WHERE no_categorie = :noCategorie";
-    private final static String COUNT_BY_NOARTICLE = "SELECT COUNT(*) FROM ARTICLES_VENDUS WHERE no_article = :noArticle"; 
+	private final static String COUNT_BY_NOARTICLE = "SELECT COUNT(*) FROM ARTICLES_VENDUS WHERE no_article = :noArticle";
 
 
 
 	public ArticleVenduDAOImpl(NamedParameterJdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
-/**
- *  Creation d' un article vendu
- */
+	/**
+	 *  Creation d' un article vendu
+	 */
 	@Override
 	public void create(ArticleVendu articleVendu) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
@@ -52,21 +59,20 @@ public class ArticleVenduDAOImpl implements ArticleVenduDAO {
 			articleVendu.setNoArticle(keyHolder.getKey().intValue());
 		}
 	}
-/**
- *  lecture avec le noArticle
- */
+	/**
+	 *  lecture avec le noArticle
+	 */
 	@Override
 	public ArticleVendu read(int noArticle) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
 		// ajout parametre pour la requete
-		mapParameterSource.addValue("noArticle",noArticle);
-		return jdbcTemplate.queryForObject(READ, mapParameterSource,new BeanPropertyRowMapper<>(ArticleVendu.class));
-
+		mapParameterSource.addValue("noArticle", noArticle);
+		return jdbcTemplate.queryForObject(READ, mapParameterSource, new ArticleVenduRowMapper());
 	}
 
-/**
- *  MAJ article Vendu
- */
+	/**
+	 *  MAJ article Vendu
+	 */
 	@Override
 	public void update(ArticleVendu articleVendu) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
@@ -83,18 +89,18 @@ public class ArticleVenduDAOImpl implements ArticleVenduDAO {
 
 		jdbcTemplate.update(UPDATE, mapParameterSource);
 	}
-/**
- *  delete Article Vendu
- */
+	/**
+	 *  delete Article Vendu
+	 */
 	@Override
 	public void delete(int noArticle) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
 		mapParameterSource.addValue("noArticle",noArticle);
 		jdbcTemplate.update(DELETE, mapParameterSource);
 	}
-/*
- *  recherche article vendu par numero d' utilisateur
- */
+	/*
+	 *  recherche article vendu par numero d' utilisateur
+	 */
 	@Override
 	public List<ArticleVendu> findByUtilisateur(int noUtilisateur) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
@@ -102,25 +108,65 @@ public class ArticleVenduDAOImpl implements ArticleVenduDAO {
 		mapParameterSource.addValue("no_utilisateur",noUtilisateur);
 		return jdbcTemplate.query(FIND_BY_UTILISATEUR ,new BeanPropertyRowMapper<>(ArticleVendu.class));
 	}
-/*
- *  recherche article par categorie
- */
+	/*
+	 *  recherche article par categorie
+	 */
 	@Override
 	public List<ArticleVendu> findByCategorie(int noCategorie) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
 		mapParameterSource.addValue("no_categorie",noCategorie);
 		return jdbcTemplate.query(FIND_BY_CATEGORIE ,new BeanPropertyRowMapper<>(ArticleVendu.class));
 	}
-	
-/**
- * comptage par no_article	
- */
+
+	/**
+	 * comptage par no_article
+	 */
 	@Override
 	public int countArticle(int noArticle) {
-		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();	
-		// ajout parametre pour la requete			
-				mapParameterSource.addValue("no_article",noArticle);
-				
-				return jdbcTemplate.queryForObject(COUNT_BY_NOARTICLE , mapParameterSource, Integer.class) ;
+		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
+		// ajout parametre pour la requete
+		mapParameterSource.addValue("no_article",noArticle);
+
+		return jdbcTemplate.queryForObject(COUNT_BY_NOARTICLE , mapParameterSource, Integer.class) ;
 	}
+
+
+
+
+	public class ArticleVenduRowMapper implements RowMapper<ArticleVendu> {
+
+		@Override
+		public ArticleVendu mapRow(ResultSet rs, int rowNum) throws SQLException {
+			ArticleVendu articleVendu = new ArticleVendu();
+
+			articleVendu.setNoArticle(rs.getInt("no_article"));
+			articleVendu.setNomArticle(rs.getString("nom_article"));
+			articleVendu.setDescription(rs.getString("description"));
+			articleVendu.setDateDebutEnchere(rs.getObject("date_debut_encheres", LocalDate.class));
+			articleVendu.setDateFinEnchere(rs.getObject("date_fin_encheres", LocalDate.class));
+			articleVendu.setPrixInitial(rs.getFloat("prix_initial"));
+			articleVendu.setPrixVente(rs.getFloat("prix_vente"));
+
+			// Map Categorie
+			Categorie categorie = new Categorie();
+			categorie.setNoCategorie(rs.getInt("no_categorie"));
+			articleVendu.setCategorie(categorie);
+
+			// Map Utilisateur Vendeur
+			Utilisateur vendeur = new Utilisateur();
+			vendeur.setNoUtilisateur(rs.getInt("no_utilisateur_vendeur"));
+			articleVendu.setVendeur(vendeur);
+
+			// Map Utilisateur Acheteur (peut être NULL)
+			int noAcheteur = rs.getInt("no_utilisateur_acheteur");
+			if (!rs.wasNull()) {
+				Utilisateur acheteur = new Utilisateur();
+				acheteur.setNoUtilisateur(noAcheteur);
+				articleVendu.setAcheteur(acheteur);
+			}
+
+			return articleVendu;
+		}
+	}
+
 }
