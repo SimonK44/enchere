@@ -22,9 +22,6 @@
           <div class="form-container">
               <form th:action="@{/creer}" method="post" th:object="${article}">
 
-                  <label for="noArticle">No Article :</label>
-                  <input id="noArticle" name="noArticle" type="number" th:field="*{noArticle}" />
-
                   <label for="nomArticle">Nom de l'article :</label>
                   <input id="nomArticle" name="nomArticle" type="text" th:field="*{nomArticle}" />
 
