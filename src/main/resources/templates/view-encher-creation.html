@@ -36,14 +36,12 @@
                   <label for="prixInitial">Mise à prix :</label>
                   <input type="number" step="0.01" id="prixInitial" name="prixInitial" th:field="*{prixInitial}" />
 
-                  <label for="prixVente">Prix de vente :</label>
-                  <input type="number" step="0.01" id="prixVente" name="prixVente" th:field="*{prixVente}" />
-
                   <label for="dateDebutEnchere">Début de l'enchère :</label>
-                  <input type="date" id="dateDebutEnchere" name="dateDebutEnchere" th:field="*{dateDebutEnchere}" />
+                  <input type="date" id="dateDebutEnchere" name="dateDebutEnchere" th:value="${#temporals.format(article.dateDebutEnchere, 'yyyy-MM-dd')}" th:field="*{dateDebutEnchere}" />
 
                   <label for="dateFinEnchere">Fin de l'enchère :</label>
-                  <input type="date" id="dateFinEnchere" name="dateFinEnchere" th:field="*{dateFinEnchere}" />
+                  <input type="date" id="dateFinEnchere" name="dateFinEnchere" th:value="${#temporals.format(article.dateFinEnchere.plusMonths(1), 'yyyy-MM-dd')}" th:field="*{dateFinEnchere}" />
+
 
                   <fieldset th:object="${adresse}">
                       <legend>Retrait</legend>
