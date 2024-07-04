@@ -18,13 +18,15 @@ public class ArticleVenduImpl implements ArticleVenduService {
 
 	private ArticleVenduDAO articleVenduDAO;
 	private UtilisateurDAO utilisateurDAO;
+	private RetraitDAO retraitDAO;
 
 
 
-	public ArticleVenduImpl(ArticleVenduDAO articleVenduDAO, UtilisateurDAO utilisateurDAO) {
+	public ArticleVenduImpl(ArticleVenduDAO articleVenduDAO, UtilisateurDAO utilisateurDAO, RetraitDAO retraitDAO) {
 		super();
 		this.articleVenduDAO = articleVenduDAO;
 		this.utilisateurDAO = utilisateurDAO;
+		this.retraitDAO = retraitDAO;
 	}
 
 	@Override
@@ -41,33 +43,33 @@ public class ArticleVenduImpl implements ArticleVenduService {
 	public List<ArticleVendu> findAll() {
 
     	List<ArticleVendu> articles = articleVenduDAO.findAll();
-    	
+
     	System.out.println("articles : " + articles);
     	for(ArticleVendu a : articles ) {
     		a.setVendeur(utilisateurDAO.read(a.getVendeur().getNoUtilisateur()));
     		System.out.println("articlevenduimpl : " + a);
     	}
-    	
-    	//ArticleVendu [noArticle=1, nomArticle=Tan, description=une e, 
-    	//dateDebutEnchere=2024-07-01, dateFinEnchere=2024-07-30, prixInitial=100.0, prixVente=150.0, 
-    	//categorie=Categorie [noCategorie=1, libelle=null], acheteur=Utilisateur [noUtilisateur=2, pseudo=null, nom=null, prenom=null, email=null, telephone=null, rue=null, codePostal=null, ville=null, motDePasse=null, credit=0, administrateur=false], 
-    	//vendeur=Utilisateur [noUtilisateur=1, pseudo=null, nom=null, prenom=null, email=null, telephone=null, rue=null, codePostal=null, ville=null, motDePasse=null, credit=0, administrateur=false], encheres=[]], 
-    	
+
+    	//ArticleVendu [noArticle=1, nomArticle=Tan, description=une e,
+    	//dateDebutEnchere=2024-07-01, dateFinEnchere=2024-07-30, prixInitial=100.0, prixVente=150.0,
+    	//categorie=Categorie [noCategorie=1, libelle=null], acheteur=Utilisateur [noUtilisateur=2, pseudo=null, nom=null, prenom=null, email=null, telephone=null, rue=null, codePostal=null, ville=null, motDePasse=null, credit=0, administrateur=false],
+    	//vendeur=Utilisateur [noUtilisateur=1, pseudo=null, nom=null, prenom=null, email=null, telephone=null, rue=null, codePostal=null, ville=null, motDePasse=null, credit=0, administrateur=false], encheres=[]],
+
     	System.out.println(utilisateurDAO.read(1));
-    	
-    	
-		
+
+
+
 //		articles.foreach(u->u.setUtilisateur(u))
 //    	Utilisateur u -> u.s(this.utilisateurService.lectureUtilisateur();))
-		
-		
+
+
 //    	 articles.forEach(u -> {
 //    	 u.setVendeur(utilisateurDAO.read(u.getVendeur().getNoUtilisateur()));
 //    	});
-    	
+
 
 		return articles;
-		
+
 	}
 
 	@Override
