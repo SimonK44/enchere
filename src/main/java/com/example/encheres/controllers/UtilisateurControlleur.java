@@ -46,14 +46,22 @@ public class UtilisateurControlleur {
 
 	//Afficher une page de profil simple
 	@GetMapping("/afficher")
-	public String afficherUtilisateurParId(@RequestParam("noUtilisateur") int id, Model model) {
+	public String afficherUtilisateurParId(@RequestParam(name="noUtilisateur", defaultValue ="1") int id, Model model, 
+										@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession) {
 		
-		Utilisateur u = this.utilisateurService.lectureUtilisateur(id);
-		System.out.println(u.getNoUtilisateur());
+		if(utilisateurSession != null && utilisateurSession.getNoUtilisateur() >= 1) {
+			// Il y a un utilsateur en session
+			Utilisateur u = this.utilisateurService.lectureUtilisateur(id);
+			System.out.println(u.getNoUtilisateur());	
+			
+			if(u != null) {
+				model.addAttribute("utilisateur", u); // 1 objet utilisateur avec tous ses paramètres
+			}
+			return "view-utilisateur";			
+		}		
 		
-		model.addAttribute("utilisateur", u); // 1 objet utilisateur avec tous ses paramètres
+		return "redirect:/login";		
 		
-		return "view-utilisateur";
 	}	
 	
 	@PostMapping("/modifier")
