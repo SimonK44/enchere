@@ -7,6 +7,8 @@ import com.example.encheres.dal.UtilisateurDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class ArticleVenduImpl implements ArticleVenduService {
@@ -34,6 +36,11 @@ public class ArticleVenduImpl implements ArticleVenduService {
 	@Override
 	public ArticleVendu lectureArticleVendu(int noArticleVendu) {
 		return this.articleVenduDAO.read(noArticleVendu);
+	}
+
+	@Override
+	public List<ArticleVendu> findAll() {
+		return this.articleVenduDAO.findAll();
 	}
 
 	@Override
