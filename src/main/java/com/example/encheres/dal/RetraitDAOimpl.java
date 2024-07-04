@@ -9,7 +9,7 @@ import com.example.encheres.bo.Retrait;
 
 
 @Repository
-public class RetraitDAOimpl implements RetraitDao {
+public class RetraitDAOimpl implements RetraitDAO {
 	private NamedParameterJdbcTemplate jdbcTemplate;	
 	
 	private static final String CREATE = "INSERT INTO RETRAITS (no_article,rue, code_postal, ville) VALUES(:noArticle, :rue, :codePostal,:ville )";
