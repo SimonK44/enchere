@@ -40,7 +40,9 @@ public class EnchereServiceImpl implements EnchereService {
 			be.addError(BusinessException.ERREUR_1);
 			throw be;
 		  }
-		}
+		} else {			
+			throw be;
+		}	
 	}
 /**
  * lecture enchere
