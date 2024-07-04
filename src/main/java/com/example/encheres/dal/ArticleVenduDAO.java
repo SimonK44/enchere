@@ -13,8 +13,9 @@ public interface ArticleVenduDAO {
 	void update (ArticleVendu articleVendu);
 	void delete (int noArticle);
 	List<ArticleVendu> findByUtilisateur(int noUtilisateur);
+	List<ArticleVendu> findAll();
 	List<ArticleVendu> findByCategorie(int noCategorie);
 	int countArticle ( int noArticle);
-	
-	
+
+
 }
