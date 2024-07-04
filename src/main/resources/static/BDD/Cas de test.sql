@@ -11,13 +11,13 @@ INSERT INTO ROLE ( role , is_admin ) VALUES ( 'ROLE_UTILISATEUR' , 0 );
 
 --table utilisateur
 INSERT INTO UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur )
-           VALUES ('ENIKim', 'Heejung', 'kim', 'kim.heejung2024@campus-eni.fr', '0605040302', 'rue des peupliers', '44000', 'Seoul', '{bcrypt}$2a$12$dst5jLkKVVsHMp4f3A2AvetYm47irH6U62uYeH2EIC11daSwqc0gS',1000,1) ;
+           VALUES ('ENIKim', 'Heejung', 'kim', 'kim.heejung2024@campus-eni.fr', '0605040302', 'rue des peupliers', '44000', 'Seoul', '{bcrypt}$2a$10$2L0krXp8YyPpHu/dx6vIXuoXCykLtOsYBsLc5RAEyY7nYnW0TFf2O',1000,1) ;
 INSERT INTO UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur )
-           VALUES ('ENIYanis', 'Greco', 'Yanis', 'yanis.greco2024@campus-eni.fr', '0615140302', 'rue des chataigers', '44000', 'Nantes', '{bcrypt}$2a$12$zCRlIMdMJ0n3sd0iuzzjkewp/7G88g74bpq/AZw6Bfs20mAPOEKpu',2000,1) ;
+           VALUES ('ENIYanis', 'Greco', 'Yanis', 'yanis.greco2024@campus-eni.fr', '0615140302', 'rue des chataigers', '44000', 'Nantes', '{bcrypt}$2a$12$L72jmubzaElUYFrs7hi92uP67rn2y3YE6NloSYmdWyFSW47NrcuiC',2000,1) ;
 INSERT INTO UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur )
-           VALUES ('ENILilian', 'Boumendil', 'Lilian', 'lilian.boumendil2024@campus-eni.fr', '0725140322', 'rue du chene', '44000', 'Reze', '{bcrypt}$2a$12$FzN61dWP/EVrAwOI9f2zl.nSqaao5GIsw92CmwSHhv.YpT8oypxJ2',500,1) ;
+           VALUES ('ENILilian', 'Boumendil', 'Lilian', 'lilian.boumendil2024@campus-eni.fr', '0725140322', 'rue du chene', '44000', 'Reze', '{bcrypt}$2a$12$WDC/wP0BYuohJ1PYqgo9LeD2Ubm7qOYIk1JILFm1kdgmwI.hM.dU2',500,1) ;
 INSERT INTO UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur )
-           VALUES ('ENISimon', 'Kervadec', 'Simon', 'simon.kervadec024@campus-eni.fr', '0625140322', 'rue de la foret de broceliande', '29000', 'Brest', '{bcrypt}$2a$12$FRK0EOSH3TWDWO9OHWUo1eM6FGvipbFbt/eTIRz6aBFATYaOWdsJe',500,1) ;
+           VALUES ('ENISimon', 'Kervadec', 'Simon', 'simon.kervadec024@campus-eni.fr', '0625140322', 'rue de la foret de broceliande', '29000', 'Brest', '{bcrypt}$2a$12$ZL.5u7QmKc7Ver/XTt/z4.kKgJGOX7o4.3.d7EFrWZ7La8uRAk/.a',500,1) ;
 
 
 -- table ARTICLE_VENDUS
