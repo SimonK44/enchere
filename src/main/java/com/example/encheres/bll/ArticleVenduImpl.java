@@ -26,16 +26,7 @@ public class ArticleVenduImpl implements ArticleVenduService {
 
 	@Override
 	public void create(ArticleVendu articleVendu) {
-		//TODO initialisation du vendeur  -> Recuperer l'id de l'utilisateur
-		Utilisateur acheteur = new Utilisateur();
-		Utilisateur vendeur = new Utilisateur();
 
-		vendeur.setNoUtilisateur(1);
-
-		articleVendu.setAcheteur(acheteur);
-		articleVendu.setVendeur(vendeur);
-
-		this.articleVenduDAO.create(articleVendu);
 	}
 
 	@Override
@@ -60,8 +51,13 @@ public class ArticleVenduImpl implements ArticleVenduService {
 
 	@Override
 	@Transactional
-	public void createArticleWithRetrait(ArticleVendu articleVendu, Retrait adresse) {
-		this.create(articleVendu);
+	public void createArticleWithRetrait(ArticleVendu articleVendu, Retrait adresse, Utilisateur user) {
+		Utilisateur acheteur = new Utilisateur();
+		Utilisateur vendeur = new Utilisateur();
+		vendeur.setNoUtilisateur(user.getNoUtilisateur());
+		articleVendu.setAcheteur(acheteur);
+		articleVendu.setVendeur(vendeur);
+		this.articleVenduDAO.create(articleVendu);
 		adresse.setNoArticle(articleVendu.getNoArticle());
 		this.retraitDAO.create(adresse);
 	}

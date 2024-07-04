@@ -14,5 +14,5 @@ public interface ArticleVenduService {
 	void modifierArticleVendu(ArticleVendu articleVendu);
 	void supprimerArticleVendu(int articleVendu);
 
-	void createArticleWithRetrait(ArticleVendu articleVendu, Retrait adresse);
+	void createArticleWithRetrait(ArticleVendu articleVendu, Retrait adresse, Utilisateur user);
 }
