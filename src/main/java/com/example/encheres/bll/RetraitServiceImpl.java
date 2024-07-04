@@ -23,14 +23,4 @@ public class RetraitServiceImpl implements RetraitService {
 	public Retrait read(int noArticle) {
 		return this.retraitDao.read(noArticle);
 	}
-
-	@Override
-	public void update(Retrait retrait) {
-
-	}
-
-	@Override
-	public void delete(int noArticle) {
-
-	}
 }
