@@ -6,9 +6,9 @@ public class Retrait {
 	private String rue;
 	private String codePostal;
 	private String ville;
-	
+
 /*
- * constructeur de la classe retrait	
+ * constructeur de la classe retrait
  */
 	public Retrait(int noArticle, String rue, String codePostal, String ville) {
 		super();
@@ -16,6 +16,9 @@ public class Retrait {
 		this.rue = rue;
 		this.codePostal = codePostal;
 		this.ville = ville;
+	}
+
+	public Retrait() {
 	}
 
 	public int getNoArticle() {
@@ -56,6 +59,6 @@ public class Retrait {
 				+ "]";
 	}
 
-	
-	
+
+
 }
