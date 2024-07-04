@@ -107,7 +107,7 @@ public class EnchereDAOImpl implements EnchereDAO {
  *  montant max enchere pour un article vendu
  */
 @Override
-public int montantMax( int noArticle) {
+public int montantMax(int noArticle) {
 	MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
 // ajout parametres pour la requete			
 			mapParameterSource.addValue("noArticle",noArticle);
