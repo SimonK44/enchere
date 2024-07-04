@@ -1,16 +1,16 @@
 package com.example.encheres.bll;
 
 import com.example.encheres.bo.Retrait;
-import com.example.encheres.dal.RetraitDao;
+import com.example.encheres.dal.RetraitDAO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class RetraitServiceImpl implements RetraitService {
-	private RetraitDao retraitDao;
+	private RetraitDAO retraitDao;
 
-	public RetraitServiceImpl(RetraitDao retraitDao) {
+	public RetraitServiceImpl(RetraitDAO retraitDao) {
 		this.retraitDao = retraitDao;
 	}
 
