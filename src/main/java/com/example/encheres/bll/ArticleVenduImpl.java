@@ -1,11 +1,14 @@
 package com.example.encheres.bll;
 
 import com.example.encheres.bo.ArticleVendu;
+import com.example.encheres.bo.Retrait;
 import com.example.encheres.bo.Utilisateur;
 import com.example.encheres.dal.ArticleVenduDAO;
+import com.example.encheres.dal.RetraitDAO;
 import com.example.encheres.dal.UtilisateurDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,9 +17,11 @@ import java.util.List;
 public class ArticleVenduImpl implements ArticleVenduService {
 
 	private ArticleVenduDAO articleVenduDAO;
+	private RetraitDAO retraitDAO;
 
-	public ArticleVenduImpl(ArticleVenduDAO articleVenduDAO) {
+	public ArticleVenduImpl(ArticleVenduDAO articleVenduDAO, RetraitDAO retraitDAO) {
 		this.articleVenduDAO = articleVenduDAO;
+		this.retraitDAO = retraitDAO;
 	}
 
 	@Override
@@ -51,5 +56,13 @@ public class ArticleVenduImpl implements ArticleVenduService {
 	@Override
 	public void supprimerArticleVendu(int articleVendu) {
 
+	}
+
+	@Override
+	@Transactional
+	public void createArticleWithRetrait(ArticleVendu articleVendu, Retrait adresse) {
+		this.create(articleVendu);
+		adresse.setNoArticle(articleVendu.getNoArticle());
+		this.retraitDAO.create(adresse);
 	}
 }
