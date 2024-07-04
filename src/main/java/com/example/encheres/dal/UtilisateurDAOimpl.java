@@ -19,21 +19,17 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 	
 	private static final String CREATE   = "INSERT INTO UTILISATEURS ( pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) VALUES ( :pseudo, :nom, :prenom, :email, :telephone, :rue, :codePostal, :ville, :motDePasse, :credit, :administrateur)";
 	private static final String READ     = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE no_utilisateur = :noUtlisateur";
-	private static final String UPDATE   = "UPDATE UTILISATEURS  SET pseudo = :pseudo, nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, rue = :rue, code_postal : codePostal, ville = : ville, mot_de_passe = :motDePasse, credit = :credit, administrateur = :administrateur WHERE no_utilisateur = noUtilisateur";
+	private static final String UPDATE   = "UPDATE UTILISATEURS SET pseudo = :pseudo, nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, rue = :rue, code_postal = :codePostal, ville = :ville, mot_de_passe = :motDePasse WHERE no_utilisateur = :noUtilisateur";
 	private static final String DELETE   = "DELETE FROM utilisateurs WHERE no_utilisateur = :noUtilisateur";
 	private static final String FIND_ALL = "SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS";
 	private static final String FIND_BY_PSEUDO = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE pseudo = :pseudo";
-	
-	
-	
-	
+		
 	private static final String COUNT_BY_NOM_PRENOM  = "SELECT COUNT(*) FROM UTILISATEURS WHERE nom = :nom AND prenom = :prenom";
     private static final String COUNT_BY_PSEUDO      = "SELECT COUNT(*) FROM UTILISATEURS WHERE pseudo = :pseudo";
     
     private static final String COUNT_BY_NOM_PRENOMMODIFIER  = "SELECT COUNT(*) FROM UTILISATEURS WHERE nom = :nom AND prenom = :prenom AND no_utilisateur != :noUtilisateur";
     private static final String COUNT_BY_PSEUDOMODIFIER      = "SELECT COUNT(*) FROM UTILISATEURS WHERE pseudo = :pseudo AND no_utilisateur != :noUtilisateur";
     private static final String COUNT_BY_NOUTILISATEUR       = "SELECT COUNT(*) FROM UTILISATEURS WHERE no_utilisateur = :noUtilisateur";
-	
     
     
     /**
@@ -48,7 +44,8 @@ public UtilisateurDAOimpl(NamedParameterJdbcTemplate jdbcTemplate) {
  * creation d'un utilisateur	
  */
 	@Override
-	public void create(Utilisateur utilisateur) {
+	public void create(Utilisateur utilisateur) {		
+				
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
 // ajout parametres pour la requete			
 		mapParameterSource.addValue("pseudo",utilisateur.getPseudo());
@@ -58,7 +55,7 @@ public UtilisateurDAOimpl(NamedParameterJdbcTemplate jdbcTemplate) {
 		mapParameterSource.addValue("telephone",utilisateur.getTelephone());
 		mapParameterSource.addValue("rue",utilisateur.getRue());
 		mapParameterSource.addValue("codePostal",utilisateur.getCodePostal());
-		mapParameterSource.addValue("Ville",utilisateur.getVille());
+		mapParameterSource.addValue("ville",utilisateur.getVille());
 		mapParameterSource.addValue("motDePasse",utilisateur.getMotDePasse());
 		mapParameterSource.addValue("credit",utilisateur.getCredit());
 		mapParameterSource.addValue("administrateur",utilisateur.isAdministrateur());
@@ -86,14 +83,14 @@ public UtilisateurDAOimpl(NamedParameterJdbcTemplate jdbcTemplate) {
 		return jdbcTemplate.queryForObject(READ, mapParameterSource,new BeanPropertyRowMapper<>(Utilisateur.class));
 	}
 /**
- *  mise à jour utilisateur
+ *  mise à jour utilisateur sans crédit, sans admin
  */
 	@Override
 	public void update(Utilisateur utilisateur) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
+		System.out.println("utilisateurDAOImpl"+utilisateur);
 // ajout parametre pour la requete			
-		mapParameterSource.addValue("noUtlisateur",utilisateur.getNoUtilisateur());			
-		mapParameterSource.addValue("pseudo",utilisateur.getPseudo());
+		mapParameterSource.addValue("noUtilisateur",utilisateur.getNoUtilisateur());			
 		mapParameterSource.addValue("pseudo",utilisateur.getPseudo());
 		mapParameterSource.addValue("nom",utilisateur.getNom());
 		mapParameterSource.addValue("prenom",utilisateur.getPrenom());
@@ -101,13 +98,12 @@ public UtilisateurDAOimpl(NamedParameterJdbcTemplate jdbcTemplate) {
 		mapParameterSource.addValue("telephone",utilisateur.getTelephone());
 		mapParameterSource.addValue("rue",utilisateur.getRue());
 		mapParameterSource.addValue("codePostal",utilisateur.getCodePostal());
-		mapParameterSource.addValue("Ville",utilisateur.getVille());
+		mapParameterSource.addValue("ville",utilisateur.getVille());
 		mapParameterSource.addValue("motDePasse",utilisateur.getMotDePasse());
-		mapParameterSource.addValue("credit",utilisateur.getCredit());
-		mapParameterSource.addValue("administrateur",utilisateur.isAdministrateur());		
-		
+//		mapParameterSource.addValue("credit",utilisateur.getCredit());
+//		mapParameterSource.addValue("administrateur",utilisateur.isAdministrateur());		
+		System.out.println(mapParameterSource.toString());
 		jdbcTemplate.update(UPDATE, mapParameterSource);
-		
 	}
 /**
  *  suppression d' utilisateur
@@ -159,7 +155,7 @@ public UtilisateurDAOimpl(NamedParameterJdbcTemplate jdbcTemplate) {
 	public int countByNomPrenomModifier(int noUtilisateur, String nom, String prenom) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
 // ajout parametre pour la requete			
-		mapParameterSource.addValue("no_utilisateur",noUtilisateur);	
+		mapParameterSource.addValue("noUtilisateur",noUtilisateur);	
 		mapParameterSource.addValue("nom",nom);		
 		mapParameterSource.addValue("prenom",prenom);		
 		
@@ -173,7 +169,7 @@ public UtilisateurDAOimpl(NamedParameterJdbcTemplate jdbcTemplate) {
 	public int countByPseudoModifier(int noUtilisateur, String pseudo) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();	
 // ajout parametre pour la requete			
-		mapParameterSource.addValue("no_utilisateur",noUtilisateur);	
+		mapParameterSource.addValue("noUtilisateur",noUtilisateur);	
 		mapParameterSource.addValue("pseudo",pseudo);					
 		
 		return jdbcTemplate.queryForObject(COUNT_BY_PSEUDOMODIFIER , mapParameterSource, Integer.class) ;
@@ -195,7 +191,7 @@ public UtilisateurDAOimpl(NamedParameterJdbcTemplate jdbcTemplate) {
 public int countByNoUtilisateur(int noUtilisateur) {
 	MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();	
 	// ajout parametre pour la requete			
-			mapParameterSource.addValue("no_utilisateur",noUtilisateur);	
+			mapParameterSource.addValue("noUtilisateur",noUtilisateur);	
 					
 			
 			return jdbcTemplate.queryForObject(COUNT_BY_NOUTILISATEUR , mapParameterSource, Integer.class) ;
