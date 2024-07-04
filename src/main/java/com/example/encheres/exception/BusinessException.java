@@ -15,6 +15,7 @@ public class BusinessException extends Exception {
 	public static final String ERREUR_2 = " Doublon sur le pseudo";
 	public static final String ERREUR_3 = " Article inexistant";
 	public static final String ERREUR_4 = " Utilisateur inexistant";
+	public static final String ERREUR_5 = " Montant enchere trop basse";
 
 	public BusinessException() {
 		super();
