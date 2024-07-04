@@ -45,6 +45,11 @@ public ArticleVendu(int noArticle, String nomArticle, String description, LocalD
 		this.categorie = new Categorie();
 	}
 
+	public ArticleVendu(int i, String string, String string2, String string3, String string4, int j, int k, int l,
+			int m, int n) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getNoArticle() {
 	return noArticle;
 }
