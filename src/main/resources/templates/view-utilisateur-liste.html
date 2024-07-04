@@ -29,7 +29,7 @@
 	 	 	<td th:text="${item.email}"></td>
 	 	 	<td>
 	 	 		<a th:href="@{/utilisateur/detail(id=${item.noutilisateur})}"> Detail</a>	 	 	   
-	 	 	     <a sec:authorize="hasRole('ADMINISTRATEUR')" th:href="@{/utilisateur/supprime(id=${item.noutilisateur})}"> Suppression</a>
+	 	 	     <a th:href="@{/utilisateur/supprime(id=${item.noutilisateur})}"> Suppression</a>
 	 	 	</td>
 	  	</tr>
 	 	 </tbody>	
