@@ -9,60 +9,61 @@
 <body>	
 	<div th:replace="~{/fragments/fragment-header :: frag-header}"></div>
 	<main>
-		<form th:action="@{/modifier}" method="POST">
+		<form th:action="@{/utilisateurs/modifier}" method="POST" th:object="${utilisateur}">
 			<h1>Mon profil</h1>
 			<div class="form-row">
 				<div class="form-col">
+					<input type="hidden" name="noUtilisateur" data-th-value="${utilisateur.noUtilisateur}" />
 					<label for="inputPseudo">Pseudo :</label>				
-					<input id="inputPseudo" type="text" name="pseudo" />
+					<input id="inputPseudo" type="text" name="pseudo" th:value="${utilisateur.pseudo}" th:field="*{pseudo}"/>
 				</div>
 				<div class="form-col">
 					<label for="inputPrenom">Nom :</label>
-					<input id="inputPrenom" type="text" name="prenom"/>					
+					<input id="inputPrenom" type="text" name="prenom" th:value="${utilisateur.prenom}" th:field="*{prenom}"/>					
 				</div>
 			</div>
 			<div class="form-row">
 				<div class="form-col">
 					<label for="inputNom">Prénom :</label>
-					<input id="inputNom" type="text" name="nom"/>					
+					<input id="inputNom" type="text" name="nom" th:value="${utilisateur.nom}" th:field="*{nom}"/>					
 				</div>
 				<div class="form-col">
 					<label for="inputEmail">Email :</label>
-					<input id="inputEmail" type="email" name="email"/>				
+					<input id="inputEmail" type="email" name="email" th:value="${utilisateur.email}" th:field="*{email}"/>				
 				</div>
 			</div>
 			<div class="form-row">
 				<div class="form-col">
 					<label for="inputTelephone">Téléphone :</label>
-					<input id="inputTelephone" type="text" name="telephone"/>						
+					<input id="inputTelephone" type="text" name="telephone" th:value="${utilisateur.telephone}" th:field="*{telephone}"/>						
 				</div>
 				<div class="form-col">
 					<label for="inputRue">Rue :</label>
-					<input id="inputRue" type="text" name="rue"/>						
+					<input id="inputRue" type="text" name="rue" th:value="${utilisateur.rue}" th:field="*{rue}"/>						
 				</div>
 			</div>			
 			<div class="form-row">
 				<div class="form-col">
 					<label for="inputCp">Code postal :</label>
-					<input id="inputCp" type="text" name="cp"/>						
+					<input id="inputCp" type="text" name="cp" th:value="${utilisateur.codePostal}" th:field="*{codePostal}"/>						
 				</div>
 				<div class="form-col">
 					<label for="inputVille">Ville :</label>
-					<input id="inputVille" type="text" name="ville"/>					
+					<input id="inputVille" type="text" name="ville" th:value="${utilisateur.ville}" th:field="*{ville}"/>					
 				</div>
 			</div>
 			<div class="form-row">
 				<div class="form-col">
-					<label for="inputPassord">Mot de passe actuel :</label>
-					<input id="inputPassord" type="password" name="password"/>					
+					<label for="inputPassordAct">Mot de passe actuel :</label>
+					<input id="inputPassordAct" type="password" name="passwordAct"/>					
 				</div>
 				<div class="form-col">										
 				</div>
 			</div>
 			<div class="form-row">
 				<div class="form-col">
-					<label for="inputPassord">Nouveau mot de passe :</label>
-					<input id="inputPassord" type="password" name="password"/>					
+					<label for="inputPassordNew">Nouveau mot de passe :</label>
+					<input id="inputPassordNew" type="password" name="passwordNew" th:field="*{motDePasse}"/>					
 				</div>
 				<div class="form-col">
 					<label for="confirmPassword">Confirmation :</label>
@@ -72,7 +73,7 @@
 			<div class="form-row">				
 				<div class="form-col">
 					<label for="credit">Crédit :</label>
-					<input id="credit" type="text" name="credit" readonly/>					
+					<input id="credit" type="text" name="credit" th:value="${utilisateur.credit}" disabled/>					
 				</div>
 			</div>
 			<div class="form-actions">
