@@ -24,6 +24,7 @@ public class ArticleVenduDAOImpl implements ArticleVenduDAO {
 
 	private final static String CREATE = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres , date_fin_encheres, prix_initial, prix_vente, no_utilisateur_vendeur, no_utilisateur_acheteur , no_categorie) VALUES (:nomArticle,:description,:dateDebutEnchere, :dateFinEnchere,:prixInitial, :prixVente ,:noUtilisateurVendeur, NULL, :noCategorie )";
 	private final static String READ   = "SELECT no_article, nom_article, description, date_debut_encheres , date_fin_encheres, prix_initial, prix_vente, no_utilisateur_vendeur, no_utilisateur_acheteur , no_categorie FROM ARTICLES_VENDUS WHERE no_article = :noArticle ";
+	private final static String FIND_ALL   = "SELECT no_article, nom_article, description, date_debut_encheres , date_fin_encheres, prix_initial, prix_vente, no_utilisateur_vendeur, no_utilisateur_acheteur , no_categorie FROM ARTICLES_VENDUS ";
 	private final static String UPDATE = "UPDATE ARTICLES_VENDUS SET nom_article = :nomArticle, description = :description, date_debut_encheres := dateDebutEncheres, date_fin_encheres := dateFinEncheres, prix_initial = :prixInitial, prix_vente = :prixVente, no_utilisateur_vendeur = :noUtilisateurVendeur, no_utilisateur_acheteur = noUtilisateurVendeur, no_categorie :=noCategorie";
 	private final static String DELETE = "DELETE ARTICLES_VENDUS WHERE no_article = :noArticle";
 	private final static String FIND_BY_UTILISATEUR = "SELECT nom_article, description, date_debut_encheres , date_fin_encheres, prix_initial, prix_vente, no_utilisateur_vendeur,no_utilisateur_acheteur , no_categorie FROM ARTICLES_VENDUS WHERE no_utilisateur_vendeur = :noUtilisateurVendeur";
@@ -108,6 +109,12 @@ public class ArticleVenduDAOImpl implements ArticleVenduDAO {
 		mapParameterSource.addValue("no_utilisateur",noUtilisateur);
 		return jdbcTemplate.query(FIND_BY_UTILISATEUR ,new BeanPropertyRowMapper<>(ArticleVendu.class));
 	}
+
+	@Override
+	public List<ArticleVendu> findAll() {
+		return jdbcTemplate.query(FIND_ALL, new ArticleVenduRowMapper());
+	}
+
 	/*
 	 *  recherche article par categorie
 	 */
