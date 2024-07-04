@@ -64,31 +64,20 @@
         </div>
             
         </fieldset>
-       
-        <div class="auction-items">
-        <div class="auction-item">
-            <div>
-                <img class="rectangle" src="image/maison.jpg" alt="image produit" />
+      
+	     <div class="auction-item" th:each="article : ${articles}">
+   
+    		<div>
+    		 <img class="rectangle" th:src="@{'images/articles/'+${article.noArticle}+'.jpg'}" alt="image produit" />
             </div>
-            <div>
-                <p>Fauteuil</p>
-                <p>Prix : <span>310</span> points</p>
-                <p>Fin de l'enchère : <span>01/09/2018</span></p>
-                <p>Vendeur : <span>NineJae</span></p>
-            </div>
-        </div>
-         <div class="auction-item">
-            <div>
-                <img class="rectangle" src="image/maison.jpg" alt="image produit" />
-            </div>
-            <div>
-                <p>Fauteuil</p>
-                <p>Prix : <span>310</span> points</p>
-                <p>Fin de l'enchère : <span>01/09/2018</span></p>
-                <p>Vendeur : <span>NineJae</span></p>
-            </div>
-        </div>
-        </div>
+             <div>	
+                <p th:text="${article.nomArticle}">Fauteuil </p>
+                <p>Prix : <span  th:text="${article.prixInitial}"> 310 </span> points </p>
+                <p>Fin de l'enchère : <span th:text="${article.dateFinEnchere}">01/09/2018</span></p>
+                <p>Vendeur : <span th:text="${article.vendeur.pseudo}">NineJae</span></p>   
+    	    </div>
+ 		 </div>
+    
     </main>
     <div th:replace="~{/fragments/fragment-footer :: frag-footer}"></div>
 
