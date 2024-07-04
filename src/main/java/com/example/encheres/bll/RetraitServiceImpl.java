@@ -16,7 +16,7 @@ public class RetraitServiceImpl implements RetraitService {
 
 	@Override
 	public void create(Retrait retrait) {
-
+		this.retraitDao.create(retrait);
 	}
 
 	@Override

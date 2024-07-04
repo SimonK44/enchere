@@ -10,16 +10,16 @@ import com.example.encheres.bo.Retrait;
 
 @Repository
 public class RetraitDAOimpl implements RetraitDAO {
-	private NamedParameterJdbcTemplate jdbcTemplate;	
-	
+	private NamedParameterJdbcTemplate jdbcTemplate;
+
 	private static final String CREATE = "INSERT INTO RETRAITS (no_article,rue, code_postal, ville) VALUES(:noArticle, :rue, :codePostal,:ville )";
-	private static final String READ   = "SELECT no_article, rue, code_postal, ville FROM RETRAITS WHERE no_article = :noArticle"; 
+	private static final String READ   = "SELECT no_article, rue, code_postal, ville FROM RETRAITS WHERE no_article = :noArticle";
 	private static final String UPDATE = "UPDATE RETRAIT SET rue = :rue, cod_postal = :codePostal, ville = :ville";
 	private static final String DELETE = "DELETE FROM RETRAIT WHERE no_article = :noArticle";
-	
-	
-	
-	public RetraitDAOimpl(NamedParameterJdbcTemplate jdbcTemplate) {		
+
+
+
+	public RetraitDAOimpl(NamedParameterJdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 /**
@@ -28,25 +28,23 @@ public class RetraitDAOimpl implements RetraitDAO {
 	@Override
 	public void create(Retrait retrait) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
-		// ajout parametres pour la requete		
+		// ajout parametres pour la requete
 		mapParameterSource.addValue("noArticle",retrait.getNoArticle());
 		mapParameterSource.addValue("rue",retrait.getRue());
 		mapParameterSource.addValue("codePostal",retrait.getCodePostal());
 		mapParameterSource.addValue("ville",retrait.getVille());
-		
 		jdbcTemplate.update(CREATE, mapParameterSource);
-		
 	}
 /**
  *  lecture du retrait
  */
-	
+
 	@Override
 	public Retrait read(int noArticle) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
-// ajout parametre pour la requete			
+// ajout parametre pour la requete
 		mapParameterSource.addValue("noArticle",noArticle);
-		
+
 		return jdbcTemplate.queryForObject(READ, mapParameterSource,new BeanPropertyRowMapper<>(Retrait.class));
 	}
 /**
@@ -55,14 +53,14 @@ public class RetraitDAOimpl implements RetraitDAO {
 	@Override
 	public void update(Retrait retrait) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
-// ajout parametres pour la requete			
+// ajout parametres pour la requete
 		mapParameterSource.addValue("noArticle",retrait.getNoArticle());
 		mapParameterSource.addValue("rue",retrait.getRue());
 		mapParameterSource.addValue("codePostal",retrait.getCodePostal());
 		mapParameterSource.addValue("ville",retrait.getVille());
-		
+
 		jdbcTemplate.update(UPDATE, mapParameterSource);
-		
+
 	}
 /**
  * suppression du retrait
@@ -70,12 +68,12 @@ public class RetraitDAOimpl implements RetraitDAO {
 	@Override
 	public void delete(int noArticle) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
-// ajout parametre pour la requete			
+// ajout parametre pour la requete
 		mapParameterSource.addValue("noArticle",noArticle);
-		jdbcTemplate.update(DELETE, mapParameterSource);		
-		
+		jdbcTemplate.update(DELETE, mapParameterSource);
+
 	}
 
-	
+
 
 }

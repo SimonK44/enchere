@@ -45,14 +45,14 @@
                   <label for="dateFinEnchere">Fin de l'enchère :</label>
                   <input type="date" id="dateFinEnchere" name="dateFinEnchere" th:field="*{dateFinEnchere}" />
 
-                  <fieldset>
+                  <fieldset th:object="${adresse}">
                       <legend>Retrait</legend>
                       <label for="rue">Rue :</label>
-                      <input type="text" id="rue" name="rue" />
+                      <input type="text" id="rue" name="rue" th:field="*{rue}" />
                       <label for="codePostal">Code postal :</label>
-                      <input type="number" id="codePostal" name="codePostal" />
+                      <input type="number" id="codePostal" name="codePostal" th:field="*{codePostal}" />
                       <label for="ville">Ville :</label>
-                      <input type="text" id="ville" name="ville" />
+                      <input type="text" id="ville" name="ville" th:field="*{ville}" />
                   </fieldset>
 
                   <div>
