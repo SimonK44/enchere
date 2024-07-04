@@ -2,6 +2,7 @@ package com.example.encheres.controllers;
 
 import com.example.encheres.bll.ArticleVenduService;
 import com.example.encheres.bll.CategorieService;
+import com.example.encheres.bll.UtilisateurService;
 import com.example.encheres.bo.ArticleVendu;
 import com.example.encheres.bo.Categorie;
 import com.example.encheres.bo.Enchere;
@@ -21,10 +22,16 @@ import java.util.List;
 public class ArticleVenduController {
 	private ArticleVenduService articleVenduService;
 	private CategorieService categorieService;
+	private UtilisateurService utilisateurService;
 	@Autowired
-	public ArticleVenduController(ArticleVenduService articleVenduService, CategorieService categorieService) {
+	public ArticleVenduController(
+			ArticleVenduService articleVenduService,
+			CategorieService categorieService,
+			UtilisateurService utilisateurService
+	) {
 		this.articleVenduService = articleVenduService;
 		this.categorieService = categorieService;
+		this.utilisateurService = utilisateurService;
 	}
 
 	@GetMapping("/vendre-article")
@@ -57,6 +64,13 @@ public class ArticleVenduController {
 	public String pageArticleDetail(@RequestParam(value = "id", required = false) int noArticleVendu, Model model) {
 		System.out.println("\n \n \n " + this.articleVenduService.lectureArticleVendu(noArticleVendu));
 		ArticleVendu article = this.articleVenduService.lectureArticleVendu(noArticleVendu);
+
+		Categorie categorie = this.categorieService.read(article.getCategorie().getNoCategorie());
+		article.setCategorie(categorie);
+
+		Utilisateur vendeur = this.utilisateurService.lectureUtilisateur(article.getVendeur().getNoUtilisateur());
+		article.setVendeur(vendeur);
+
 		model.addAttribute("article", article);
 		return "/view-encher-detail";
 	}
