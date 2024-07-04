@@ -32,7 +32,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				be.addError(BusinessException.ERREUR_1);
 				throw be;
 			}
-		}
+		} else {			
+			throw be;
+		}	
 
 	}
 
