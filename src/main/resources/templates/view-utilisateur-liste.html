@@ -21,15 +21,15 @@
 			</tr>
 	  </thead>
 	  <tbody>
-	  <!-- une ligne tr par film -->
-	 	 <tr th:each="item : ${utilisateur}">
+	  <!-- une ligne tr par utilisateur -->
+	 	 <tr th:each="item : ${utilisateurs}">
 	 	 	<td th:text="${item.pseudo}"></td>
 	 	 	<td th:text="${item.nom}"></td>
 	 	 	<td th:text="${item.prenom}"></td>
 	 	 	<td th:text="${item.email}"></td>
 	 	 	<td>
-	 	 		<a th:href="@{/utilisateur/detail(id=${item.noutilisateur})}"> Detail</a>	 	 	   
-	 	 	     <a th:href="@{/utilisateur/supprime(id=${item.noutilisateur})}"> Suppression</a>
+	 	 		<a th:href="@{/utilisateurs/afficher(id=${item.noUtilisateur})}"> Detail</a>	 	 	   
+	 	 	     <a th:href="@{/utilisateur/supprime(id=${item.noUtilisateur})}"> Suppression</a>
 	 	 	</td>
 	  	</tr>
 	 	 </tbody>	
