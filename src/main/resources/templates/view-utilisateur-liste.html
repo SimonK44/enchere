@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+	<link rel="stylesheet" th:href="@{/css/header-footer.css}" />
+	<link rel="stylesheet" th:href="@{/css/profil.css}" />
+	<title>ENI-Enchères</title>
+</head>
+<body>
+	<div th:replace="~{/fragments/fragment-header :: frag-header}"></div>
+	<main>
+	
+	<table>
+	  <thead>
+			<tr>
+				<th>Pseudo</th>
+				<th>Nom</th>
+				<th>prenom</th>
+				<th>email</th>
+				<th>Action</th>
+			</tr>
+	  </thead>
+	  <tbody>
+	  <!-- une ligne tr par film -->
+	 	 <tr th:each="item : ${utilisateur}">
+	 	 	<td th:text="${item.pseudo}"></td>
+	 	 	<td th:text="${item.nom}"></td>
+	 	 	<td th:text="${item.prenom}"></td>
+	 	 	<td th:text="${item.email}"></td>
+	 	 	<td>
+	 	 		<a th:href="@{/utilisateur/detail(id=${item.noutilisateur})}"> Detail</a>	 	 	   
+	 	 	     <a sec:authorize="hasRole('ADMINISTRATEUR')" th:href="@{/utilisateur/supprime(id=${item.noutilisateur})}"> Suppression</a>
+	 	 	</td>
+	  	</tr>
+	 	 </tbody>	
+	</table>
+	
+	
+	
+	
+    
+    </main>
+	<div class="center" th:replace="~{/fragments/fragment-footer :: frag-footer}"></div>
+
+</body>
+</html>
