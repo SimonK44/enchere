@@ -33,28 +33,19 @@ public class securityConfig {
 	SecurityFilterChain web(HttpSecurity http) throws Exception {
 	    http
 	        .authorizeHttpRequests((authorize) -> authorize
-    		.requestMatchers("/utilisateurs").permitAll()
-		    .requestMatchers("/utilisateurs/afficher").permitAll()
-		    .requestMatchers("/utilisateurs/modifier").permitAll()		    
-		    .requestMatchers("/utilisateurs/creer").permitAll()	
-		    .requestMatchers("/vendre-article").permitAll()
-		    .requestMatchers("/view-resultat-gagnant").permitAll()
-		    .requestMatchers("/view-resultat-retrait").permitAll()
-		    .requestMatchers("/vendre-article").permitAll()
-//		    .requestMatchers("/utilisateurs").hasAnyRole("UTILISATEUR", "ADMIN")
-//		    .requestMatchers("/utilisateurs/afficher").hasAnyRole("UTILISATEUR", "ADMIN")
-//		    .requestMatchers("/utilisateurs/modifier").hasAnyRole("UTILISATEUR", "ADMIN")		    
-//		    .requestMatchers("/utilisateurs/creer").hasAnyRole("UTILISATEUR", "ADMIN")	
-//		    .requestMatchers("/vendre-article").hasAnyRole("UTILISATEUR", "ADMIN")
-//		    .requestMatchers("/view-resultat-gagnant").hasAnyRole("UTILISATEUR", "ADMIN")
-//		    .requestMatchers("/view-resultat-retrait").hasAnyRole("UTILISATEUR", "ADMIN")
-//		    .requestMatchers("/vendre-article").hasAnyRole("UTILISATEUR", "ADMIN")
-		    
+		    .requestMatchers("/utilisateurs/afficher").hasAnyRole("UTILISATEUR", "ADMIN")
+		    .requestMatchers("/utilisateurs/modifier").hasAnyRole("UTILISATEUR", "ADMIN")		    
+		    .requestMatchers("/utilisateurs/creer").permitAll()
+		    .requestMatchers("/vendre-article").hasAnyRole("UTILISATEUR", "ADMIN")
+		    .requestMatchers("/view-resultat-gagnant").hasAnyRole("UTILISATEUR", "ADMIN")
+		    .requestMatchers("/view-resultat-retrait").hasAnyRole("UTILISATEUR", "ADMIN")
+		    .requestMatchers("/vendre-article").hasAnyRole("UTILISATEUR", "ADMIN")
 		    .requestMatchers("/css/*").permitAll() //Accès au CSS pour tous le monde
 		    .requestMatchers("/images/*").permitAll() //Accès aux images pour tous le monde
 		    .requestMatchers("/image/*").permitAll() //Accès aux images pour tous le monde
 		    .requestMatchers("/").permitAll() //Accès à l'index pour tous le monde
 		    .requestMatchers("/home").permitAll() //Accès à l'index pour tous le monde
+		    .requestMatchers("/encheres").permitAll() //Accès à l'index pour tous le monde
 	            .anyRequest().authenticated()
 	        );
 	    
@@ -70,7 +61,7 @@ public class securityConfig {
 			    	form.clearAuthentication(true);
 			    	form.deleteCookies("JSESSIONID"); //Suppression du cookie de session
 			    	form.logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
-			    	form.logoutSuccessUrl("/login?logout").permitAll();
+			    	form.logoutSuccessUrl("/encheres").permitAll();
 	    });
 	    
 
