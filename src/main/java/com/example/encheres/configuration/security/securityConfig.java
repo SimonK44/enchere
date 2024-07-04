@@ -20,9 +20,6 @@ public class securityConfig {
 	 */	
 	@Bean
 	UserDetailsManager users(DataSource dataSource) {
-//		System.out.println("generation mdp");
-//		String mdp = PasswordEncoderFactories.createDelegatingPasswordEncoder().encode("kim");
-//		System.out.println(mdp);
 		JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
 		users.setUsersByUsernameQuery("select pseudo, mot_de_passe, 'true' as enabled from UTILISATEURS where pseudo = ?");
 		users.setAuthoritiesByUsernameQuery("select pseudo, role from UTILISATEURS INNER JOIN ROLE ON ROLE.is_admin = UTILISATEURS.administrateur WHERE pseudo = ?");

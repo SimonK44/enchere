@@ -46,11 +46,11 @@ public class HomeController {
     
     @GetMapping({"/","home","encheres","listes-articles"})
     public String home(Model model) {
-    	List <ArticleVendu> articles = new ArrayList<ArticleVendu>();
-    	articles.add(new ArticleVendu(1, "Une pipe","ceci n est pas une pipe",LocalDate.now(),LocalDate.now(), 10, 110, new Categorie(1, "informatique"),new Utilisateur(),new ArrayList<enchere>()));
-    	articles.add(new ArticleVendu(2, "Table de salon" ,"une tres belle table en chene", "2024-07-01","2024-07-30", 100, 150, 1, 2, 1));
-    	model.addAttribute("articles",articles);
-		model.addAttribute("categories", categorieService.findAll());
+//    	List <ArticleVendu> articles = new ArrayList<ArticleVendu>();
+//    	articles.add(new ArticleVendu(1, "Une pipe","ceci n est pas une pipe",LocalDate.now(),LocalDate.now(), 10, 110, new Categorie(1, "informatique"),new Utilisateur(),new ArrayList<enchere>()));
+//    	articles.add(new ArticleVendu(2, "Table de salon" ,"une tres belle table en chene", "2024-07-01","2024-07-30", 100, 150, 1, 2, 1));
+//    	model.addAttribute("articles",articles);
+//		model.addAttribute("categories", categorieService.findAll());
         return "home";
     }
 }
