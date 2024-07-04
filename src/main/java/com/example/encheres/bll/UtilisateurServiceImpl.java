@@ -1,7 +1,10 @@
 package com.example.encheres.bll;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,12 +17,13 @@ import com.example.encheres.exception.BusinessException;
 public class UtilisateurServiceImpl implements UtilisateurService {
 	@Autowired
 	private UtilisateurDAO utilisateurDAO;
-
-
+	
 	@Override
 	@Transactional(rollbackFor = BusinessException.class)
 	public void creerUtilisateur(Utilisateur utilisateur) throws BusinessException {
 		BusinessException be = new BusinessException() ;
+				
+		cryptMotDePasse(utilisateur);
 		
 		boolean isValid = controleNomPrenom(utilisateur.getNom(),utilisateur.getPrenom(),be);
 		isValid &= controlePseudo(utilisateur.getPseudo(), be);
@@ -50,13 +54,17 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	public void modifierUtilisateur(Utilisateur utilisateur) throws BusinessException {
 		BusinessException be = new BusinessException() ;
 		
+		cryptMotDePasse(utilisateur);
+		
 		boolean isValid = controleModifierNomPrenom(utilisateur.getNoUtilisateur(), utilisateur.getNom(),utilisateur.getPrenom(),be);
 		isValid &= controleModifierPseudo(utilisateur.getNoUtilisateur(),utilisateur.getPseudo(),be );
 
 		if (isValid) {
 			try {
 				utilisateurDAO.update(utilisateur);
+				System.out.println("UtilisateurServImpl utilisateur : "+utilisateur);
 			} catch (DataAccessException e) {
+				e.printStackTrace();
 				be.addError(BusinessException.ERREUR_0);
 				throw be;
 			}
@@ -76,7 +84,17 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			be.addError(BusinessException.ERREUR_0);
 			throw be;
 		}
-
+	}
+	
+	@Override
+	public Utilisateur findByPseudo(String pseudo) {
+		return utilisateurDAO.findByPseudo(pseudo);
+		
+	}
+	
+	@Override
+	public List<Utilisateur> findAll() {
+		return utilisateurDAO.findAll();
 	}
 
 	private boolean controleNomPrenom (String nom, String prenom, BusinessException be) {
@@ -130,10 +148,12 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		return isValid;
 	}
 
-	@Override
-	public Utilisateur findByPseudo(String pseudo) {
-		return utilisateurDAO.findByPseudo(pseudo);
-		
+	
+	private void cryptMotDePasse(Utilisateur utilisateur) {
+		System.out.println("generation mdp");
+		utilisateur.setMotDePasse(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode(utilisateur.getMotDePasse()));
+		System.out.println(utilisateur.getMotDePasse());
 	}
+	
 
 }

@@ -1,5 +1,8 @@
 package com.example.encheres.bo;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 /*
  * classe decrivant un utilisateur
@@ -7,10 +10,17 @@ package com.example.encheres.bo;
 public class Utilisateur {
 
 	private int noUtilisateur;
+	@NotBlank
+	@Size(min = 2, max = 32, message = "Le nom doit être compris entre 2 et 32 caractères")
 	private String pseudo;
+	@NotBlank
 	private String nom;
+	@NotBlank
 	private String prenom;
+	@NotBlank
+	@Email
 	private String email;
+	
 	private String telephone;
 	private String rue;
 	private String codePostal;

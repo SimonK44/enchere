@@ -39,7 +39,9 @@
 
       <div>
         <label>Retrait</label>
-        <input type="text" id="adresse" name="adresse" th:value="${article.vendeur.rue}" disabled/>
+        <input type="text" id="adresseRue" name="vendeur" th:value="${adresse.rue}" disabled/>
+        <input type="text" id="adresseVille" name="vendeur" th:value="${adresse.ville}" disabled/>
+        <input type="text" id="adresseCP" name="vendeur" th:value="${adresse.codePostal}" disabled/>
       </div>
 
       <label for="vendeur">Vendeur : </label>

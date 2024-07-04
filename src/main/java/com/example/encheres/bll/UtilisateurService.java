@@ -1,5 +1,7 @@
 package com.example.encheres.bll;
 
+import java.util.List;
+
 import com.example.encheres.bo.Utilisateur;
 import com.example.encheres.exception.BusinessException;
 
@@ -9,4 +11,5 @@ public interface UtilisateurService {
 	void modifierUtilisateur(Utilisateur utilisateur) throws BusinessException;
 	void supprimerUtilisateur(int noUtilisateur)      throws BusinessException;
 	Utilisateur findByPseudo( String pseudo);
+	List<Utilisateur> findAll ();
 }

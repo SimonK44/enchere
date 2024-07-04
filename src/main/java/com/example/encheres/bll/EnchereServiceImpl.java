@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.encheres.bo.Enchere;
 import com.example.encheres.dal.ArticleVenduDAO;
@@ -23,6 +24,7 @@ public class EnchereServiceImpl implements EnchereService {
  *  creation d' une enchere	
  */
 	@Override
+	@Transactional(rollbackFor = BusinessException.class)
 	public void creerEnchere(Enchere enchere) throws BusinessException {
 		BusinessException be = new BusinessException() ;
 		

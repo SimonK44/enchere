@@ -1,12 +1,12 @@
 /* Reset some default browser styles */
-body, h1, p, label, input, select, button, div {
+main, h1, p, label, input, select, button, div {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
 /* Basic styles */
-body {
+main {
     font-family: Arial, sans-serif;
     background-color: #f8f8f8;
     color: #333;
@@ -63,9 +63,9 @@ main label {
     margin-top: 10px;
 }
 
-main input[type="text"], 
-main input[type="number"], 
-main input[type="date"], 
+main input[type="text"],
+main input[type="number"],
+main input[type="date"],
 main select {
     width: 100%;
     padding: 10px;

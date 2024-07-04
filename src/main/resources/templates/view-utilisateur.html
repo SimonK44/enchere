@@ -39,8 +39,8 @@
 				<label for="inputVille">Ville :</label>
 				<input id="inputVille" type="text" th:value="${utilisateur.ville}" disabled="disabled" />
 			</div>
-			<div class="form-actions">
-				<a th:href="@{/utilisateurs/modifier}">Modifier</a>
+			<div class="form-actions" th:if="${!isDifferentUser}">
+				<a th:href="@{/utilisateurs/modifier(noUtilisateur=${utilisateur.noUtilisateur})}">Modifier</a>
 			</div>
 		</form>
 	</main>

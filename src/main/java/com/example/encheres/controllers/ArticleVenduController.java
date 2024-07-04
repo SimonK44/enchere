@@ -37,15 +37,25 @@ public class ArticleVenduController {
 
 	@GetMapping("/vendre-article")
 	public String vendreArticle(Model model) {
-		model.addAttribute("article", new ArticleVendu());
+		ArticleVendu articleVendu = new ArticleVendu();
+		articleVendu.setNomArticle("LocalDate.now()");
+		articleVendu.setDateDebutEnchere(LocalDate.now());
+		articleVendu.setDateFinEnchere(LocalDate.now().plusMonths(1));
+		System.out.println(articleVendu);
+		model.addAttribute("article", articleVendu);
 		model.addAttribute("categories", categorieService.findAll());
+		model.addAttribute("adresse", new Retrait());
 		return "view-encher-creation";
 	}
 
 	@PostMapping("/creer")
-	public String creerArticle(@ModelAttribute("vendre-article") ArticleVendu articleVendu) {
-		this.articleVenduService.create(articleVendu);
-		return "redirect:/utilisateurs/afficher";
+	public String creerArticle(
+		@ModelAttribute("vendre-article") ArticleVendu articleVendu,
+		@ModelAttribute("adresse") Retrait adresse,
+		@ModelAttribute("utilisateurSession") Utilisateur user
+	) {
+		this.articleVenduService.createArticleWithRetrait(articleVendu, adresse, user);
+		return "redirect:view-encher-detail?id=" + articleVendu.getNoArticle();
 	}
 
 
@@ -76,6 +86,7 @@ public class ArticleVenduController {
 		System.out.println(adresse);
 
 		model.addAttribute("article", article);
+		model.addAttribute("adresse", adresse);
 		return "/view-encher-detail";
 	}
 }

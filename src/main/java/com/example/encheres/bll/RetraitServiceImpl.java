@@ -16,21 +16,11 @@ public class RetraitServiceImpl implements RetraitService {
 
 	@Override
 	public void create(Retrait retrait) {
-
+		this.retraitDao.create(retrait);
 	}
 
 	@Override
 	public Retrait read(int noArticle) {
 		return this.retraitDao.read(noArticle);
-	}
-
-	@Override
-	public void update(Retrait retrait) {
-
-	}
-
-	@Override
-	public void delete(int noArticle) {
-
 	}
 }

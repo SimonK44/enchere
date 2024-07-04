@@ -1,11 +1,14 @@
 package com.example.encheres.bll;
 
 import com.example.encheres.bo.ArticleVendu;
+import com.example.encheres.bo.Retrait;
 import com.example.encheres.bo.Utilisateur;
 import com.example.encheres.dal.ArticleVenduDAO;
+import com.example.encheres.dal.RetraitDAO;
 import com.example.encheres.dal.UtilisateurDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -26,16 +29,7 @@ public class ArticleVenduImpl implements ArticleVenduService {
 
 	@Override
 	public void create(ArticleVendu articleVendu) {
-		//TODO initialisation du vendeur  -> Recuperer l'id de l'utilisateur
-		Utilisateur acheteur = new Utilisateur();
-		Utilisateur vendeur = new Utilisateur();
 
-		vendeur.setNoUtilisateur(1);
-
-		articleVendu.setAcheteur(acheteur);
-		articleVendu.setVendeur(vendeur);
-
-		this.articleVenduDAO.create(articleVendu);
 	}
 
 	@Override
@@ -84,5 +78,18 @@ public class ArticleVenduImpl implements ArticleVenduService {
 	@Override
 	public void supprimerArticleVendu(int articleVendu) {
 
+	}
+
+	@Override
+	@Transactional
+	public void createArticleWithRetrait(ArticleVendu articleVendu, Retrait adresse, Utilisateur user) {
+		Utilisateur acheteur = new Utilisateur();
+		Utilisateur vendeur = new Utilisateur();
+		vendeur.setNoUtilisateur(user.getNoUtilisateur());
+		articleVendu.setAcheteur(acheteur);
+		articleVendu.setVendeur(vendeur);
+		this.articleVenduDAO.create(articleVendu);
+		adresse.setNoArticle(articleVendu.getNoArticle());
+		this.retraitDAO.create(adresse);
 	}
 }
