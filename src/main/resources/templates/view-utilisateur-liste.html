@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 	<link rel="stylesheet" th:href="@{/css/header-footer.css}" />
-	<link rel="stylesheet" th:href="@{/css/profil.css}" />
+    <link rel="stylesheet" th:href="@{/css/profil.css}" />  
+	<link rel="stylesheet" th:href="@{/css/table.css}" />
+    <link rel="stylesheet" th:href="@{/css/home.css}" /> 
 	<title>ENI-Enchères</title>
 </head>
 <body>
@@ -28,8 +30,8 @@
 	 	 	<td th:text="${item.prenom}"></td>
 	 	 	<td th:text="${item.email}"></td>
 	 	 	<td>
-	 	 		<a th:href="@{/utilisateurs/afficher(id=${item.noUtilisateur})}"> Detail</a>	 	 	   
-	 	 	     <a th:href="@{/utilisateur/supprime(id=${item.noUtilisateur})}"> Suppression</a>
+	 	 		<button class="search-button" th:href="@{/utilisateurs/afficher(id=${item.noUtilisateur})}"> Detail</button>	 	 	   
+	 	 	     <button class="search-button" th:href="@{/utilisateur/supprime(id=${item.noUtilisateur})}"> Suppression</button>
 	 	 	</td>
 	  	</tr>
 	 	 </tbody>	
