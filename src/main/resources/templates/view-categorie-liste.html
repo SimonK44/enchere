@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+	<link rel="stylesheet" th:href="@{/css/header-footer.css}" />
+	<link rel="stylesheet" th:href="@{/css/profil.css}" />
+	<title>ENI-Enchères</title>
+</head>
+<body>
+	<div th:replace="~{/fragments/fragment-header :: frag-header}"></div>
+	<main>
+
+	<table>
+	  <thead>
+			<tr>
+				<th>Id</th>
+				<th>Libelle</th>
+				<th>Etat</th>
+				<th>Suppression définitive</th>
+			</tr>
+	  </thead>
+	  <tbody>
+	  <!-- une ligne tr par utilisateur -->
+	 	 <tr th:each="categorie : ${categories}">
+	 	 	<td th:text="${categorie.noCategorie}"></td>
+	 	 	<td th:text="${categorie.libelle}"></td>
+			 <td>
+				 <a th:if="${categorie.dateSuppression != null}"
+					th:href="@{/administrateur/listeCategorieUpdate(id=${categorie.noCategorie})}"
+					th:text="'HIDE'"></a>
+				 <a th:if="${categorie.dateSuppression == null}"
+					th:href="@{/administrateur/listeCategorieUpdate(id=${categorie.noCategorie})}"
+					th:text="'SHOW'"></a>
+			 </td>
+			 <td>
+	 	 	     <a th:href="@{/administrateur/listeCategorieDelete(id=${categorie.noCategorie})}">X</a>
+	 	 	</td>
+	  	</tr>
+	 	 </tbody>
+	</table>
+
+
+
+
+
+    </main>
+	<div class="center" th:replace="~{/fragments/fragment-footer :: frag-footer}"></div>
+
+</body>
+</html>

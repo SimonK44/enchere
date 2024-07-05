@@ -29,8 +29,8 @@ public class CategorieImpl implements CategorieService {
 	}
 
 	@Override
-	public void delete(int categorie) {
-
+	public void delete(int noCategorie) {
+		this.categorieDAO.delete(noCategorie);
 	}
 
 	@Override
@@ -39,7 +39,16 @@ public class CategorieImpl implements CategorieService {
 	}
 
 	@Override
+	public void updateDateSuppression(int noCategorie) {
+		this.categorieDAO.updateDateSuppression(noCategorie);
+	}
+
+	@Override
 	public List<Categorie> findAll() {
 		return this.categorieDAO.findAll();
+	}
+	@Override
+	public List<Categorie> findAllAdmin() {
+		return this.categorieDAO.findAllAdmin();
 	}
 }

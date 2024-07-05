@@ -4,6 +4,7 @@ INSERT INTO CATEGORIES (libelle) VALUES ('Informatique');
 INSERT INTO CATEGORIES (libelle) VALUES ('Ameublement');
 INSERT INTO CATEGORIES (libelle) VALUES ('Vêtement');
 INSERT INTO CATEGORIES (libelle) VALUES ('Sport&Loisirs');
+INSERT INTO CATEGORIES (libelle, date_suppression) VALUES ('Voiture', '2024-08-15');
 
 --table role
 INSERT INTO ROLE ( role , is_admin ) VALUES ( 'ROLE_ADMIN' , 1 );
@@ -23,13 +24,13 @@ INSERT INTO UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_posta
 
 -- table ARTICLE_VENDUS
 INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur_vendeur, no_utilisateur_acheteur, no_categorie)
-            VALUES ('Table de salon' , 'une tres belle table en chene', '2024-07-01','2024-07-30', 100, 150, 1, 2, 1); 
+            VALUES ('Table de salon' , 'une tres belle table en chene', '2024-07-01','2024-07-30', 100, 150, 1, 2, 1);
 INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur_vendeur, no_utilisateur_acheteur, no_categorie)
-            VALUES ('Une pipe' , 'ceci n est pas une pipe', '2024-06-01', '2024-08-15',10, 110, 3,2 ,1); 
+            VALUES ('Une pipe' , 'ceci n est pas une pipe', '2024-06-01', '2024-08-15',10, 110, 3,2 ,1);
 INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, no_utilisateur_vendeur, no_categorie)
-            VALUES ('PC de l ENI' , 'PC surpuissant', '2024-08-01', '2024-08-15',10, 3 ,2); 
+            VALUES ('PC de l ENI' , 'PC surpuissant', '2024-08-01', '2024-08-15',10, 3 ,2);
 INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, no_utilisateur_vendeur, no_categorie)
-            VALUES ('Pomme' , 'un excellent fruit plein de vitamines', '2024-03-24', '2024-08-05',10, 3 ,3); 
+            VALUES ('Pomme' , 'un excellent fruit plein de vitamines', '2024-03-24', '2024-08-05',10, 3 ,3);
 
 -- tables retraits
 INSERT INTO RETRAITS (no_article, rue, code_postal,ville) VALUES (1, 'rue des rosiers', '44000','Nantes');
