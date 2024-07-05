@@ -44,30 +44,29 @@ public class HomeController {
         }
         return "view-test-connexion";
     }
-    
-    @GetMapping({"/","home","encheres","listes-articles"})
+
+    @GetMapping({"/","/home","/encheres","/listes-articles"})
     public String home(
     	Model model) {
     	List<ArticleVendu> articles = this.articleVenduService.findAll();
-    	System.out.println(articles);
-    	
-    	
-    	
+
+
+
     	model.addAttribute("articles", articles);
-    	
-    	
-    	
-    	
-    	//ArticleVendu [noArticle=1, nomArticle=Table de salon, description=une tres belle table en chene, 
-    	//dateDebutEnchere=2024-07-01, dateFinEnchere=2024-07-30, prixInitial=100.0, prixVente=150.0, 
-    	//categorie=Categorie [noCategorie=1, libelle=null], acheteur=Utilisateur [noUtilisateur=2, pseudo=null, nom=null, prenom=null, email=null, telephone=null, rue=null, codePostal=null, ville=null, motDePasse=null, credit=0, administrateur=false], 
-    	//vendeur=Utilisateur [noUtilisateur=1, pseudo=null, nom=null, prenom=null, email=null, telephone=null, rue=null, codePostal=null, ville=null, motDePasse=null, credit=0, administrateur=false], encheres=[]], 
-    	
+
+
+
+
+    	//ArticleVendu [noArticle=1, nomArticle=Table de salon, description=une tres belle table en chene,
+    	//dateDebutEnchere=2024-07-01, dateFinEnchere=2024-07-30, prixInitial=100.0, prixVente=150.0,
+    	//categorie=Categorie [noCategorie=1, libelle=null], acheteur=Utilisateur [noUtilisateur=2, pseudo=null, nom=null, prenom=null, email=null, telephone=null, rue=null, codePostal=null, ville=null, motDePasse=null, credit=0, administrateur=false],
+    	//vendeur=Utilisateur [noUtilisateur=1, pseudo=null, nom=null, prenom=null, email=null, telephone=null, rue=null, codePostal=null, ville=null, motDePasse=null, credit=0, administrateur=false], encheres=[]],
+
     	return "home";
-    	
-    	
-    	
-    	
+
+
+
+
     }
 }
 

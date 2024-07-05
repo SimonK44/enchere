@@ -41,7 +41,6 @@ public class ArticleVenduController {
 		articleVendu.setNomArticle("LocalDate.now()");
 		articleVendu.setDateDebutEnchere(LocalDate.now());
 		articleVendu.setDateFinEnchere(LocalDate.now().plusMonths(1));
-		System.out.println(articleVendu);
 		model.addAttribute("article", articleVendu);
 		model.addAttribute("categories", categorieService.findAll());
 		model.addAttribute("adresse", new Retrait());
@@ -72,8 +71,10 @@ public class ArticleVenduController {
 
 
 	@GetMapping("/view-encher-detail")
-	public String pageArticleDetail(@RequestParam(value = "id", required = false) int noArticleVendu, Model model) {
-		System.out.println("\n \n \n " + this.articleVenduService.lectureArticleVendu(noArticleVendu));
+	public String pageArticleDetail(
+			@RequestParam(value = "id", required = false) int noArticleVendu,
+			Model model
+	) {
 		ArticleVendu article = this.articleVenduService.lectureArticleVendu(noArticleVendu);
 
 		Categorie categorie = this.categorieService.read(article.getCategorie().getNoCategorie());
@@ -88,5 +89,20 @@ public class ArticleVenduController {
 		model.addAttribute("article", article);
 		model.addAttribute("adresse", adresse);
 		return "/view-encher-detail";
+	}
+
+	@PostMapping("/encherir")
+	public String encherir(
+		@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession,
+		@RequestParam("noArticleVendu") int noArticleVendu,
+		@RequestParam("proposition") Double proposition
+	) {
+		// Logique pour gérer l'enchère, par exemple enregistrer dans la base de données
+		System.out.println("Enchère pour l'article avec ID : " + utilisateurSession);
+		System.out.println("Enchère pour l'article avec ID : " + noArticleVendu);
+		System.out.println("Proposition d'enchère : " + proposition);
+
+		// Redirection ou affichage d'une nouvelle vue après traitement
+		return "redirect:/home"; // Redirige vers une page de confirmation
 	}
 }
