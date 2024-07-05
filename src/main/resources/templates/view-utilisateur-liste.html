@@ -4,8 +4,10 @@
 <meta charset="UTF-8">
 	<link rel="stylesheet" th:href="@{/css/header-footer.css}" />
     <link rel="stylesheet" th:href="@{/css/profil.css}" />  
-	<link rel="stylesheet" th:href="@{/css/table.css}" />
     <link rel="stylesheet" th:href="@{/css/home.css}" /> 
+	<link rel="stylesheet" th:href="@{/css/table.css}" />
+	<script th:href="@{/js/confirmation-suppression.js}" ></script>
+    
 	<title>ENI-Enchères</title>
 </head>
 <body>
@@ -30,19 +32,23 @@
 	 	 	<td th:text="${item.prenom}"></td>
 	 	 	<td th:text="${item.email}"></td>
 	 	 	<td>
-	 	 		<button class="search-button" th:href="@{/utilisateurs/afficher(id=${item.noUtilisateur})}"> Detail</button>	 	 	   
-	 	 	     <button class="search-button" th:href="@{/utilisateur/supprime(id=${item.noUtilisateur})}"> Suppression</button>
+	 	 		<a  th:href="@{/utilisateurs/afficher(id=${item.noUtilisateur})}"> Detail</a>	 	 	   
+	 	 	    <a id="suppression" th:href="@{/utilisateur/supprime(id=${item.noUtilisateur})}" onclick=" return confirmation()"> Suppression</a>
 	 	 	</td>
 	  	</tr>
 	 	 </tbody>	
-	</table>
-	
-	
-	
-	
-    
+	</table>    
     </main>
 	<div class="center" th:replace="~{/fragments/fragment-footer :: frag-footer}"></div>
 
+ <script>
+        function confirmation() {
+            return confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur ?");
+        }
+    </script>
+
+
 </body>
+
+
 </html>
