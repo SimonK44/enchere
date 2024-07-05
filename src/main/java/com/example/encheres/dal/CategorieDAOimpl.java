@@ -18,11 +18,13 @@ public class CategorieDAOimpl implements CategorieDAO {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
-	private final static String CREATE   = "INSERT INTO CATEGORIE (libelle) VALUE (:libelle)";
+	private final static String CREATE   = "INSERT INTO CATEGORIES (libelle) VALUE (:libelle)";
 	private final static String READ     = "SELECT no_categorie, libelle from CATEGORIES WHERE no_categorie = :noCategorie";
-	private final static String UPDATE   = "UPDATE CATEGORIE SET libelle = :libelle";
-	private final static String DELETE   = "DELETE FROM CATEGORIE WHERE no_categorie = :noCategorie";
-	private final static String FIND_ALL = "SELECT no_categorie, libelle FROM CATEGORIES";
+	private final static String UPDATE   = "UPDATE CATEGORIES SET libelle = :libelle";
+	private final static String UPDATE_DATE_SUPPRESSION = "UPDATE CATEGORIES SET date_suppression = CASE WHEN date_suppression IS NULL THEN GETDATE() ELSE NULL END WHERE no_categorie = :noCategorie";
+	private final static String DELETE   = "DELETE FROM CATEGORIES WHERE no_categorie = :noCategorie";
+	private final static String FIND_ALL = "SELECT no_categorie, libelle FROM CATEGORIES where date_suppression IS NULL ";
+	private final static String FIND_ALL_ADMIN = "SELECT no_categorie, libelle, date_suppression FROM CATEGORIES";
 /**
  * creation categorie
  */
@@ -63,7 +65,13 @@ public class CategorieDAOimpl implements CategorieDAO {
 		mapParameterSource.addValue("libelle",categorie.getLibelle());
 
 		jdbcTemplate.update(UPDATE, mapParameterSource);
-
+	}
+	@Override
+	public void updateDateSuppression(int noCategorie) {
+		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
+		System.out.println("Ma cate ID" + noCategorie);
+		mapParameterSource.addValue("noCategorie", noCategorie);
+		jdbcTemplate.update(UPDATE_DATE_SUPPRESSION, mapParameterSource);
 	}
 /*
  *  suppression categorie
@@ -71,10 +79,8 @@ public class CategorieDAOimpl implements CategorieDAO {
 	@Override
 	public void delete(int noCategorie) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
-// ajout parametre pour la requete
 		mapParameterSource.addValue("noCategorie",noCategorie);
 		jdbcTemplate.update(DELETE, mapParameterSource);
-
 	}
 /**
  *  liste de toutes les categories
@@ -82,6 +88,10 @@ public class CategorieDAOimpl implements CategorieDAO {
 	@Override
 	public List<Categorie> findAll() {
 		return jdbcTemplate.query(FIND_ALL ,new BeanPropertyRowMapper<>(Categorie.class));
+	}
+	@Override
+	public List<Categorie> findAllAdmin() {
+		return jdbcTemplate.query(FIND_ALL_ADMIN ,new BeanPropertyRowMapper<>(Categorie.class));
 	}
 
 

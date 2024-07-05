@@ -44,7 +44,6 @@ public class ArticleVenduImpl implements ArticleVenduService {
 
     	List<ArticleVendu> articles = articleVenduDAO.findAll();
 
-    	System.out.println("articles : " + articles);
     	for(ArticleVendu a : articles ) {
     		a.setVendeur(utilisateurDAO.read(a.getVendeur().getNoUtilisateur()));
     		System.out.println("articlevenduimpl : " + a);

@@ -12,5 +12,7 @@ public interface CategorieService {
 	void delete(int categorie);
 
 	void update(int categorie);
+	void updateDateSuppression(int noCategorie);
 	List<Categorie> findAll();
+	List<Categorie> findAllAdmin();
 }

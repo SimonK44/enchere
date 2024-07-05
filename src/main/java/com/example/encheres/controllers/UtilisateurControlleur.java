@@ -56,6 +56,10 @@ public class UtilisateurControlleur {
 			@SessionAttribute(value = "utilisateurSession", required = false) Utilisateur utilisateurSession,
 			@RequestParam(value = "id", required = false) Integer noUtilisateur // Utilisez Integer au lieu de int
 	) {
+
+		System.out.println("\n \n");
+		System.out.println("utilisateurSession"+utilisateurSession);
+		System.out.println("noUtilisateur"+noUtilisateur);
 		// Si aucun utilisateur en session et aucun ID fourni, redirigez vers la page de connexion
 		if (utilisateurSession == null && noUtilisateur == null) {
 			return "redirect:/login";
