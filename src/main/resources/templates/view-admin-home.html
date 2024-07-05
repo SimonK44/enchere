@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+	<link rel="stylesheet" th:href="@{/css/header-footer.css}" />
+	<link rel="stylesheet" th:href="@{/css/profil.css}" />
+	<title>ENI-Enchères</title>
+</head>
+<body>
+	<div th:replace="~{/fragments/fragment-header :: frag-header}"></div>
+	<main>
+
+	 <a
+		th:href="@{/administrateur/listeCategorieUpdate(id=${categorie.noCategorie})}"
+		th:text="'HIDE'"></a>
+	 <a
+		th:href="@{/administrateur/listeCategorieUpdate(id=${categorie.noCategorie})}"
+		th:text="'SHOW'"></a>
+
+
+
+
+    </main>
+	<div class="center" th:replace="~{/fragments/fragment-footer :: frag-footer}"></div>
+
+</body>
+</html>
