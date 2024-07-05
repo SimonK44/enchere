@@ -33,6 +33,8 @@ public class securityConfig {
 	SecurityFilterChain web(HttpSecurity http) throws Exception {
 	    http
 	        .authorizeHttpRequests((authorize) -> authorize
+	        .requestMatchers("/administrateur").hasRole("ADMIN")
+	        .requestMatchers("/administrateur/liste").hasRole("ADMIN")
 		    .requestMatchers("/utilisateurs/afficher").hasAnyRole("UTILISATEUR", "ADMIN")
 		    .requestMatchers("/utilisateurs/modifier").hasAnyRole("UTILISATEUR", "ADMIN")
 		    .requestMatchers("/utilisateurs/creer").permitAll()

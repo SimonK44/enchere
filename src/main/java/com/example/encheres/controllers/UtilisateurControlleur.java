@@ -119,7 +119,10 @@ public class UtilisateurControlleur {
 
 	//Création d'un utilisateur
 	@PostMapping("/creer")
-	public String creerUtilisateur(@Valid @ModelAttribute("utilisateur") Utilisateur utilisateur, BindingResult bindingResult) {
+	public String creerUtilisateur(@Valid @ModelAttribute("utilisateur") Utilisateur utilisateur, 
+								BindingResult bindingResult) {
+//		@RequestParam("confirmPassword") String confirmPassword, 
+//		System.out.println(confirmPassword);
 		Utilisateur u = new Utilisateur();
 
 		if (bindingResult.hasErrors()) {

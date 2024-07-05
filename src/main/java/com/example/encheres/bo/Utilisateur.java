@@ -1,7 +1,10 @@
 package com.example.encheres.bo;
 
+import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 /*
@@ -9,9 +12,18 @@ import jakarta.validation.constraints.Size;
  */
 public class Utilisateur {
 
+	/*
+	 * En tant qu’utilisateur, je peux m’inscrire sur la plateforme Enchères.org. 
+	 * Le pseudo doit être unique sur toute la plateforme, 
+	 * ainsi que l’email. 
+	 * Le pseudo n’accepte que des caractères alphanumériques. 
+	 * Si la création du profil est validée, 
+	 * l’utilisateur est dirigé vers la page d’accueil 
+	 */	
+	
 	private int noUtilisateur;
 	@NotBlank
-	@Size(min = 2, max = 32, message = "Le nom doit être compris entre 2 et 32 caractères")
+	@Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Le pseudo doit être alphanumérique")
 	private String pseudo;
 	@NotBlank
 	private String nom;
@@ -20,12 +32,24 @@ public class Utilisateur {
 	@NotBlank
 	@Email
 	private String email;
-	
+	@Digits(fraction = 0, integer = 10, message = "Le téléphone doit comporter 10 chiffres")
 	private String telephone;
+	@NotBlank
 	private String rue;
+	@NotBlank
+	@Digits(fraction = 0, integer = 10, message = "Le téléphone doit comporter 5 chiffres")
 	private String codePostal;
+	@NotBlank
 	private String ville;
+	@NotBlank
+	@Size(min = 8)
 	private String motDePasse;
+//	@Transient
+//    private String confirmPassword;    
+//    @AssertTrue(message = "Les mots de passe ne correspondent pas")
+//    private boolean isPasswordConfirmed() {
+//        return motDePasse != null && motDePasse.equals(confirmPassword);
+//    }
 	private int credit;
 	private boolean administrateur;
 	
