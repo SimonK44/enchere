@@ -10,13 +10,20 @@
 	<div th:replace="~{/fragments/fragment-header :: frag-header}"></div>
 	<main>
 
-	 <a
-		th:href="@{/administrateur/listeCategorieUpdate(id=${categorie.noCategorie})}"
-		th:text="'HIDE'"></a>
-	 <a
-		th:href="@{/administrateur/listeCategorieUpdate(id=${categorie.noCategorie})}"
-		th:text="'SHOW'"></a>
-
+		<ul>
+			<li>
+				<a
+					th:href="@{/administrateur/liste}"
+					th:text="'Gestion des Utilisateurs'">
+				</a>
+			</li>
+			<li>
+				<a
+					th:href="@{/administrateur/listeCategorie}"
+					th:text="'Gestion des Catégrories'">
+				</a>
+			</li>
+		</ul>
 
 
 
