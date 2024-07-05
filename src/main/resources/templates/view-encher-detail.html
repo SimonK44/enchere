@@ -51,11 +51,16 @@
       <label for="meilleurOffre"> Meilleur offre : </label>
       <input type="number" id="meilleurOffre" name="meilleurOffre" th:value="${article.prixVente}" disabled/>
 
+      <div class="proposition-container">
+        <label for="proposition">Ma proposition : </label>
+        <form th:action="@{/encherir}" method="post">
 
-      <label for="proposition">Ma proposition : </label>
-      <input type="number" id="proposition" name="proposition" />
-      <div>
-        <button>Enchérir</button>
+          <input type="hidden" id="noArticleVendu" name="noArticleVendu" th:value="${article.noArticle}" />
+          <label for="proposition">Ma proposition :</label>
+          <input type="number" id="proposition" name="proposition" th:min="${article.prixVente + 1}" class="proposition-input" />
+
+          <button type="submit">Enchérir</button>
+        </form>
       </div>
     </div>
   </div>

@@ -13,9 +13,9 @@ import com.example.encheres.bo.Utilisateur;
 @Controller
 @SessionAttributes({"utilisateurSession"})
 public class LoginController {
-	
+
 	private ContexteService contexteService;
-	
+
 	public LoginController(ContexteService contexteService) {
 		this.contexteService = contexteService;
 	}
@@ -25,17 +25,21 @@ public class LoginController {
 	public String login() {
 		return "login";
 	}
-	
+
 	@GetMapping("/session")
 	public String connexion(@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession) {
-		
+
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
-		
+
 		System.out.println("Session : "+currentPrincipalName);
-		
+
+		System.out.println("\n \n currentPrincipalName : " + currentPrincipalName);
+
 		Utilisateur utilisateur = this.contexteService.charger(currentPrincipalName);
-		
+
+		System.out.println("utilisateurutilisateur : " + utilisateur);
+
 		if(utilisateur != null) {
 			//mettre à jour utilisateurSession avec l'utilisateur chargé
 			utilisateurSession.setNoUtilisateur(utilisateur.getNoUtilisateur());
@@ -66,14 +70,14 @@ public class LoginController {
 			utilisateurSession.setCredit(0);
 			utilisateurSession.setAdministrateur(false);
 		}
-		
+
 		return "redirect:/home";
-	}	
-	
+	}
+
 	@ModelAttribute("utilisateurSession")
 	public Utilisateur chargerUtilisateurSession() {
 		return new Utilisateur();
-	}	
-	
-	
+	}
+
+
 }
