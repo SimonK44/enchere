@@ -70,15 +70,10 @@ fieldset div {
 }
 
 
-.auction-items{
-	   display: flex;
-	   justify-content: space-around;
-}
-
-
 .auction-item {
-    display: flex;
+    display: inline-flex;
     align-items: center;
+   justify-content: space-between;
 	width: 500px;
     background-color: #fff;
     padding: 20px;
