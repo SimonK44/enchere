@@ -14,10 +14,10 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class securityConfig {
-	
+
 	/*
 	 * Profil récupérés dans la BDD
-	 */	
+	 */
 	@Bean
 	UserDetailsManager users(DataSource dataSource) {
 		JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
@@ -25,16 +25,16 @@ public class securityConfig {
 		users.setAuthoritiesByUsernameQuery("select pseudo, role from UTILISATEURS INNER JOIN ROLE ON ROLE.is_admin = UTILISATEURS.administrateur WHERE pseudo = ?");
 		return users;
 	}
-	
+
 	/*
 	 * Définition des accès en fonction des profils
-	 */	
+	 */
 	@Bean
 	SecurityFilterChain web(HttpSecurity http) throws Exception {
 	    http
 	        .authorizeHttpRequests((authorize) -> authorize
 		    .requestMatchers("/utilisateurs/afficher").hasAnyRole("UTILISATEUR", "ADMIN")
-		    .requestMatchers("/utilisateurs/modifier").hasAnyRole("UTILISATEUR", "ADMIN")		    
+		    .requestMatchers("/utilisateurs/modifier").hasAnyRole("UTILISATEUR", "ADMIN")
 		    .requestMatchers("/utilisateurs/creer").permitAll()
 		    .requestMatchers("/vendre-article").hasAnyRole("UTILISATEUR", "ADMIN")
 		    .requestMatchers("/view-resultat-gagnant").hasAnyRole("UTILISATEUR", "ADMIN")
@@ -45,17 +45,19 @@ public class securityConfig {
 		    .requestMatchers("/image/*").permitAll() //Accès aux images pour tous le monde
 		    .requestMatchers("/").permitAll() //Accès à l'index pour tous le monde
 		    .requestMatchers("/home").permitAll() //Accès à l'index pour tous le monde
+		    .requestMatchers("/session").permitAll() //Accès à l'index pour tous le monde
+		    .requestMatchers("/login").permitAll() //Accès à l'index pour tous le monde
 		    .requestMatchers("/encheres").permitAll() //Accès à l'index pour tous le monde
 	            .anyRequest().authenticated()
 	        );
-	    
-	    //Formulaire de connexion par défaut	    
+
+	    //Formulaire de connexion par défaut
 	    http.formLogin(form -> {
 	    			form.loginPage("/login"); //url permettant d'afficher la page de login
 	    			form.permitAll();
 	    			form.defaultSuccessUrl("/session"); //url appelée si connexion ok
-	    }); 
-	    
+	    });
+
 	    http.logout(form -> {
 			    	form.invalidateHttpSession(true);
 			    	form.clearAuthentication(true);
@@ -63,7 +65,7 @@ public class securityConfig {
 			    	form.logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
 			    	form.logoutSuccessUrl("/encheres").permitAll();
 	    });
-	    
+
 
 	    return http.build();
 	}

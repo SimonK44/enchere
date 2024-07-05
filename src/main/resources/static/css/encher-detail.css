@@ -81,7 +81,7 @@ main .dropdown {
 
 /* Button styles */
 button {
-    margin-top: 20px;
+    margin-top: 5px;
     padding: 10px 15px;
     border: none;
     border-radius: 4px;
@@ -99,4 +99,12 @@ button:hover {
 /* Align the text */
 p, label {
     margin-bottom: 10px;
+}
+
+.proposition-container {
+    display: flex;
+    align-items: center; /* Alignement vertical des éléments */
+}
+.proposition-input {
+    max-width: 120px;
 }

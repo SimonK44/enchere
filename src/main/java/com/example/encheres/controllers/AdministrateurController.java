@@ -38,13 +38,14 @@ public class AdministrateurController {
 
 	//Méthode permettant d'afficher la liste des utilisateur
 	@GetMapping("/liste")
-	public String afficherListeUtilisateur(Model model, @ModelAttribute("utilisateurSession") Utilisateur utilisateurSession) {
+	public String afficherListeUtilisateur(
+			Model model,
+			@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession
+	) {
 
 		System.out.println(utilisateurSession);
 
 		List<Utilisateur> utilisateurs = utilisateurService.findAll();
-
-		System.out.println("AdministrateurControlleur " + utilisateurs  );
 
 		model.addAttribute("utilisateurs", utilisateurs);
 

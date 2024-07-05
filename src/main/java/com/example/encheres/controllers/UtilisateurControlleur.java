@@ -56,33 +56,45 @@ public class UtilisateurControlleur {
 			@SessionAttribute(value = "utilisateurSession", required = false) Utilisateur utilisateurSession,
 			@RequestParam(value = "id", required = false) Integer noUtilisateur // Utilisez Integer au lieu de int
 	) {
+		System.out.println("afficherUtilisateurParId" + utilisateurSession);
+		System.out.println("\n \n afficherUtilisateurParId  : noUtilisateur" + noUtilisateur);
 		// Si aucun utilisateur en session et aucun ID fourni, redirigez vers la page de connexion
 		if (utilisateurSession == null && noUtilisateur == null) {
+			System.out.println(" premier ");
 			return "redirect:/login";
 		}
 
 		// Si aucun utilisateur en session mais un ID est fourni
 		if (utilisateurSession == null) {
+			System.out.println(" deuxiemee ");
+
 			Utilisateur utilisateur = this.utilisateurService.lectureUtilisateur(noUtilisateur);
 			model.addAttribute("utilisateur", utilisateur);
 			model.addAttribute("isDifferentUser", true); // Ajoutez cette variable
 			return "view-utilisateur";
 		}
+		System.out.println(" tresss ");
 
 		// Si un utilisateur est en session
 		Utilisateur utilisateur;
 		boolean isDifferentUser = false;
 		if (noUtilisateur == null || noUtilisateur.equals(utilisateurSession.getNoUtilisateur())) {
+			System.out.println(" azerty ");
+
 			utilisateur = this.utilisateurService.lectureUtilisateur(utilisateurSession.getNoUtilisateur());
 		} else {
+			System.out.println(" ytreza ");
 			utilisateur = this.utilisateurService.lectureUtilisateur(noUtilisateur);
 			isDifferentUser = true; // L'utilisateur demandé est différent de l'utilisateur en session
 		}
 
 		if (utilisateur != null) {
+			System.out.println("vers lagin ");
 			model.addAttribute("utilisateur", utilisateur); // 1 objet utilisateur avec tous ses paramètres
 		}
 		model.addAttribute("isDifferentUser", isDifferentUser); // Ajoutez cette variable au modèle
+
+		System.out.println("vFininiisssh ");
 
 		return "view-utilisateur";
 	}
@@ -93,7 +105,6 @@ public class UtilisateurControlleur {
 
 		try {
 			this.utilisateurService.modifierUtilisateur(utilisateur);
-			System.out.println("Utilisateur = "+utilisateur);
 			return "redirect:/home";
 		} catch (BusinessException e) {
 			e.getErreurs().forEach(err -> {
