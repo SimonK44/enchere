@@ -1,9 +1,11 @@
 package com.example.encheres.bll;
 
 import com.example.encheres.bo.ArticleVendu;
+import com.example.encheres.bo.Enchere;
 import com.example.encheres.bo.Retrait;
 import com.example.encheres.bo.Utilisateur;
 import com.example.encheres.dal.ArticleVenduDAO;
+import com.example.encheres.dal.EnchereDAO;
 import com.example.encheres.dal.RetraitDAO;
 import com.example.encheres.dal.UtilisateurDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +21,20 @@ public class ArticleVenduImpl implements ArticleVenduService {
 	private ArticleVenduDAO articleVenduDAO;
 	private UtilisateurDAO utilisateurDAO;
 	private RetraitDAO retraitDAO;
+	private EnchereDAO enchereDAO;
 
 
-
-	public ArticleVenduImpl(ArticleVenduDAO articleVenduDAO, UtilisateurDAO utilisateurDAO, RetraitDAO retraitDAO) {
+	public ArticleVenduImpl(
+			ArticleVenduDAO articleVenduDAO,
+			UtilisateurDAO utilisateurDAO,
+			RetraitDAO retraitDAO,
+			EnchereDAO enchereDAO
+	) {
 		super();
 		this.articleVenduDAO = articleVenduDAO;
 		this.utilisateurDAO = utilisateurDAO;
 		this.retraitDAO = retraitDAO;
+		this.enchereDAO = enchereDAO;
 	}
 
 	@Override
@@ -74,6 +82,11 @@ public class ArticleVenduImpl implements ArticleVenduService {
 	}
 
 	@Override
+	public void modifierArticleVenduPrixVente(int noArticleVendu, float prixVente) {
+		this.articleVenduDAO.updatePrixVente(noArticleVendu, prixVente);
+	}
+
+	@Override
 	public void supprimerArticleVendu(int articleVendu) {
 
 	}
@@ -90,4 +103,35 @@ public class ArticleVenduImpl implements ArticleVenduService {
 		adresse.setNoArticle(articleVendu.getNoArticle());
 		this.retraitDAO.create(adresse);
 	}
+
+	@Transactional
+	public void encherirArticle(int noArticleVendu, float proposition, Utilisateur user) {
+		Utilisateur utilisateur = this.utilisateurDAO.read(user.getNoUtilisateur());
+		// recuperer derniere offre
+		Enchere lastEnchereMax = this.enchereDAO.montantMax(noArticleVendu);
+		//rendre les points
+		Utilisateur dernierAcheteur = this.utilisateurDAO.read(lastEnchereMax.getUtilisateur().getNoUtilisateur());
+		System.out.println("\n CRvz NW : " + (dernierAcheteur.getCredit() + lastEnchereMax.getMontantEnchere()));
+		this.utilisateurDAO.updateCredit(
+				lastEnchereMax.getUtilisateur().getNoUtilisateur(),
+				dernierAcheteur.getCredit() + lastEnchereMax.getMontantEnchere()
+		);
+		// retirer credit utilisateur
+		this.utilisateurDAO.updateCredit(
+				utilisateur.getNoUtilisateur(),
+				utilisateur.getCredit() - proposition
+		);
+		//ajouter enchere
+		Enchere nouvelleEnchere = new Enchere();
+		ArticleVendu articleVenduEnchere = new ArticleVendu();
+		articleVenduEnchere.setNoArticle(noArticleVendu);
+		nouvelleEnchere.setMontantEnchere(proposition);
+		nouvelleEnchere.setArticleVendu(articleVenduEnchere);
+		nouvelleEnchere.setUtilisateur(user);
+		this.enchereDAO.create(nouvelleEnchere);
+		//modifier articlevendu
+		this.articleVenduDAO.updatePrixVente(noArticleVendu, proposition);
+
+	}
+
 }

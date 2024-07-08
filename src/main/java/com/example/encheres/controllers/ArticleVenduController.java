@@ -95,12 +95,14 @@ public class ArticleVenduController {
 	public String encherir(
 		@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession,
 		@RequestParam("noArticleVendu") int noArticleVendu,
-		@RequestParam("proposition") Double proposition
+		@RequestParam("proposition") float proposition
 	) {
 		// Logique pour gérer l'enchère, par exemple enregistrer dans la base de données
 		System.out.println("Enchère pour l'article avec ID : " + utilisateurSession);
 		System.out.println("Enchère pour l'article avec ID : " + noArticleVendu);
 		System.out.println("Proposition d'enchère : " + proposition);
+
+		this.articleVenduService.encherirArticle(noArticleVendu, proposition, utilisateurSession);
 
 		// Redirection ou affichage d'une nouvelle vue après traitement
 		return "redirect:/home"; // Redirige vers une page de confirmation
