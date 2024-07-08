@@ -57,7 +57,7 @@ public class UtilisateurControlleur {
 			@RequestParam(value = "id", required = false) Integer noUtilisateur // Utilisez Integer au lieu de int
 	) {
 		System.out.println("afficherUtilisateurParId" + utilisateurSession);
-		System.out.println("\n \n afficherUtilisateurParId  : noUtilisateur" + noUtilisateur);
+		System.out.println("\n \n afficherUtilisateurParId  : noUtilisateur" + utilisateurSession);
 		// Si aucun utilisateur en session et aucun ID fourni, redirigez vers la page de connexion
 		if (utilisateurSession == null && noUtilisateur == null) {
 			System.out.println(" premier ");
@@ -89,7 +89,7 @@ public class UtilisateurControlleur {
 		}
 
 		if (utilisateur != null) {
-			System.out.println("vers lagin ");
+			System.out.println("vers login ");
 			model.addAttribute("utilisateur", utilisateur); // 1 objet utilisateur avec tous ses paramètres
 		}
 		model.addAttribute("isDifferentUser", isDifferentUser); // Ajoutez cette variable au modèle
@@ -103,17 +103,25 @@ public class UtilisateurControlleur {
 	@PostMapping("/modifier")
 	public String modifUtilisateurParId(@Valid @ModelAttribute("utilisateur") Utilisateur utilisateur, BindingResult bindingResult) {
 
-		try {
-			this.utilisateurService.modifierUtilisateur(utilisateur);
-			return "redirect:/home";
-		} catch (BusinessException e) {
-			e.getErreurs().forEach(err -> {
-				ObjectError error = new ObjectError("globalError", err);
-				bindingResult.addError(error);
-				System.err.println(error);
-				}
-			);
+		Utilisateur u = new Utilisateur();
+		
+		if (bindingResult.hasErrors()) {
 			return "view-profil-modification";
+		} else {
+			System.out.println("Modification de l'utilisateur = " + utilisateur);
+			//Appel du service en charge de la création de l'utilisateur		
+			try {
+				this.utilisateurService.modifierUtilisateur(utilisateur);
+				return "redirect:/home";
+			} catch (BusinessException e) {
+				e.getErreurs().forEach(err -> {
+					ObjectError error = new ObjectError("globalError", err);
+					bindingResult.addError(error);
+					System.err.println(error);
+					}
+				);
+				return "view-profil-modification";
+			}
 		}
 	}
 
