@@ -143,5 +143,11 @@ public class EnchereDAOImpl implements EnchereDAO {
 		}
 	}
 
+//@Override
+//public int montantMax(int noUtilisateur, int noArticle) {
+//	// TODO Auto-generated method stub
+//	return 0;
+//}
+
 
 }
