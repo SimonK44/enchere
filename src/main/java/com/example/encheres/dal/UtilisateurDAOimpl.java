@@ -40,15 +40,9 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 
  /**
  * constructeur de UtlisateurDAOimpl
-=======
 	private static final String FIND_ALL = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS";
 	private static final String FIND_BY_PSEUDO = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE pseudo = :pseudo";
-<<<<<<< Updated upstream
 
-=======
-	
-	
->>>>>>> Stashed changes
 	private static final String COUNT_BY_NOM_PRENOM  = "SELECT COUNT(*) FROM UTILISATEURS WHERE nom = :nom AND prenom = :prenom";
     private static final String COUNT_BY_PSEUDO      = "SELECT COUNT(*) FROM UTILISATEURS WHERE pseudo = :pseudo";
 
@@ -59,7 +53,7 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 
     /**
  * constructeur de UtlisateurDAOimpl
->>>>>>> Stashed changes
+
  * @param jdbcTemplate
  */
 public UtilisateurDAOimpl(NamedParameterJdbcTemplate jdbcTemplate) {
