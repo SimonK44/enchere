@@ -17,5 +17,5 @@ public interface ArticleVenduService {
 
 	void createArticleWithRetrait(ArticleVendu articleVendu, Retrait adresse, Utilisateur user);
 
-	void encherirArticle(int noArticleVendu, float proposition, Utilisateur user);
+	void encherirArticle(int noArticleVendu, int proposition, Utilisateur user);
 }

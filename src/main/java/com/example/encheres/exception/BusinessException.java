@@ -16,6 +16,7 @@ public class BusinessException extends Exception {
 	public static final String ERREUR_3 = "Article inexistant";
 	public static final String ERREUR_4 = "Utilisateur inexistant";
 	public static final String ERREUR_5 = "Montant enchere trop basse";
+	public static final String ERREUR_6 = "Les mots de passe sont différents";
 
 	public BusinessException() {
 		super();

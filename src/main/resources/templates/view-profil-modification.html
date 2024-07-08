@@ -65,7 +65,8 @@
 			<div class="form-row">
 				<div class="form-col">
 					<label for="inputPassordAct">Mot de passe actuel :</label>
-					<input id="inputPassordAct" type="password" name="passwordAct"/>					
+					<input id="inputPassordAct" type="password" name="password" th:field="*{motDePasseActuel}"/>	
+					<div data-th-replace="~{/fragments/fragment-error :: frag-error('motDePasseActuel')}"></div>				
 				</div>
 				<div class="form-col">										
 				</div>
@@ -78,7 +79,8 @@
 				</div>
 				<div class="form-col">
 					<label for="confirmPassword">Confirmation :</label>
-					<input id="confirmPassword" type="password" name="confirmPassword"/>					
+					<input id="confirmPassword" type="password" name="confirmPassword" th:field="*{confirmMotDePasse}"/>
+					<div data-th-replace="~{/fragments/fragment-error :: frag-error('confirmMotDePasse')}"></div>					
 				</div>
 			</div>
 			<div class="form-row">				

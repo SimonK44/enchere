@@ -105,7 +105,7 @@ public class ArticleVenduImpl implements ArticleVenduService {
 	}
 
 	@Transactional
-	public void encherirArticle(int noArticleVendu, float proposition, Utilisateur user) {
+	public void encherirArticle(int noArticleVendu, int proposition, Utilisateur user) {
 		Utilisateur utilisateur = this.utilisateurDAO.read(user.getNoUtilisateur());
 		// recuperer derniere offre
 		Enchere lastEnchereMax = this.enchereDAO.montantMax(noArticleVendu);
