@@ -137,7 +137,7 @@ public class EnchereDAOImpl implements EnchereDAO {
 
 			// Mapping enchere
 			LocalDate dateEnchere = rs.getDate("date_enchere").toLocalDate();
-			float montantEnchere = rs.getFloat("montant_enchere");
+			int montantEnchere = rs.getInt("montant_enchere");
 
 			return new Enchere(utilisateur, articleVendu, dateEnchere, montantEnchere);
 		}
