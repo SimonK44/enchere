@@ -66,8 +66,12 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			} catch (DataAccessException e) {
 				e.printStackTrace();
 				be.addError(BusinessException.ERREUR_0);
+				System.out.println("Error");
 				throw be;
 			}
+		} else {
+			System.out.println("UtilisateurServImpl Error modif : "+utilisateur);
+			throw be;			
 		}
 	}
 

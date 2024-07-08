@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<link rel="stylesheet" th:href="@{/css/header-footer.css}" />
 	<link rel="stylesheet" th:href="@{/css/form-inscription.css}" />
+	<link rel="stylesheet" th:href="@{/css/error.css}" />
 	<title>ENI-Enchères</title>
 </head>
 <body>	
@@ -11,45 +12,54 @@
 	<main>
 		<form th:action="@{/utilisateurs/modifier}" method="POST" th:object="${utilisateur}">
 			<h1>Mon profil</h1>
+			<div data-th-replace="~{/fragments/fragment-errors :: frag-errors}"></div>
 			<div class="form-row">
 				<div class="form-col">
 					<input type="hidden" name="noUtilisateur" data-th-value="${utilisateur.noUtilisateur}" />
 					<label for="inputPseudo">Pseudo :</label>				
 					<input id="inputPseudo" type="text" name="pseudo" th:value="${utilisateur.pseudo}" th:field="*{pseudo}"/>
+					<div data-th-replace="~{/fragments/fragment-error :: frag-error('pseudo')}"></div>
 				</div>
 				<div class="form-col">
-					<label for="inputPrenom">Nom :</label>
-					<input id="inputPrenom" type="text" name="prenom" th:value="${utilisateur.prenom}" th:field="*{prenom}"/>					
+					<label for="inputNom">Nom :</label>
+					<input id="inputNom" type="text" name="nom" th:value="${utilisateur.nom}" th:field="*{nom}"/>	
+					<div data-th-replace="~{/fragments/fragment-error :: frag-error('nom')}"></div>				
 				</div>
 			</div>
 			<div class="form-row">
 				<div class="form-col">
 					<label for="inputNom">Prénom :</label>
-					<input id="inputNom" type="text" name="nom" th:value="${utilisateur.nom}" th:field="*{nom}"/>					
+					<input id="inputNom" type="text" name="prenom" th:value="${utilisateur.prenom}" th:field="*{prenom}"/>	
+					<div data-th-replace="~{/fragments/fragment-error :: frag-error('prenom')}"></div>				
 				</div>
 				<div class="form-col">
 					<label for="inputEmail">Email :</label>
-					<input id="inputEmail" type="email" name="email" th:value="${utilisateur.email}" th:field="*{email}"/>				
+					<input id="inputEmail" type="email" name="email" th:value="${utilisateur.email}" th:field="*{email}"/>	
+					<div data-th-replace="~{/fragments/fragment-error :: frag-error('email')}"></div>			
 				</div>
 			</div>
 			<div class="form-row">
 				<div class="form-col">
 					<label for="inputTelephone">Téléphone :</label>
-					<input id="inputTelephone" type="text" name="telephone" th:value="${utilisateur.telephone}" th:field="*{telephone}"/>						
+					<input id="inputTelephone" type="text" name="telephone" th:value="${utilisateur.telephone}" th:field="*{telephone}"/>
+					<div data-th-replace="~{/fragments/fragment-error :: frag-error('telephone')}"></div>						
 				</div>
 				<div class="form-col">
 					<label for="inputRue">Rue :</label>
-					<input id="inputRue" type="text" name="rue" th:value="${utilisateur.rue}" th:field="*{rue}"/>						
+					<input id="inputRue" type="text" name="rue" th:value="${utilisateur.rue}" th:field="*{rue}"/>	
+					<div data-th-replace="~{/fragments/fragment-error :: frag-error('rue')}"></div>					
 				</div>
 			</div>			
 			<div class="form-row">
 				<div class="form-col">
 					<label for="inputCp">Code postal :</label>
-					<input id="inputCp" type="text" name="cp" th:value="${utilisateur.codePostal}" th:field="*{codePostal}"/>						
+					<input id="inputCp" type="text" name="cp" th:value="${utilisateur.codePostal}" th:field="*{codePostal}"/>	
+					<div data-th-replace="~{/fragments/fragment-error :: frag-error('codePostal')}"></div>					
 				</div>
 				<div class="form-col">
 					<label for="inputVille">Ville :</label>
-					<input id="inputVille" type="text" name="ville" th:value="${utilisateur.ville}" th:field="*{ville}"/>					
+					<input id="inputVille" type="text" name="ville" th:value="${utilisateur.ville}" th:field="*{ville}"/>	
+					<div data-th-replace="~{/fragments/fragment-error :: frag-error('ville')}"></div>				
 				</div>
 			</div>
 			<div class="form-row">
@@ -63,7 +73,8 @@
 			<div class="form-row">
 				<div class="form-col">
 					<label for="inputPassordNew">Nouveau mot de passe :</label>
-					<input id="inputPassordNew" type="password" name="passwordNew" th:field="*{motDePasse}"/>					
+					<input id="inputPassordNew" type="password" name="passwordNew" th:field="*{motDePasse}"/>
+					<div data-th-replace="~{/fragments/fragment-error :: frag-error('motDePasse')}"></div>					
 				</div>
 				<div class="form-col">
 					<label for="confirmPassword">Confirmation :</label>
