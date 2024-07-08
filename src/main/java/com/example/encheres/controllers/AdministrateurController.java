@@ -36,7 +36,7 @@ public class AdministrateurController {
 		return "view-admin-home";
 	}
 
-	//Méthode permettant d'afficher la liste des utilisateur
+	//Méthode permettant d'afficher la liste des utilisateurs
 	@GetMapping("/liste")
 	public String afficherListeUtilisateur(
 			Model model,
@@ -45,15 +45,37 @@ public class AdministrateurController {
 
 		System.out.println(utilisateurSession);
 
-		List<Utilisateur> utilisateurs = utilisateurService.findAll();
+		List<Utilisateur> utilisateurs = utilisateurService.findAllHisto();
 
 		model.addAttribute("utilisateurs", utilisateurs);
 
 		return LIST_UTILISATEUR;
 	}
+	
+	// methode permettant d' historiser les utilisateurs
+	@GetMapping("/supprime")
+	public String historiserUtilisateur (
+			@RequestParam (name="noUtilisateur") int noUtilisateur,
+			@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession,
+			BindingResult bingingResult
+			) {
+		System.out.println("AdministrateurControlleur hisot no Utilisateur : " + noUtilisateur);
+		
+		try {
+			utilisateurService.historiserUtilisateur(noUtilisateur);		
+			return "redirect: " +LIST_UTILISATEUR;
+		} catch (BusinessException e) {
+			e.getErreurs().forEach(err -> {
+				ObjectError error = new ObjectError("globalError", err);
+				bingingResult.addError(error);
+				}
+			);	
+			return LIST_UTILISATEUR;
+		}
+	}
+	
 
-
-	//Méthode permettant d'afficher la liste des utilisateur
+	//Méthode permettant d'afficher la liste des categories
 	@GetMapping("/listeCategorie")
 	public String afficherListeCategorie(Model model) {
 		List<Categorie> categories = this.categorieService.findAllAdmin();

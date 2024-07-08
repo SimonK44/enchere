@@ -1,5 +1,7 @@
 package com.example.encheres.dal;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -16,21 +18,25 @@ import com.example.encheres.bo.Utilisateur;
 public class UtilisateurDAOimpl implements UtilisateurDAO {
 	
 	private NamedParameterJdbcTemplate jdbcTemplate;	
-	
+// requete SQL sans histo	
 	private static final String CREATE   = "INSERT INTO UTILISATEURS ( pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) VALUES ( :pseudo, :nom, :prenom, :email, :telephone, :rue, :codePostal, :ville, :motDePasse, :credit, :administrateur)";
-	private static final String READ     = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE no_utilisateur = :noUtlisateur";
+	private static final String READ     = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE no_utilisateur = :noUtlisateur AND date_histo  IS NULL";
 	private static final String UPDATE   = "UPDATE UTILISATEURS SET pseudo = :pseudo, nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, rue = :rue, code_postal = :codePostal, ville = :ville, mot_de_passe = :motDePasse WHERE no_utilisateur = :noUtilisateur";
 	private static final String DELETE   = "DELETE FROM utilisateurs WHERE no_utilisateur = :noUtilisateur";
-	private static final String FIND_ALL = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS";
-	private static final String FIND_BY_PSEUDO = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE pseudo = :pseudo";
+	private static final String FIND_ALL = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE date_histo  IS NULL ORDER BY pseudo";
+	private static final String FIND_BY_PSEUDO = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE pseudo = :pseudo AND date_histo  IS NULL ORDER BY pseudo";
 		
-	private static final String COUNT_BY_NOM_PRENOM  = "SELECT COUNT(*) FROM UTILISATEURS WHERE nom = :nom AND prenom = :prenom";
-    private static final String COUNT_BY_PSEUDO      = "SELECT COUNT(*) FROM UTILISATEURS WHERE pseudo = :pseudo";
+	private static final String COUNT_BY_NOM_PRENOM  = "SELECT COUNT(*) FROM UTILISATEURS WHERE nom = :nom AND prenom = :prenom AND date_histo  IS NULL" ;
+    private static final String COUNT_BY_PSEUDO      = "SELECT COUNT(*) FROM UTILISATEURS WHERE pseudo = :pseudo AND date_histo  IS NULL";
     
-    private static final String COUNT_BY_NOM_PRENOMMODIFIER  = "SELECT COUNT(*) FROM UTILISATEURS WHERE nom = :nom AND prenom = :prenom AND no_utilisateur != :noUtilisateur";
-    private static final String COUNT_BY_PSEUDOMODIFIER      = "SELECT COUNT(*) FROM UTILISATEURS WHERE pseudo = :pseudo AND no_utilisateur != :noUtilisateur";
-    private static final String COUNT_BY_NOUTILISATEUR       = "SELECT COUNT(*) FROM UTILISATEURS WHERE no_utilisateur = :noUtilisateur";
-    
+    private static final String COUNT_BY_NOM_PRENOMMODIFIER  = "SELECT COUNT(*) FROM UTILISATEURS WHERE nom = :nom AND prenom = :prenom AND no_utilisateur != :noUtilisateur AND date_histo  IS NULL";
+    private static final String COUNT_BY_PSEUDOMODIFIER      = "SELECT COUNT(*) FROM UTILISATEURS WHERE pseudo = :pseudo AND no_utilisateur != :noUtilisateur AND date_histo  IS NULL";
+    private static final String COUNT_BY_NOUTILISATEUR       = "SELECT COUNT(*) FROM UTILISATEURS WHERE no_utilisateur = :noUtilisateur AND date_histo  IS NULL";
+
+//    requete SQL avec histo
+	private static final String FIND_ALL_HISTO = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur, date_histo FROM UTILISATEURS ORDER BY date_histo ASC, pseudo";
+	private static final String UPDATE_HISTO   = "UPDATE UTILISATEURS SET date_histo = GETDATE() WHERE no_utilisateur = :noUtilisateur";
+	
     
     /**
  * constructeur de UtlisateurDAOimpl	
@@ -195,6 +201,26 @@ public int countByNoUtilisateur(int noUtilisateur) {
 					
 			
 			return jdbcTemplate.queryForObject(COUNT_BY_NOUTILISATEUR , mapParameterSource, Integer.class) ;
+}
+/**
+ * methode permettant de permettant lister tous les utlisateurs meme les historisés
+ */
+@Override
+public List<Utilisateur> findAllHisto() {
+	// TODO Auto-generated method stub
+	return  jdbcTemplate.query(FIND_ALL_HISTO ,new BeanPropertyRowMapper<>(Utilisateur.class));	
+}
+
+/**
+ *  methode permettant de mettre à jour la date d' histo
+ */
+@Override
+public void updateHisto(int noUtilisateur) {
+	MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();	
+// ajout parametres de requete	
+	mapParameterSource.addValue("noUtilisateur",noUtilisateur); 
+	jdbcTemplate.update(UPDATE_HISTO, mapParameterSource);
+	
 }
 
 }

@@ -5,13 +5,13 @@ import java.util.List;
 import com.example.encheres.bo.Utilisateur;
 
 public interface UtilisateurDAO {
-	
+// methodes sans les utilisateurs historisés	
 	void create (Utilisateur utilisateur);
 	Utilisateur read(int noUtlisateur);
 	void update (Utilisateur utilisateur);
 	void delete(int noUtilisateur);
 	List<Utilisateur> findAll();
-	
+		
 	Utilisateur findByPseudo(String pseudo); 
 	
 	int countByNomPrenom(String nom, String prenom);
@@ -21,4 +21,8 @@ public interface UtilisateurDAO {
 	int countByPseudoModifier(int noUtilisateur, String pseudo);
 	int countByNoUtilisateur(int noUtilisateur);
 
+// methodes avec les utlisateurs historisés
+	List<Utilisateur> findAllHisto();
+	void updateHisto (int noUtilisateur);
+	
 }
