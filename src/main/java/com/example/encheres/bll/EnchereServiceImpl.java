@@ -13,45 +13,44 @@ import com.example.encheres.dal.UtilisateurDAO;
 import com.example.encheres.exception.BusinessException;
 
 public class EnchereServiceImpl implements EnchereService {
-	@Autowired
 	private EnchereDAO      enchereDAO;
 	private ArticleVenduDAO articleVenduDAO;
 	private UtilisateurDAO  utilisateurDAO;
 
-	
-	
+
+
 /**
- *  creation d' une enchere	
+ *  creation d' une enchere
  */
 	@Override
 	@Transactional(rollbackFor = BusinessException.class)
 	public void creerEnchere(Enchere enchere) throws BusinessException {
-		BusinessException be = new BusinessException() ;
-		
+		/*BusinessException be = new BusinessException() ;
+
 		boolean isValid = controleArticle(enchere.getArticleVendu().getNoArticle(), be);
-		
+
 		isValid &= controleUtilisateur(enchere.getUtilisateur().getNoUtilisateur(),be);
-		
+
 		isValid &= controleMontantMax(enchere.getArticleVendu().getNoArticle(), enchere.getMontantEnchere(),be);
-		
+
 		if (isValid) {
-			
+
 		  try {
 			enchereDAO.create(enchere);
 		  } catch (DataAccessException e) {
 			be.addError(BusinessException.ERREUR_1);
 			throw be;
 		  }
-		} else {			
+		} else {
 			throw be;
-		}	
+		}	*/
 	}
 /**
  * lecture enchere
  */
 	@Override
 	public Enchere lectureEnchere(int noUtilisateur, int noArticle) {
-		
+
 		return enchereDAO.read(noUtilisateur, noArticle);
 	}
 /**
@@ -59,16 +58,15 @@ public class EnchereServiceImpl implements EnchereService {
  */
 	@Override
 	public List<Enchere> listeEnchereParArticle(int noArticle) {
-		
+
 		return enchereDAO.findByArticle(noArticle);
 	}
-	
+
 	@Override
-	public int enchereMontantMax(int noArticle) {
-		
+	public Enchere enchereMontantMax(int noArticle) {
 		return enchereDAO.montantMax( noArticle);
-	}	
-	
+	}
+
 /**
  *  controle que l' article de l' enchere existe
  * @param noArticle
@@ -77,48 +75,48 @@ public class EnchereServiceImpl implements EnchereService {
  */
 	private boolean controleArticle(int noArticle,BusinessException be) {
 		boolean isValid = false;
-		
+
 		if ( articleVenduDAO.countArticle( noArticle) == 1 ) {
 			isValid = true;
 		}else {
-				be.addError(BusinessException.ERREUR_3);		
+				be.addError(BusinessException.ERREUR_3);
 		}
-				
-		return isValid;		
-		
+
+		return isValid;
+
 	}
 /**
- * controle que l' utilisateur de l' enchere existe	
+ * controle que l' utilisateur de l' enchere existe
  * @param noUtilisateur
  * @param be
  * @return
  */
 	private boolean controleUtilisateur(int noUtilisateur,BusinessException be ) {
 		boolean isValid = false;
-		
+
 		if (utilisateurDAO.countByNoUtilisateur(noUtilisateur)== 1) {
 			isValid = true;
 		}else {
 			be.addError(BusinessException.ERREUR_4);
 		}
-		
-		return isValid;		
+
+		return isValid;
 	}
 
 /**
  *  controle que le montant de l' enchere depasse le montant de l' ancienne enchere
  */
-	private boolean controleMontantMax( int noArticle, float montant, BusinessException be) {
+/*	private boolean controleMontantMax( int noArticle, float montant, BusinessException be) {
 		boolean isValid = false;
-		
+
 		if (enchereDAO.montantMax(noArticle) < montant) {
 			isValid = true;
 		} else {
 			be.addError(BusinessException.ERREUR_5);
 		}
-		
-		return isValid;		
-		
-	}
-	
+
+		return isValid;
+
+	}*/
+
 }
