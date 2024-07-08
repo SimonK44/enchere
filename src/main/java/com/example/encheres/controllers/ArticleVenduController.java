@@ -69,7 +69,6 @@ public class ArticleVenduController {
 		return "view-resultat-retrait";
 	}
 
-
 	@GetMapping("/view-encher-detail")
 	public String pageArticleDetail(
 			@RequestParam(value = "id", required = false) int noArticleVendu,
