@@ -9,8 +9,8 @@ public class Enchere {
 	private ArticleVendu articleVendu;
 	
 	private LocalDate dateEnchere;
-	private float montantEnchere;
-	public Enchere(Utilisateur utilisateur, ArticleVendu articleVendu, LocalDate dateEnchere, float montantEnchere) {
+	private int montantEnchere;
+	public Enchere(Utilisateur utilisateur, ArticleVendu articleVendu, LocalDate dateEnchere, int montantEnchere) {
 		
 		this.utilisateur = utilisateur;
 		this.articleVendu = articleVendu;
@@ -38,7 +38,7 @@ public class Enchere {
 	public float getMontantEnchere() {
 		return montantEnchere;
 	}
-	public void setMontantEnchere(float montantEnchere) {
+	public void setMontantEnchere(int montantEnchere) {
 		this.montantEnchere = montantEnchere;
 	}
 	@Override
