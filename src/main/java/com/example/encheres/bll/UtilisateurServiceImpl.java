@@ -96,6 +96,26 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	public List<Utilisateur> findAll() {
 		return utilisateurDAO.findAll();
 	}
+	
+	
+	@Override
+	public List<Utilisateur> findAllHisto() {
+		return utilisateurDAO.findAllHisto();
+	}
+
+	@Override
+	@Transactional(rollbackFor = BusinessException.class)
+	public void historiserUtilisateur(int noUtilisateur) throws BusinessException {
+		BusinessException be = new BusinessException() ;		
+	
+		try {
+			utilisateurDAO.updateHisto(noUtilisateur);
+		} catch (DataAccessException e) {
+				e.printStackTrace();
+				be.addError(BusinessException.ERREUR_0);
+				throw be;
+		}
+	}
 
 	private boolean controleNomPrenom (String nom, String prenom, BusinessException be) {
 		boolean isValid = false;
@@ -154,6 +174,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		utilisateur.setMotDePasse(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode(utilisateur.getMotDePasse()));
 		System.out.println(utilisateur.getMotDePasse());
 	}
+
+
 	
 
 }
