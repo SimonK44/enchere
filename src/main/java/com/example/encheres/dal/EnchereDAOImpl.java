@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.example.encheres.bo.ArticleVendu;
-import com.example.encheres.bo.Categorie;
 import com.example.encheres.bo.Utilisateur;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
@@ -142,12 +141,6 @@ public class EnchereDAOImpl implements EnchereDAO {
 			return new Enchere(utilisateur, articleVendu, dateEnchere, montantEnchere);
 		}
 	}
-
-//@Override
-//public int montantMax(int noUtilisateur, int noArticle) {
-//	// TODO Auto-generated method stub
-//	return 0;
-//}
 
 
 }
