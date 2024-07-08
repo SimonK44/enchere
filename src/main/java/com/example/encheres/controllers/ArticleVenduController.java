@@ -94,7 +94,7 @@ public class ArticleVenduController {
 	public String encherir(
 		@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession,
 		@RequestParam("noArticleVendu") int noArticleVendu,
-		@RequestParam("proposition") float proposition
+		@RequestParam("proposition") int proposition
 	) {
 		// Logique pour gérer l'enchère, par exemple enregistrer dans la base de données
 		System.out.println("Enchère pour l'article avec ID : " + utilisateurSession);

@@ -60,11 +60,11 @@ public class ArticleVenduImpl implements ArticleVenduService {
     		a.setVendeur(utilisateurDAO.read(a.getVendeur().getNoUtilisateur()));
     	}
 
-    	//ArticleVendu [noArticle=1, nomArticle=Tan, description=une e, 
-    	//dateDebutEnchere=2024-07-01, dateFinEnchere=2024-07-30, prixInitial=100.0, prixVente=150.0, 
-    	//categorie=Categorie [noCategorie=1, libelle=null], acheteur=Utilisateur [noUtilisateur=2, pseudo=null, nom=null, prenom=null, email=null, telephone=null, rue=null, codePostal=null, ville=null, motDePasse=null, credit=0, administrateur=false], 
-    	//vendeur=Utilisateur [noUtilisateur=1, pseudo=null, nom=null, prenom=null, email=null, telephone=null, rue=null, codePostal=null, ville=null, motDePasse=null, credit=0, administrateur=false], encheres=[]], 
-    	
+    	//ArticleVendu [noArticle=1, nomArticle=Tan, description=une e,
+    	//dateDebutEnchere=2024-07-01, dateFinEnchere=2024-07-30, prixInitial=100.0, prixVente=150.0,
+    	//categorie=Categorie [noCategorie=1, libelle=null], acheteur=Utilisateur [noUtilisateur=2, pseudo=null, nom=null, prenom=null, email=null, telephone=null, rue=null, codePostal=null, ville=null, motDePasse=null, credit=0, administrateur=false],
+    	//vendeur=Utilisateur [noUtilisateur=1, pseudo=null, nom=null, prenom=null, email=null, telephone=null, rue=null, codePostal=null, ville=null, motDePasse=null, credit=0, administrateur=false], encheres=[]],
+
     	System.out.println(utilisateurDAO.read(7));
 //		articles.foreach(u->u.setUtilisateur(u))
 //    	Utilisateur u -> u.s(this.utilisateurService.lectureUtilisateur();))
@@ -84,8 +84,9 @@ public class ArticleVenduImpl implements ArticleVenduService {
 
 	}
 
+
 	@Override
-	public void modifierArticleVenduPrixVente(int noArticleVendu, float prixVente) {
+	public void modifierArticleVenduPrixVente(int noArticleVendu, int prixVente) {
 		this.articleVenduDAO.updatePrixVente(noArticleVendu, prixVente);
 	}
 
@@ -108,7 +109,7 @@ public class ArticleVenduImpl implements ArticleVenduService {
 	}
 
 	@Transactional
-	public void encherirArticle(int noArticleVendu, float proposition, Utilisateur user) {
+	public void encherirArticle(int noArticleVendu, int proposition, Utilisateur user) {
 		Utilisateur utilisateur = this.utilisateurDAO.read(user.getNoUtilisateur());
 		// recuperer derniere offre
 		Enchere lastEnchereMax = this.enchereDAO.montantMax(noArticleVendu);
@@ -140,9 +141,9 @@ public class ArticleVenduImpl implements ArticleVenduService {
 	public List<ArticleVendu> findAllComplexe(int requete,  String nomArticle, int noCategorie, int noUtilisateurVendeur, int noUtilisateurAcheteur) {
 
 		// à developper
-		
-		
+
+
 		return null;
 	}
-	
+
 }
