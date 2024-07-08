@@ -127,10 +127,12 @@ public class UtilisateurControlleur {
 
 	//Création d'un utilisateur
 	@PostMapping("/creer")
-	public String creerUtilisateur(@Valid @ModelAttribute("utilisateur") Utilisateur utilisateur, 
-								BindingResult bindingResult) {
-//		@RequestParam("confirmPassword") String confirmPassword, 
-//		System.out.println(confirmPassword);
+	public String creerUtilisateur(@Valid 
+			@RequestParam(name = "confirmPassword") String confirmPassword,
+			@ModelAttribute("utilisateur") Utilisateur utilisateur, 								
+			BindingResult bindingResult) {
+//		@RequestParam("confirmPassword") String confirmPassword,
+		System.out.println(confirmPassword);
 		Utilisateur u = new Utilisateur();
 
 		if (bindingResult.hasErrors()) {
@@ -145,6 +147,7 @@ public class UtilisateurControlleur {
 				e.getErreurs().forEach(err -> {
 					ObjectError error = new ObjectError("globalError", err);
 					bindingResult.addError(error);
+					System.err.println(error);
 					}
 				);
 				return "view-profil-creation";
