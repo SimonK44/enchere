@@ -1,8 +1,9 @@
 package com.example.encheres.bo;
 
+import java.time.LocalDate;
+
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -52,6 +53,8 @@ public class Utilisateur {
 //    }
 	private int credit;
 	private boolean administrateur;
+	
+	private LocalDate dateHisto;
 	
 	
 /**
@@ -189,13 +192,24 @@ public void setAdministrateur(boolean administrateur) {
 	this.administrateur = administrateur;
 }
 
+
+public LocalDate getDateHisto() {
+	return dateHisto;
+}
+
+public void setDateHisto(LocalDate dateHisto) {
+	this.dateHisto = dateHisto;
+}
+
 @Override
 public String toString() {
 	return "Utilisateur [noUtilisateur=" + noUtilisateur + ", pseudo=" + pseudo + ", nom=" + nom + ", prenom=" + prenom
 			+ ", email=" + email + ", telephone=" + telephone + ", rue=" + rue + ", codePostal=" + codePostal
 			+ ", ville=" + ville + ", motDePasse=" + motDePasse + ", credit=" + credit + ", administrateur="
-			+ administrateur + "]";
+			+ administrateur + ", dateHisto=" + dateHisto + "]";
 }
+
+
 
 	
 	

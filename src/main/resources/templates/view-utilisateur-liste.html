@@ -19,8 +19,9 @@
 			<tr>
 				<th>Pseudo</th>
 				<th>Nom</th>
-				<th>prenom</th>
-				<th>email</th>
+				<th>Prenom</th>
+				<th>Email</th>
+				<th>Date historisation</th>
 				<th>Action</th>
 			</tr>
 	  </thead>
@@ -31,9 +32,10 @@
 	 	 	<td th:text="${item.nom}"></td>
 	 	 	<td th:text="${item.prenom}"></td>
 	 	 	<td th:text="${item.email}"></td>
+	 	 	<td th:text="${item.dateHisto}"></td>
 	 	 	<td>
 	 	 		<a  th:href="@{/utilisateurs/afficher(id=${item.noUtilisateur})}"> Detail</a>	 	 	   
-	 	 	    <a id="suppression" th:href="@{/utilisateur/supprime(id=${item.noUtilisateur})}" onclick=" return confirmation()"> Suppression</a>
+	 	 	    <a id="suppression" th:if="${item.dateHisto == null }"  th:href="@{/administrateur/supprime(noUtilisateur=${item.noUtilisateur})}" onclick=" return confirmation()"> Suppression</a>
 	 	 	</td>
 	  	</tr>
 	 	 </tbody>	
