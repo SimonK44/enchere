@@ -43,7 +43,12 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 =======
 	private static final String FIND_ALL = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS";
 	private static final String FIND_BY_PSEUDO = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE pseudo = :pseudo";
+<<<<<<< Updated upstream
 
+=======
+	
+	
+>>>>>>> Stashed changes
 	private static final String COUNT_BY_NOM_PRENOM  = "SELECT COUNT(*) FROM UTILISATEURS WHERE nom = :nom AND prenom = :prenom";
     private static final String COUNT_BY_PSEUDO      = "SELECT COUNT(*) FROM UTILISATEURS WHERE pseudo = :pseudo";
 
@@ -147,7 +152,8 @@ public UtilisateurDAOimpl(NamedParameterJdbcTemplate jdbcTemplate) {
  */
 	@Override
 	public List<Utilisateur> findAll() {
-		return jdbcTemplate.query(FIND_ALL ,new BeanPropertyRowMapper<>(Utilisateur.class));
+		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();	
+		return jdbcTemplate.query(FIND_ALL,mapParameterSource,new BeanPropertyRowMapper<>(Utilisateur.class));
 	}
 
 /**

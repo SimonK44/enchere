@@ -7,8 +7,8 @@ import com.example.encheres.bo.Utilisateur;
 import com.example.encheres.dal.ArticleVenduDAO;
 import com.example.encheres.dal.EnchereDAO;
 import com.example.encheres.dal.RetraitDAO;
+import com.example.encheres.dal.ArticleVenduDynamiqueDAO;
 import com.example.encheres.dal.UtilisateurDAO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +36,9 @@ public class ArticleVenduImpl implements ArticleVenduService {
 		this.retraitDAO = retraitDAO;
 		this.enchereDAO = enchereDAO;
 	}
+	private ArticleVenduDynamiqueDAO articleVenduDynamiqueDAO;
+
+
 
 	@Override
 	public void create(ArticleVendu articleVendu) {
@@ -57,12 +60,12 @@ public class ArticleVenduImpl implements ArticleVenduService {
     		a.setVendeur(utilisateurDAO.read(a.getVendeur().getNoUtilisateur()));
     	}
 
-    	//ArticleVendu [noArticle=1, nomArticle=Tan, description=une e,
-    	//dateDebutEnchere=2024-07-01, dateFinEnchere=2024-07-30, prixInitial=100.0, prixVente=150.0,
-    	//categorie=Categorie [noCategorie=1, libelle=null], acheteur=Utilisateur [noUtilisateur=2, pseudo=null, nom=null, prenom=null, email=null, telephone=null, rue=null, codePostal=null, ville=null, motDePasse=null, credit=0, administrateur=false],
-    	//vendeur=Utilisateur [noUtilisateur=1, pseudo=null, nom=null, prenom=null, email=null, telephone=null, rue=null, codePostal=null, ville=null, motDePasse=null, credit=0, administrateur=false], encheres=[]],
-
-
+    	//ArticleVendu [noArticle=1, nomArticle=Tan, description=une e, 
+    	//dateDebutEnchere=2024-07-01, dateFinEnchere=2024-07-30, prixInitial=100.0, prixVente=150.0, 
+    	//categorie=Categorie [noCategorie=1, libelle=null], acheteur=Utilisateur [noUtilisateur=2, pseudo=null, nom=null, prenom=null, email=null, telephone=null, rue=null, codePostal=null, ville=null, motDePasse=null, credit=0, administrateur=false], 
+    	//vendeur=Utilisateur [noUtilisateur=1, pseudo=null, nom=null, prenom=null, email=null, telephone=null, rue=null, codePostal=null, ville=null, motDePasse=null, credit=0, administrateur=false], encheres=[]], 
+    	
+    	System.out.println(utilisateurDAO.read(7));
 //		articles.foreach(u->u.setUtilisateur(u))
 //    	Utilisateur u -> u.s(this.utilisateurService.lectureUtilisateur();))
 
@@ -134,4 +137,12 @@ public class ArticleVenduImpl implements ArticleVenduService {
 
 	}
 
+	public List<ArticleVendu> findAllComplexe(int requete,  String nomArticle, int noCategorie, int noUtilisateurVendeur, int noUtilisateurAcheteur) {
+
+		// à developper
+		
+		
+		return null;
+	}
+	
 }
