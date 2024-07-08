@@ -9,9 +9,15 @@ import com.example.encheres.dal.EnchereDAO;
 import com.example.encheres.dal.RetraitDAO;
 import com.example.encheres.dal.ArticleVenduDynamiqueDAO;
 import com.example.encheres.dal.UtilisateurDAO;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 
@@ -22,6 +28,10 @@ public class ArticleVenduImpl implements ArticleVenduService {
 	private UtilisateurDAO utilisateurDAO;
 	private RetraitDAO retraitDAO;
 	private EnchereDAO enchereDAO;
+
+
+	@Value("${upload.path}")
+	private String uploadPath;
 
 
 	public ArticleVenduImpl(
@@ -97,7 +107,7 @@ public class ArticleVenduImpl implements ArticleVenduService {
 
 	@Override
 	@Transactional
-	public void createArticleWithRetrait(ArticleVendu articleVendu, Retrait adresse, Utilisateur user) {
+	public void createArticleWithRetrait(ArticleVendu articleVendu, Retrait adresse, Utilisateur user, MultipartFile image) {
 		Utilisateur acheteur = new Utilisateur();
 		Utilisateur vendeur = new Utilisateur();
 		vendeur.setNoUtilisateur(user.getNoUtilisateur());
@@ -106,6 +116,16 @@ public class ArticleVenduImpl implements ArticleVenduService {
 		this.articleVenduDAO.create(articleVendu);
 		adresse.setNoArticle(articleVendu.getNoArticle());
 		this.retraitDAO.create(adresse);
+
+		if (!image.isEmpty()) {
+			try {
+				byte[] bytes = image.getBytes();
+				Path path = Paths.get(uploadPath + articleVendu.getNoArticle() + ".jpg");
+				Files.write(path, bytes);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Transactional
@@ -114,7 +134,10 @@ public class ArticleVenduImpl implements ArticleVenduService {
 		// recuperer derniere offre
 		Enchere lastEnchereMax = this.enchereDAO.montantMax(noArticleVendu);
 		//rendre les points
+		System.out.println("AVANT dernierAcheteur\n");
 		Utilisateur dernierAcheteur = this.utilisateurDAO.read(lastEnchereMax.getUtilisateur().getNoUtilisateur());
+		System.out.println("APRES dernierAcheteur\n");
+
 		System.out.println("\n CRvz NW : " + (dernierAcheteur.getCredit() + lastEnchereMax.getMontantEnchere()));
 		this.utilisateurDAO.updateCredit(
 				lastEnchereMax.getUtilisateur().getNoUtilisateur(),
