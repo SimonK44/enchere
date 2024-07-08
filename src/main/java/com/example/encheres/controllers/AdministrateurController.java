@@ -21,6 +21,7 @@ import com.example.encheres.bo.Utilisateur;
 public class AdministrateurController {
 
 	private final static String LIST_UTILISATEUR = "view-utilisateur-liste";
+	private final static String LIST_CATEGORIE   = "view-categorie-liste";
 
 	UtilisateurService utilisateurService;
 	CategorieService categorieService;
@@ -59,7 +60,7 @@ public class AdministrateurController {
 			@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession,
 			BindingResult bingingResult
 			) {
-		System.out.println("AdministrateurControlleur hisot no Utilisateur : " + noUtilisateur);
+//		System.out.println("AdministrateurControlleur hisot no Utilisateur : " + noUtilisateur);
 		
 		try {
 			utilisateurService.historiserUtilisateur(noUtilisateur);		
@@ -80,18 +81,42 @@ public class AdministrateurController {
 	public String afficherListeCategorie(Model model) {
 		List<Categorie> categories = this.categorieService.findAllAdmin();
 		model.addAttribute("categories", categories);
-		return "view-categorie-liste";
+		return LIST_CATEGORIE;
 	}
 
 	@GetMapping("/listeCategorieUpdate")
-	public String modifDateSuppressionCategorieById(@RequestParam(value = "id", required = false) int noCategorie) {
-		this.categorieService.updateDateSuppression(noCategorie);
-		return "view-categorie-liste";
+	public String modifDateSuppressionCategorieById(@RequestParam(value = "id", required = false) int noCategorie,
+													@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession,
+													BindingResult bingingResult) {
+		try {
+			this.categorieService.updateDateSuppression(noCategorie);
+			return "redirect:" + LIST_CATEGORIE;
+		} catch (BusinessException e) {		
+			e.printStackTrace();
+			e.getErreurs().forEach(err -> {
+				ObjectError error = new ObjectError("globalError", err);
+				bingingResult.addError(error);
+				}
+			);	
+			return "redirect:" + LIST_CATEGORIE;
+		}
 	}
 	@GetMapping("/listeCategorieDelete")
-	public String deleteCategorie(@RequestParam(value = "id", required = false) int noCategorie) {
-		this.categorieService.delete(noCategorie);
-		return "view-categorie-liste";
+	public String deleteCategorie(@RequestParam(value = "id", required = false) int noCategorie,
+								  @ModelAttribute("utilisateurSession") Utilisateur utilisateurSession,
+								  BindingResult bingingResult) {
+		try {
+			this.categorieService.delete(noCategorie);
+			return "redirect:" + LIST_CATEGORIE;
+		} catch (BusinessException e) {
+			e.printStackTrace();
+			e.getErreurs().forEach(err -> {
+				ObjectError error = new ObjectError("globalError", err);
+				bingingResult.addError(error);
+				}
+			);	
+			return "redirect:" + LIST_CATEGORIE;
+		}
 	}
 
 }
