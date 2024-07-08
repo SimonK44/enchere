@@ -17,5 +17,5 @@ public interface ArticleVenduService {
 	void supprimerArticleVendu(int articleVendu);
 	void createArticleWithRetrait(ArticleVendu articleVendu, Retrait adresse, Utilisateur user, MultipartFile image);
 	void encherirArticle(int noArticleVendu, int proposition, Utilisateur user);
-	List<ArticleVendu> findAllComplexe(int requete,  String nomArticle, int noCategorie, int noUtilisateurVendeur, int noUtilisateurAcheteur);
+	List<ArticleVendu> findAllComplexe(String transactionType, int requete,  String nomArticle, int noCategorie, int noUtilisateurVendeur, int noUtilisateurAcheteur);
 }
