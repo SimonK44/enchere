@@ -40,8 +40,7 @@ public class securityConfig {
 		    .requestMatchers("/utilisateurs/creer").permitAll()
 		    .requestMatchers("/vendre-article").hasAnyRole("UTILISATEUR", "ADMIN")
 		    .requestMatchers("/view-resultat-gagnant").hasAnyRole("UTILISATEUR", "ADMIN")
-		    .requestMatchers("/view-resultat-retrait").hasAnyRole("UTILISATEUR", "ADMIN")
-		    .requestMatchers("/vendre-article").hasAnyRole("UTILISATEUR", "ADMIN")
+		    .requestMatchers("/view-resultat-retrait").hasAnyRole("UTILISATEUR", "ADMIN")		    
 		    .requestMatchers("/css/**").permitAll() //Accès au CSS pour tous le monde
 		    .requestMatchers("/images/**").permitAll() //Accès aux images pour tous le monde
 		    .requestMatchers("/image/**").permitAll() //Accès aux images pour tous le monde
