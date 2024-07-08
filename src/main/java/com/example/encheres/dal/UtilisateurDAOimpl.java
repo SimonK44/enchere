@@ -38,7 +38,7 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 	private static final String UPDATE_HISTO   = "UPDATE UTILISATEURS SET date_histo = GETDATE() WHERE no_utilisateur = :noUtilisateur";
 	
     
-    /**
+ /**
  * constructeur de UtlisateurDAOimpl	
  * @param jdbcTemplate
  */
@@ -68,13 +68,12 @@ public UtilisateurDAOimpl(NamedParameterJdbcTemplate jdbcTemplate) {
 		
 		
 		KeyHolder keyHolder = new GeneratedKeyHolder();
-				
 		jdbcTemplate.update(CREATE, mapParameterSource, keyHolder);
 // recuperation de la clef pour la table utilisateur		
 		if (keyHolder != null && keyHolder.getKey() != null) {
-			utilisateur.setNoUtilisateur(keyHolder.getKey().intValue());
-			
+			utilisateur.setNoUtilisateur(keyHolder.getKey().intValue());			
 		}
+		System.out.println("Génération identity keyholder : "+utilisateur.getNoUtilisateur());
 		
 	}
 /**

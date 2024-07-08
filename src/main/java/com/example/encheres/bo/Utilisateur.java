@@ -12,15 +12,6 @@ import jakarta.validation.constraints.Size;
  * classe decrivant un utilisateur
  */
 public class Utilisateur {
-
-	/*
-	 * En tant qu’utilisateur, je peux m’inscrire sur la plateforme Enchères.org. 
-	 * Le pseudo doit être unique sur toute la plateforme, 
-	 * ainsi que l’email. 
-	 * Le pseudo n’accepte que des caractères alphanumériques. 
-	 * Si la création du profil est validée, 
-	 * l’utilisateur est dirigé vers la page d’accueil 
-	 */	
 	
 	private int noUtilisateur;
 	@NotBlank
@@ -33,12 +24,15 @@ public class Utilisateur {
 	@NotBlank
 	@Email
 	private String email;
+	@NotBlank
+	@Size(min=10)
 	@Digits(fraction = 0, integer = 10, message = "Le téléphone doit comporter 10 chiffres")
 	private String telephone;
 	@NotBlank
 	private String rue;
 	@NotBlank
 	@Digits(fraction = 0, integer = 10, message = "Le téléphone doit comporter 5 chiffres")
+	@Size(min=5)
 	private String codePostal;
 	@NotBlank
 	private String ville;
