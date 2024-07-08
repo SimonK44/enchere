@@ -7,11 +7,11 @@ public class Enchere {
 	private Utilisateur utilisateur;
 	private ArticleVendu articleVendu;
 	private LocalDate dateEnchere;
-	private float montantEnchere;
+	private int montantEnchere;
 
 	public Enchere() {
 	}
-	public Enchere(Utilisateur utilisateur, ArticleVendu articleVendu, LocalDate dateEnchere, float montantEnchere) {
+	public Enchere(Utilisateur utilisateur, ArticleVendu articleVendu, LocalDate dateEnchere, int montantEnchere) {
 		this.utilisateur = utilisateur;
 		this.articleVendu = articleVendu;
 		this.dateEnchere = dateEnchere;
@@ -38,7 +38,7 @@ public class Enchere {
 	public int getMontantEnchere() {
 		return montantEnchere;
 	}
-	public void setMontantEnchere(float montantEnchere) {
+	public void setMontantEnchere(int montantEnchere) {
 		this.montantEnchere = montantEnchere;
 	}
 	@Override
