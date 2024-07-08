@@ -12,7 +12,10 @@ public interface ArticleVenduService {
 	ArticleVendu lectureArticleVendu(int noArticleVendu);
 	List<ArticleVendu> findAll();
 	void modifierArticleVendu(ArticleVendu articleVendu);
+	void modifierArticleVenduPrixVente(int noArticleVendu, float prixVente);
 	void supprimerArticleVendu(int articleVendu);
 
 	void createArticleWithRetrait(ArticleVendu articleVendu, Retrait adresse, Utilisateur user);
+
+	void encherirArticle(int noArticleVendu, float proposition, Utilisateur user);
 }

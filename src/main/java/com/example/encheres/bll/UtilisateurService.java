@@ -10,6 +10,7 @@ public interface UtilisateurService {
 	void creerUtilisateur ( Utilisateur utilisateur)  throws BusinessException;
 	Utilisateur lectureUtilisateur(int noUtilisateur);
 	void modifierUtilisateur(Utilisateur utilisateur) throws BusinessException;
+	void modifierUtilisateurCredit(int noUtilisateur, float credit);
 	void supprimerUtilisateur(int noUtilisateur)      throws BusinessException;
 	Utilisateur findByPseudo( String pseudo);
 	List<Utilisateur> findAll ();

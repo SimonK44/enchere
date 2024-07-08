@@ -17,29 +17,29 @@ import com.example.encheres.exception.BusinessException;
 public class UtilisateurServiceImpl implements UtilisateurService {
 	@Autowired
 	private UtilisateurDAO utilisateurDAO;
-	
+
 	@Override
 	@Transactional(rollbackFor = BusinessException.class)
 	public void creerUtilisateur(Utilisateur utilisateur) throws BusinessException {
 		BusinessException be = new BusinessException() ;
-				
+
 		cryptMotDePasse(utilisateur);
-		
+
 		boolean isValid = controleNomPrenom(utilisateur.getNom(),utilisateur.getPrenom(),be);
 		isValid &= controlePseudo(utilisateur.getPseudo(), be);
 
 		if (isValid) {
-			
-			try {				
+
+			try {
 				utilisateurDAO.create(utilisateur);
-			} catch (DataAccessException e) {	
+			} catch (DataAccessException e) {
 				System.out.println("utlisateur service pb Creation");
 				be.addError(BusinessException.ERREUR_1);
 				throw be;
 			}
-		} else {			
+		} else {
 			throw be;
-		}	
+		}
 
 	}
 
@@ -53,9 +53,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Transactional(rollbackFor = BusinessException.class)
 	public void modifierUtilisateur(Utilisateur utilisateur) throws BusinessException {
 		BusinessException be = new BusinessException() ;
-		
+
 		cryptMotDePasse(utilisateur);
-		
+
 		boolean isValid = controleModifierNomPrenom(utilisateur.getNoUtilisateur(), utilisateur.getNom(),utilisateur.getPrenom(),be);
 		isValid &= controleModifierPseudo(utilisateur.getNoUtilisateur(),utilisateur.getPseudo(),be );
 
@@ -71,17 +71,22 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			}
 		} else {
 			System.out.println("UtilisateurServImpl Error modif : "+utilisateur);
-			throw be;			
+			throw be;
 		}
 	}
+	@Override
+	@Transactional(rollbackFor = BusinessException.class)
+	public void modifierUtilisateurCredit(int noUtilisateur, float credit){
+		utilisateurDAO.updateCredit(noUtilisateur, credit);
+	}
 
-	
+
 
 	@Override
 	@Transactional(rollbackFor = BusinessException.class)
 	public void supprimerUtilisateur(int noUtilisateur) throws BusinessException {
 		BusinessException be = new BusinessException() ;
-		
+
 		try {
 			utilisateurDAO.delete(noUtilisateur);
 		} catch (DataAccessException e ) {
@@ -89,19 +94,19 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			throw be;
 		}
 	}
-	
+
 	@Override
 	public Utilisateur findByPseudo(String pseudo) {
 		return utilisateurDAO.findByPseudo(pseudo);
-		
+
 	}
-	
+
 	@Override
 	public List<Utilisateur> findAll() {
 		return utilisateurDAO.findAll();
 	}
-	
-	
+
+
 	@Override
 	public List<Utilisateur> findAllHisto() {
 		return utilisateurDAO.findAllHisto();
@@ -110,8 +115,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Override
 	@Transactional(rollbackFor = BusinessException.class)
 	public void historiserUtilisateur(int noUtilisateur) throws BusinessException {
-		BusinessException be = new BusinessException() ;		
-	
+		BusinessException be = new BusinessException() ;
+
 		try {
 			utilisateurDAO.updateHisto(noUtilisateur);
 		} catch (DataAccessException e) {
@@ -125,13 +130,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		boolean isValid = false;
 
 		if (utilisateurDAO.countByNomPrenom(nom, prenom) == 0 ) {
-		   isValid = true;		   
+		   isValid = true;
 		} else {
 			System.out.println("utlisateur service pb nom prenom");
 			be.addError(BusinessException.ERREUR_1);
 		}
-		
-		
+
+
 		return isValid;
 	}
 
@@ -144,7 +149,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			System.out.println("utlisateur service pb pseudo");
 			be.addError(BusinessException.ERREUR_2);
 		}
-		
+
 		return isValid;
 	}
 
@@ -156,7 +161,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		} else {
 			be.addError(BusinessException.ERREUR_1);
 		}
-		
+
 		return isValid;
 	}
 
@@ -168,18 +173,14 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		} else {
 			be.addError(BusinessException.ERREUR_2);
 		}
-		
+
 		return isValid;
 	}
 
-	
 	private void cryptMotDePasse(Utilisateur utilisateur) {
 		System.out.println("generation mdp");
 		utilisateur.setMotDePasse(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode(utilisateur.getMotDePasse()));
 		System.out.println(utilisateur.getMotDePasse());
 	}
-
-
-	
 
 }
