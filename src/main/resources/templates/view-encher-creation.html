@@ -16,11 +16,8 @@
       <h1 class="center">Nouvelle vente</h1>
       <div class="content-container">
         <div class="flex-container">
-          <div class="image-container">
-            <img src="image/maison.jpg" alt="image_produit" />
-          </div>
           <div class="form-container">
-              <form th:action="@{/creer}" method="post" th:object="${article}">
+              <form th:action="@{/creer}" method="post" th:object="${article}" enctype="multipart/form-data">
 
                   <label for="nomArticle">Nom de l'article :</label>
                   <input id="nomArticle" name="nomArticle" type="text" th:field="*{nomArticle}" />
@@ -32,6 +29,9 @@
                   <select id="categorie" th:field="*{categorie}">
                       <option th:each="categorie : ${categories}" th:value="${categorie.noCategorie}" th:text="${categorie.libelle}"></option>
                   </select>
+
+                  <label for="image">Image :</label>
+                  <input id="image" name="image" type="file" />
 
                   <label for="prixInitial">Mise à prix :</label>
                   <input type="number" step="0.01" id="prixInitial" name="prixInitial" th:field="*{prixInitial}" />

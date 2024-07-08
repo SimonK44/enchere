@@ -13,10 +13,10 @@
   <h1>Détail vente</h1>
   <div>
     <div>
-      <img src="image/maison.jpg" alt="image produit" />
+      <img th:src="@{'images/articles/'+${article.noArticle}+'.jpg'}" alt="image produit" />
     </div>
     <div>
-      <p th:text="${article.nomArticle}">Nom de l'article</p>
+      <h2 th:text="${article.nomArticle}">Nom de l'article</h2>
 
       <label for="description">Description</label>
       <input type="text" id="description" name="description" th:value="${article.description}" disabled/>
@@ -45,16 +45,14 @@
       </div>
 
       <label for="vendeur">Vendeur : </label>
-      <input type="text" id="vendeur" name="vendeur" th:value="${article.vendeur.nom}" disabled/>
+      <a th:href="@{/utilisateurs/afficher(id=${article.vendeur.getNoUtilisateur()})}"><input type="text" id="vendeur" name="vendeur" th:value="${article.vendeur.nom}"/></a>
 
 
       <label for="meilleurOffre"> Meilleur offre : </label>
       <input type="number" id="meilleurOffre" name="meilleurOffre" th:value="${article.prixVente}" disabled/>
 
       <div class="proposition-container">
-        <label for="proposition">Ma proposition : </label>
         <form th:action="@{/encherir}" method="post">
-
           <input type="hidden" id="noArticleVendu" name="noArticleVendu" th:value="${article.noArticle}" />
           <label for="proposition">Ma proposition :</label>
           <input type="number" id="proposition" name="proposition" th:min="${article.prixVente + 1}" class="proposition-input" />
