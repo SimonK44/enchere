@@ -34,9 +34,9 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 
 
 	@Override
-	public List<ArticleVendu> findDynamique(int requete,  String nomArticle, int noCategorie, int noUtilisateurVendeur, int noUtilisateurAcheteur) {
+	public List<ArticleVendu> findDynamique(String transactionType,int requete,  String nomArticle, int noCategorie, int noUtilisateurVendeur, int noUtilisateurAcheteur) {
 		// ecriture de la requete
-		String requeteFinale = preparationRequete(requete, noCategorie, nomArticle, noUtilisateurVendeur, noUtilisateurAcheteur);
+		String requeteFinale = preparationRequete( transactionType, requete, noCategorie, nomArticle, noUtilisateurVendeur, noUtilisateurAcheteur);
        // recuperation date du jour
 		String dateDuJour = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-mm-dd"));
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
@@ -53,7 +53,7 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 
 	}
 
-	private String preparationRequete (int requete, int noCategorie, String nomArticle, int noUtilisateurVendeur, int noUtilisateurAcheteur) {
+	private String preparationRequete (String transactionType,int requete, int noCategorie, String nomArticle, int noUtilisateurVendeur, int noUtilisateurAcheteur) {
 		String requeteFinale = "";
 
 		switch (requete) {
