@@ -62,7 +62,8 @@ CREATE TABLE ARTICLES_VENDUS (
                                  prix_vente                    INTEGER,
                                  no_utilisateur_vendeur        INTEGER NOT NULL,
                                  no_utilisateur_acheteur       INTEGER,
-                                 no_categorie                  INTEGER NOT NULL
+                                 no_categorie                  INTEGER NOT NULL,
+                                 date_histo                    DATE NULL
 )
 
 CREATE TABLE ROLE (
@@ -109,6 +110,3 @@ ALTER TABLE ENCHERES
         REFERENCES UTILISATEURS (no_utilisateur)
         ON DELETE NO ACTION
         ON UPDATE NO ACTION
-        
-ALTER TABLE UTILISATEURS
-    ADD date_histo DATE NOT NULL DEFAULT NULL
