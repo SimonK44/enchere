@@ -23,8 +23,8 @@ public class CategorieDAOimpl implements CategorieDAO {
 	private final static String UPDATE   = "UPDATE CATEGORIES SET libelle = :libelle";
 	private final static String UPDATE_DATE_SUPPRESSION = "UPDATE CATEGORIES SET date_suppression = CASE WHEN date_suppression IS NULL THEN GETDATE() ELSE NULL END WHERE no_categorie = :noCategorie";
 	private final static String DELETE   = "DELETE FROM CATEGORIES WHERE no_categorie = :noCategorie";
-	private final static String FIND_ALL = "SELECT no_categorie, libelle FROM CATEGORIES where date_suppression IS NULL ";
-	private final static String FIND_ALL_ADMIN = "SELECT no_categorie, libelle, date_suppression FROM CATEGORIES";
+	private final static String FIND_ALL = "SELECT no_categorie, libelle FROM CATEGORIES where date_suppression IS NULL ORDER BY libelle ";
+	private final static String FIND_ALL_ADMIN = "SELECT no_categorie, libelle, date_suppression FROM CATEGORIES ORDER BY libelle";
 /**
  * creation categorie
  */
