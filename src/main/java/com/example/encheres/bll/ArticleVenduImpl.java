@@ -25,6 +25,7 @@ import java.util.List;
 public class ArticleVenduImpl implements ArticleVenduService {
 
 	private ArticleVenduDAO articleVenduDAO;
+	private ArticleVenduDynamiqueDAO articleVenduDynamiqueDAO;
 	private UtilisateurDAO utilisateurDAO;
 	private RetraitDAO retraitDAO;
 	private EnchereDAO enchereDAO;
@@ -36,19 +37,18 @@ public class ArticleVenduImpl implements ArticleVenduService {
 
 	public ArticleVenduImpl(
 			ArticleVenduDAO articleVenduDAO,
+			ArticleVenduDynamiqueDAO articleVenduDynamiqueDAO,
 			UtilisateurDAO utilisateurDAO,
 			RetraitDAO retraitDAO,
 			EnchereDAO enchereDAO
-	) {
-		super();
+	) {		
 		this.articleVenduDAO = articleVenduDAO;
+		this.articleVenduDynamiqueDAO = articleVenduDynamiqueDAO;
 		this.utilisateurDAO = utilisateurDAO;
 		this.retraitDAO = retraitDAO;
 		this.enchereDAO = enchereDAO;
 	}
-	private ArticleVenduDynamiqueDAO articleVenduDynamiqueDAO;
-
-
+	
 
 	@Override
 	public void create(ArticleVendu articleVendu) {
@@ -161,12 +161,14 @@ public class ArticleVenduImpl implements ArticleVenduService {
 
 	}
 
-	public List<ArticleVendu> findAllComplexe(int requete,  String nomArticle, int noCategorie, int noUtilisateurVendeur, int noUtilisateurAcheteur) {
-
-		// à developper
-
-
-		return null;
+	public List<ArticleVendu> findAllComplexe(String transactionType, int requete,  String nomArticle, int noCategorie, int noUtilisateurVendeur, int noUtilisateurAcheteur) {
+		List<ArticleVendu> articles = articleVenduDynamiqueDAO.findDynamique(transactionType, requete, nomArticle, noCategorie, noUtilisateurVendeur, noUtilisateurAcheteur);
+		
+		for(ArticleVendu a : articles ) {
+    		a.setVendeur(utilisateurDAO.read(a.getVendeur().getNoUtilisateur()));
+    	}
+		
+		return articles;
 	}
 
 }
