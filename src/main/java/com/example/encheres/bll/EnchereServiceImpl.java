@@ -1,6 +1,7 @@
 package com.example.encheres.bll;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -63,7 +64,7 @@ public class EnchereServiceImpl implements EnchereService {
 	}
 
 	@Override
-	public Enchere enchereMontantMax(int noArticle) {
+	public Optional<Enchere> enchereMontantMax(int noArticle) {
 		return enchereDAO.montantMax( noArticle);
 	}
 

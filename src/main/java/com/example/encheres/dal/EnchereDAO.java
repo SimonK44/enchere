@@ -1,6 +1,7 @@
 package com.example.encheres.dal;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.example.encheres.bo.Enchere;
 
@@ -12,7 +13,7 @@ public interface EnchereDAO {
 	void delete(int noUtilisateur, int noArticle);
 	List<Enchere> findByUtilisateur(int noUtilisateur);
 	List<Enchere> findByArticle(int noArticle);
-	Enchere montantMax(int noArticle);
+	Optional<Enchere> montantMax(int noArticle);
 
 
 }

@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import com.example.encheres.bo.ArticleVendu;
 import com.example.encheres.bo.Utilisateur;
@@ -114,15 +115,15 @@ public class EnchereDAOImpl implements EnchereDAO {
  *  montant max enchere pour un article vendu
  */
 	@Override
-	public Enchere montantMax(int noArticle) {
+	public Optional<Enchere> montantMax(int noArticle) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
 		mapParameterSource.addValue("noArticle",noArticle);
 		try {
-			System.out.println("\n (MONTANT_MAX," + jdbcTemplate.queryForObject(MONTANT_MAX, mapParameterSource, new EnchereRowMapper()));
-			return jdbcTemplate.queryForObject(MONTANT_MAX, mapParameterSource, new EnchereRowMapper());
+			Enchere enchere = jdbcTemplate.queryForObject(MONTANT_MAX, mapParameterSource, new EnchereRowMapper());
+			return Optional.ofNullable(enchere);
 		} catch (EmptyResultDataAccessException e) {
 			// Gestion du cas où aucune enchère n'est trouvée pour l'article spécifié
-			return null; // ou une nouvelle instance d'Enchere vide
+			return Optional.empty();
 		}
 	}
 

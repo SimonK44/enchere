@@ -18,7 +18,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -131,34 +133,49 @@ public class ArticleVenduImpl implements ArticleVenduService {
 	@Transactional
 	public void encherirArticle(int noArticleVendu, int proposition, Utilisateur user) {
 		Utilisateur utilisateur = this.utilisateurDAO.read(user.getNoUtilisateur());
-		// recuperer derniere offre
-		Enchere lastEnchereMax = this.enchereDAO.montantMax(noArticleVendu);
-		//rendre les points
-		System.out.println("AVANT dernierAcheteur\n");
-		Utilisateur dernierAcheteur = this.utilisateurDAO.read(lastEnchereMax.getUtilisateur().getNoUtilisateur());
-		System.out.println("APRES dernierAcheteur\n");
 
-		System.out.println("\n CRvz NW : " + (dernierAcheteur.getCredit() + lastEnchereMax.getMontantEnchere()));
-		this.utilisateurDAO.updateCredit(
-				lastEnchereMax.getUtilisateur().getNoUtilisateur(),
-				dernierAcheteur.getCredit() + lastEnchereMax.getMontantEnchere()
-		);
-		// retirer credit utilisateur
-		this.utilisateurDAO.updateCredit(
-				utilisateur.getNoUtilisateur(),
-				utilisateur.getCredit() - proposition
-		);
-		//ajouter enchere
-		Enchere nouvelleEnchere = new Enchere();
-		ArticleVendu articleVenduEnchere = new ArticleVendu();
-		articleVenduEnchere.setNoArticle(noArticleVendu);
-		nouvelleEnchere.setMontantEnchere(proposition);
-		nouvelleEnchere.setArticleVendu(articleVenduEnchere);
-		nouvelleEnchere.setUtilisateur(user);
-		this.enchereDAO.create(nouvelleEnchere);
-		//modifier articlevendu
-		this.articleVenduDAO.updatePrixVente(noArticleVendu, proposition);
+		ArticleVendu art = this.articleVenduDAO.read(noArticleVendu);
+		if ( art.getDateFinEnchere() == LocalDate.now() ) {
 
+		}
+
+
+
+		// RECUPERER DERNIERE OFFRE
+		Optional<Enchere> lastEnchereMax = this.enchereDAO.montantMax(noArticleVendu);
+		if (lastEnchereMax.isEmpty()) { // SI NULL
+			// AJOUTER ENCHERE
+			Enchere nouvelleEnchere = new Enchere();
+			ArticleVendu articleVenduEnchere = new ArticleVendu();
+			articleVenduEnchere.setNoArticle(noArticleVendu);
+			nouvelleEnchere.setMontantEnchere(proposition);
+			nouvelleEnchere.setArticleVendu(articleVenduEnchere);
+			nouvelleEnchere.setUtilisateur(user);
+			this.enchereDAO.create(nouvelleEnchere);
+			// MODIFIER ARTICLE VENDU PRIX VENTE
+			this.articleVenduDAO.updatePrixVente(noArticleVendu, proposition);
+		} else {
+			// RECUPERER USER DERNIERE OFFRE
+			Utilisateur dernierAcheteur = this.utilisateurDAO.read(lastEnchereMax.get().getUtilisateur().getNoUtilisateur());
+			this.utilisateurDAO.updateCredit( // LUI RENDRE SES CREDITS
+					lastEnchereMax.get().getUtilisateur().getNoUtilisateur(),
+					dernierAcheteur.getCredit() + lastEnchereMax.get().getMontantEnchere()
+			);
+			// ACHETEUR
+			this.utilisateurDAO.updateCredit( // RETIRER LES CREDITS ACHETEUR
+					utilisateur.getNoUtilisateur(),
+					utilisateur.getCredit() - proposition
+			);
+			// CREATION DE L'ENCHERE
+			Enchere nouvelleEnchere = new Enchere();
+			ArticleVendu articleVenduEnchere = new ArticleVendu();
+			articleVenduEnchere.setNoArticle(noArticleVendu);
+			nouvelleEnchere.setMontantEnchere(proposition);
+			nouvelleEnchere.setArticleVendu(articleVenduEnchere);
+			nouvelleEnchere.setUtilisateur(user);
+			this.enchereDAO.create(nouvelleEnchere); // AJOUT DE L'ENCHERE
+			this.articleVenduDAO.updatePrixVente(noArticleVendu, proposition); // MODIFIER ARTICLE VENDU PRIX VENTE
+		}
 	}
 
 	public List<ArticleVendu> findAllComplexe(String transactionType, int requete,  String nomArticle, int noCategorie, int noUtilisateurVendeur, int noUtilisateurAcheteur) {
