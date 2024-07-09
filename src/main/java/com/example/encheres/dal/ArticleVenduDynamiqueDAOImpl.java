@@ -19,7 +19,7 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
     private final static String ENCHERES_OUVERTES       = "SELECT nom_article, description, date_debut_encheres , date_fin_encheres, prix_initial, prix_vente, no_utilisateur_vendeur, no_utilisateur_acheteur , no_categorie FROM ARTICLES_VENDUS WHERE date_debut_encheres <= :dateDuJour AND date_fin_encheres  >= :dateDuJour";
     private final static String MES_ENCHERES_EN_COURS   = "SELECT nom_article, description, date_debut_encheres , date_fin_encheres, prix_initial, prix_vente, no_utilisateur_vendeur, no_utilisateur_acheteur , no_categorie FROM ARTICLES_VENDUS AS A INNER JOIN ENCHERES AS E ON E.no_article = A.no_article WHERE date_debut_encheres <= :dateDuJour AND date_fin_encheres >= :dateDuJour AND E.no_utilisateur = :noUtilisateur";
     private final static String MES_ENCHERES_REMPORTEES = "SELECT nom_article, description, date_debut_encheres , date_fin_encheres, prix_initial, prix_vente, no_utilisateur_vendeur, no_utilisateur_acheteur , no_categorie FROM ARTICLES_VENDUS WHERE  date_fin_encheres < :dateDuJour AND no_utilisateur_acheteur = :noUtilisateurAcheteur" ;
-    private final static String MES_VENTES_EN_COURS     = "SELECT nom_article, description, date_debut_encheres , date_fin_encheres, prix_initial, prix_vente, no_utilisateur_vendeur, no_utilisateur_acheteur , no_categorie FROM ARTICLES_VENDUS WHERE  date_fin_encheres < :dateDuJour AND no_utilisateur_vendeur = :noUtilisateurVendeur ";
+    private final static String MES_VENTES_EN_COURS     = "SELECT nom_article, description, date_debut_encheres , date_fin_encheres, prix_initial, prix_vente, no_utilisateur_vendeur, no_utilisateur_acheteur , no_categorie FROM ARTICLES_VENDUS WHERE  date_fin_encheres > :dateDuJour AND no_utilisateur_vendeur = :noUtilisateurVendeur ";
     private final static String VENTES_NON_DEBUTEES     = "SELECT nom_article, description, date_debut_encheres , date_fin_encheres, prix_initial, prix_vente, no_utilisateur_vendeur, no_utilisateur_acheteur , no_categorie FROM ARTICLES_VENDUS WHERE date_debut_encheres >= :dateDuJour AND no_utilisateur_vendeur = :noUtilisateurVendeur" ;
     private final static String VENTES_TERMINEES        = "SELECT nom_article, description, date_debut_encheres , date_fin_encheres, prix_initial, prix_vente, no_utilisateur_vendeur, no_utilisateur_acheteur , no_categorie FROM ARTICLES_VENDUS WHERE date_fin_encheres < :dateDujour AND no_utilisateur_vendeur = :noUtilisateurVendeur" ;
 
@@ -34,9 +34,9 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 
 
 	@Override
-	public List<ArticleVendu> findDynamique(int requete,  String nomArticle, int noCategorie, int noUtilisateurVendeur, int noUtilisateurAcheteur) {
+	public List<ArticleVendu> findDynamique(String transactionType,int requete,  String nomArticle, int noCategorie, int noUtilisateurVendeur, int noUtilisateurAcheteur) {
 		// ecriture de la requete
-		String requeteFinale = preparationRequete(requete, noCategorie, nomArticle, noUtilisateurVendeur, noUtilisateurAcheteur);
+		String requeteFinale = preparationRequete( transactionType, requete, noCategorie, nomArticle, noUtilisateurVendeur, noUtilisateurAcheteur);
        // recuperation date du jour
 		String dateDuJour = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-mm-dd"));
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
@@ -45,7 +45,7 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 		mapParameterSource.addValue("noCategorie",noCategorie);
 		mapParameterSource.addValue("nomArticle",nomArticle);
 		mapParameterSource.addValue("no_utilisateur_vendeur",noUtilisateurVendeur);
-		mapParameterSource.addValue("no_utilisateur_vendeur",noUtilisateurVendeur);
+		//mapParameterSource.addValue("no_utilisateur_vendeur",noUtilisateurVendeur);
 		mapParameterSource.addValue("no_utilisateur_acheteur",noUtilisateurAcheteur);
 
 		return jdbcTemplate.query(requeteFinale,new BeanPropertyRowMapper<>(ArticleVendu.class));
@@ -53,7 +53,7 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 
 	}
 
-	private String preparationRequete (int requete, int noCategorie, String nomArticle, int noUtilisateurVendeur, int noUtilisateurAcheteur) {
+	private String preparationRequete (String transactionType,int requete, int noCategorie, String nomArticle, int noUtilisateurVendeur, int noUtilisateurAcheteur) {
 		String requeteFinale = "";
 
 		switch (requete) {

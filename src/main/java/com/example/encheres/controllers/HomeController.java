@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -20,16 +21,21 @@ import com.example.encheres.bo.ArticleVendu;
 import com.example.encheres.bo.Categorie;
 import com.example.encheres.bo.Enchere;
 import com.example.encheres.bo.Utilisateur;
+import com.example.encheres.dal.ArticleVenduDynamiqueDAO;
 
 @Controller
 @SessionAttributes({"utilisateurSession"})
 public class HomeController {
 	private ArticleVenduService articleVenduService;
 	private UtilisateurService utilisateurService;
+	private CategorieService categorieService; 
 
-
-	public HomeController(ArticleVenduService articleVenduService) {
+	
+	public HomeController(ArticleVenduService articleVenduService, UtilisateurService utilisateurService,
+			CategorieService categorieService) {
 		this.articleVenduService = articleVenduService;
+		this.utilisateurService = utilisateurService;
+		this.categorieService = categorieService;
 	}
 
 	@Autowired
@@ -47,27 +53,43 @@ public class HomeController {
 
     @GetMapping({"/","/home","/encheres","/listes-articles"})
     public String home(
-    	Model model) {
+    	Model model ) {
+    	System.out.println("before");
     	List<ArticleVendu> articles = this.articleVenduService.findAll();
+        List<Categorie> categories = this.categorieService.findAll();
+    	System.out.println("after");
 
-
-
+    	System.out.println("HomeControler articles"+ articles);
+    	System.out.println("HomeControler categories" + categories);
+    	
     	model.addAttribute("articles", articles);
+    	model.addAttribute("categories", categories);
 
-
-
-
-    	//ArticleVendu [noArticle=1, nomArticle=Table de salon, description=une tres belle table en chene,
-    	//dateDebutEnchere=2024-07-01, dateFinEnchere=2024-07-30, prixInitial=100.0, prixVente=150.0,
-    	//categorie=Categorie [noCategorie=1, libelle=null], acheteur=Utilisateur [noUtilisateur=2, pseudo=null, nom=null, prenom=null, email=null, telephone=null, rue=null, codePostal=null, ville=null, motDePasse=null, credit=0, administrateur=false],
-    	//vendeur=Utilisateur [noUtilisateur=1, pseudo=null, nom=null, prenom=null, email=null, telephone=null, rue=null, codePostal=null, ville=null, motDePasse=null, credit=0, administrateur=false], encheres=[]],
-
-    	return "home";
-
-
-
-
+    	//dateDebutEnchere=2024-07-01, dateFinEnchere=2024-07-30, prixInitial=100.0, prixVente=150.0, 
+    	//categorie=Categorie [noCategorie=1, libelle=null], acheteur=Utilisateur [noUtilisateur=2, pseudo=null, nom=null, prenom=null, email=null, telephone=null, rue=null, codePostal=null, ville=null, motDePasse=null, credit=0, administrateur=false], 
+    	//vendeur=Utilisateur [noUtilisateur=1, pseudo=null, nom=null, prenom=null, email=null, telephone=null, rue=null, codePostal=null, ville=null, motDePasse=null, credit=0, administrateur=false], encheres=[]], 
+    	
+  	return "home";
     }
+
+   //à developer
+   @PostMapping({"/","home","encheres","listes-articles"})
+    public String homeRecherche(
+    		@RequestParam int requete,  String nomArticle, int noCategorie, int noUtilisateurVendeur, int noUtilisateurAcheteur,
+    		Model model) {
+	   System.out.println();
+    	//à developper 
+	   //int requete,  String nomArticle, int noCategorie, int noUtilisateurVendeur, int noUtilisateurAcheteur
+    	List<ArticleVendu> articlesRecherches = this.articleVenduService.findAllComplexe
+    									( requete, nomArticle, noCategorie, noUtilisateurVendeur, noUtilisateurAcheteur); 	 	
+    	List<Categorie> categories = this.categorieService.findAll();
+    	System.out.println("homeRecherche" + articlesRecherches);
+    	
+    	model.addAttribute("articlesRecherches", articlesRecherches);
+    	model.addAttribute("categories", categories);    	
+    		
+    	return "home";
+	}
 }
 
 

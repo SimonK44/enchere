@@ -5,15 +5,18 @@ import com.example.encheres.bll.CategorieService;
 import com.example.encheres.bll.RetraitService;
 import com.example.encheres.bll.UtilisateurService;
 import com.example.encheres.bo.*;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @SessionAttributes({"utilisateurSession"})
@@ -22,6 +25,10 @@ public class ArticleVenduController {
 	private CategorieService categorieService;
 	private UtilisateurService utilisateurService;
 	private RetraitService retraitService;
+
+	@Value("${upload.path}")
+	private String uploadPath;
+
 	@Autowired
 	public ArticleVenduController(
 			ArticleVenduService articleVenduService,
@@ -51,9 +58,15 @@ public class ArticleVenduController {
 	public String creerArticle(
 		@ModelAttribute("vendre-article") ArticleVendu articleVendu,
 		@ModelAttribute("adresse") Retrait adresse,
-		@ModelAttribute("utilisateurSession") Utilisateur user
+		@ModelAttribute("utilisateurSession") Utilisateur user,
+		MultipartFile image
 	) {
-		this.articleVenduService.createArticleWithRetrait(articleVendu, adresse, user);
+/*
+		byte[] bytes = image.getBytes();
+		Path path = Paths.get(uploadPath + image.getOriginalFilename());
+		Files.write(path, bytes);
+		article.setImagePath("/images/" + image.getOriginalFilename());*/
+		this.articleVenduService.createArticleWithRetrait(articleVendu, adresse, user, image);
 		return "redirect:view-encher-detail?id=" + articleVendu.getNoArticle();
 	}
 
@@ -68,7 +81,6 @@ public class ArticleVenduController {
 	public String resultatRetrait() {
 		return "view-resultat-retrait";
 	}
-
 
 	@GetMapping("/view-encher-detail")
 	public String pageArticleDetail(
@@ -105,6 +117,6 @@ public class ArticleVenduController {
 		this.articleVenduService.encherirArticle(noArticleVendu, proposition, utilisateurSession);
 
 		// Redirection ou affichage d'une nouvelle vue après traitement
-		return "redirect:/home"; // Redirige vers une page de confirmation
+		return "redirect:/view-encher-detail?id=" + noArticleVendu; // Redirige vers une page de confirmation
 	}
 }

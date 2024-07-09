@@ -108,6 +108,7 @@ public class ArticleVenduDAOImpl implements ArticleVenduDAO {
 		mapParameterSource.addValue("noArticle",noArticle);
 		jdbcTemplate.update(DELETE, mapParameterSource);
 	}
+	
 	/*
 	 *  recherche article vendu par numero d' utilisateur
 	 */

@@ -6,8 +6,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.example.encheres.bo.ArticleVendu;
-import com.example.encheres.bo.Categorie;
 import com.example.encheres.bo.Utilisateur;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -27,7 +27,7 @@ public class EnchereDAOImpl implements EnchereDAO {
 	private static final String DELETE   = "DELETE FROM ENCHERES WHERE no_utilisateur = :noUtilisateur and no_article = :noArticle";
 	private static final String FIND_BY_UTILISATEUR = "SELECT no_utilisateur, no_article,date_enchere,montant_enchere FROM ENCHERES WHERE no_utilisateur = :noUtilisateur";
 	private static final String FIND_BY_ARTICLE     = "SELECT no_utilisateur, no_article,date_enchere,montant_enchere FROM ENCHERES WHERE no_article = :noArticle";
-	private static final String MONTANT_MAX = "SELECT * FROM ENCHERES where montant_enchere = (SELECT MAX(montant_enchere) FROM  ENCHERES where no_article = :noArticle);";
+	private static final String MONTANT_MAX = "SELECT * FROM ENCHERES where montant_enchere = (SELECT MAX(montant_enchere) FROM  ENCHERES where no_article = :noArticle) AND no_article = :noArticle;";
 
 	public EnchereDAOImpl(NamedParameterJdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
@@ -117,8 +117,13 @@ public class EnchereDAOImpl implements EnchereDAO {
 	public Enchere montantMax(int noArticle) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
 		mapParameterSource.addValue("noArticle",noArticle);
-		System.out.println("int noArticle" + noArticle);
-		return jdbcTemplate.queryForObject(MONTANT_MAX, mapParameterSource, new EnchereRowMapper());
+		try {
+			System.out.println("\n (MONTANT_MAX," + jdbcTemplate.queryForObject(MONTANT_MAX, mapParameterSource, new EnchereRowMapper()));
+			return jdbcTemplate.queryForObject(MONTANT_MAX, mapParameterSource, new EnchereRowMapper());
+		} catch (EmptyResultDataAccessException e) {
+			// Gestion du cas où aucune enchère n'est trouvée pour l'article spécifié
+			return null; // ou une nouvelle instance d'Enchere vide
+		}
 	}
 
 
