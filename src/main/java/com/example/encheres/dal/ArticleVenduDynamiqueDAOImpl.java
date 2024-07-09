@@ -42,8 +42,8 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 	private final static String VENTES_NON_DEBUTEES     = " ( date_debut_encheres >= GETDATE() AND no_utilisateur_vendeur = :noUtilisateurVendeur )";
 	 private final static String VENTES_TERMINEES       = " ( date_fin_encheres < GETDATE() AND no_utilisateur_vendeur = :noUtilisateurVendeur )"; 
 	
-	private final static String LIKE_NOM                = " AND nom_article like :nomArticle ";
-    private final static String CATEGORIE               = " AND no_categorie = :noCategorie ";		
+	private final static String LIKE_NOM                = " AND nom_article like :nomArticle";
+    private final static String CATEGORIE               = " AND no_categorie = :noCategorie";		
 
 	public ArticleVenduDynamiqueDAOImpl(NamedParameterJdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
@@ -55,13 +55,13 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 	public List<ArticleVendu> findDynamique(String transactionType,int requete,  String nomArticle, int noCategorie, int noUtilisateurVendeur, int noUtilisateurAcheteur) {
 		// ecriture de la requete
 		String requeteFinale = preparationRequete( transactionType, requete, noCategorie, nomArticle, noUtilisateurVendeur, noUtilisateurAcheteur);
-       // recuperation date du jour
+   
 		System.out.println(requeteFinale);
-		String dateDuJour = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-mm-dd"));
+
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
 
 		mapParameterSource.addValue("noCategorie",noCategorie);
-		mapParameterSource.addValue("nomArticle",nomArticle);
+		mapParameterSource.addValue("nomArticle",nomArticle + POURCENT);
 		mapParameterSource.addValue("noUtilisateurVendeur",noUtilisateurVendeur);		
 		mapParameterSource.addValue("noUtilisateurAcheteur",noUtilisateurAcheteur);
 				
@@ -149,7 +149,7 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 // ajout du like sur le nom si besoin
 		System.out.println(nomArticle);
 		if ( nomArticle != null  ) {
-			requeteFinale = requeteFinale +  LIKE_NOM + POURCENT ;
+			requeteFinale = requeteFinale +  LIKE_NOM;
 		}
 // ajout du filtre sur categorie
 		if (noCategorie != 0) {
