@@ -1,16 +1,22 @@
 
 package com.example.encheres.dal;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.example.encheres.bo.ArticleVendu;
+import com.example.encheres.bo.Categorie;
+import com.example.encheres.bo.Utilisateur;
+import com.example.encheres.dal.ArticleVenduDAOImpl.ArticleVenduRowMapper;
 
 @Repository
 public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
@@ -19,7 +25,7 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 	private final static String ACHAT                   = "achat";
 	private final static String VENTES                  = "ventes";
 	
-	private final static String SELECT = "SELECT nom_article, description, date_debut_encheres , date_fin_encheres, prix_initial, prix_vente, no_utilisateur_vendeur, no_utilisateur_acheteur , no_categorie FROM ARTICLES_VENDUS";
+	private final static String SELECT = "SELECT no_article, nom_article, description, date_debut_encheres , date_fin_encheres, prix_initial, prix_vente, no_utilisateur_vendeur, no_utilisateur_acheteur , no_categorie FROM ARTICLES_VENDUS";
 // union pour mes encheres en cours   
 	private final static String UNION  = " AS A INNER JOIN ENCHERES AS E ON E.no_article = A.no_article" ; 
 	
@@ -63,7 +69,7 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 		System.out.println("ArticleVenduDynamiqueDAOImpl requeteFinale : " + requeteFinale);
 		System.out.println("ArticleVenduDynamiqueDAOImpl parametres: " + mapParameterSource.toString());
 
-		return jdbcTemplate.query(requeteFinale,new BeanPropertyRowMapper<>(ArticleVendu.class));
+		return jdbcTemplate.query(requeteFinale,new ArticleVenduRowMapper());
 
 
 	}
@@ -154,6 +160,41 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 
 	}
 
+	public class ArticleVenduRowMapper implements RowMapper<ArticleVendu> {
+
+		@Override
+		public ArticleVendu mapRow(ResultSet rs, int rowNum) throws SQLException {
+			ArticleVendu articleVendu = new ArticleVendu();
+
+			articleVendu.setNoArticle(rs.getInt("no_article"));
+			articleVendu.setNomArticle(rs.getString("nom_article"));
+			articleVendu.setDescription(rs.getString("description"));
+			articleVendu.setDateDebutEnchere(rs.getObject("date_debut_encheres", LocalDate.class));
+			articleVendu.setDateFinEnchere(rs.getObject("date_fin_encheres", LocalDate.class));
+			articleVendu.setPrixInitial(rs.getInt("prix_initial"));
+			articleVendu.setPrixVente(rs.getInt("prix_vente"));
+
+			// Map Categorie
+			Categorie categorie = new Categorie();
+			categorie.setNoCategorie(rs.getInt("no_categorie"));
+			articleVendu.setCategorie(categorie);
+
+			// Map Utilisateur Vendeur
+			Utilisateur vendeur = new Utilisateur();
+			vendeur.setNoUtilisateur(rs.getInt("no_utilisateur_vendeur"));
+			articleVendu.setVendeur(vendeur);
+
+			// Map Utilisateur Acheteur (peut être NULL)
+			int noAcheteur = rs.getInt("no_utilisateur_acheteur");
+			if (!rs.wasNull()) {
+				Utilisateur acheteur = new Utilisateur();
+				acheteur.setNoUtilisateur(noAcheteur);
+				articleVendu.setAcheteur(acheteur);
+			}
+
+			return articleVendu;
+		}
+	}	
 
 }
 
