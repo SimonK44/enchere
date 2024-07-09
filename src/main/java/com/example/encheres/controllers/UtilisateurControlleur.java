@@ -54,73 +54,64 @@ public class UtilisateurControlleur {
 		model.addAttribute("utilisateur", u); // 1 objet utilisateur avec tous ses paramètres
 
 		return "view-profil-modification";
-	}	
-	
+	}
+
 	//Suppression du compte par l'utilisateur
 	@GetMapping("/supprimer")
 	public String supprimerUtilisateurParId(@RequestParam (name="noUtilisateur") int noUtilisateur,
 											@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession,
 											BindingResult bingingResult) {
-		
+
 		try {
-			utilisateurService.historiserUtilisateur(noUtilisateur);		
+			utilisateurService.historiserUtilisateur(noUtilisateur);
 			return "redirect:/login";
 		} catch (BusinessException e) {
 			e.getErreurs().forEach(err -> {
 				ObjectError error = new ObjectError("globalError", err);
 				bingingResult.addError(error);
 				}
-			);	
+			);
 			return "view-profil-modification";
 		}
-	}	
-	
+	}
+
 	//Afficher une page de profil simple
 	@GetMapping("/afficher")
 	public String afficherUtilisateurParId(
 			Model model,
-			@SessionAttribute("utilisateurSession") Utilisateur utilisateurSession, 
-			@RequestParam(name = "noUtilisateur", required = false) Integer noUtilisateur // Utilisez Integer au lieu de int
+			@SessionAttribute("utilisateurSession") Utilisateur utilisateurSession,
+			@RequestParam(value = "id", required = false) Integer noUtilisateur // Utilisez Integer au lieu de int
 	) {
-		System.out.println("afficherUtilisateurParId" + utilisateurSession);
-		
+
 		// Si aucun utilisateur en session et aucun ID fourni, redirigez vers la page de connexion
 		if (utilisateurSession == null && noUtilisateur == null) {
-			System.out.println("utilisateur session null et noutilisateur null");
 			return "redirect:/login";
 		}
 
+		System.out.println("Utilisateur S" + utilisateurSession);
 		// Si aucun utilisateur en session mais un ID est fourni
 		if (utilisateurSession == null) {
-			System.out.println(" deuxiemee ");
 
 			Utilisateur utilisateur = this.utilisateurService.lectureUtilisateur(noUtilisateur);
 			model.addAttribute("utilisateur", utilisateur);
 			model.addAttribute("isDifferentUser", true); // Ajoutez cette variable
 			return "view-utilisateur";
 		}
-		System.out.println("pas d'utilisateur en session mais noUtilisateur ok");
-
 		// Si un utilisateur est en session
 		Utilisateur utilisateur;
 		boolean isDifferentUser = false;
 		if (noUtilisateur == null || noUtilisateur.equals(utilisateurSession.getNoUtilisateur())) {
-			System.out.println("utilisateur en session : "+noUtilisateur+"No en session : "+utilisateurSession.getNoUtilisateur());
 
 			utilisateur = this.utilisateurService.lectureUtilisateur(utilisateurSession.getNoUtilisateur());
 		} else {
-			System.out.println("Utilisateur différent de celui en session : "+noUtilisateur+" No en Session : "+utilisateurSession.getNoUtilisateur());
 			utilisateur = this.utilisateurService.lectureUtilisateur(noUtilisateur);
 			isDifferentUser = true; // L'utilisateur demandé est différent de l'utilisateur en session
 		}
 
 		if (utilisateur != null) {
-			System.out.println("Utilisateur présent, préparation du model" + utilisateur);
-			model.addAttribute("utilisateur : ", utilisateur); // 1 objet utilisateur avec tous ses paramètres
+			model.addAttribute("utilisateur", utilisateur); // 1 objet utilisateur avec tous ses paramètres
 		}
 		model.addAttribute("isDifferentUser", isDifferentUser); // Ajoutez cette variable au modèle
-
-		System.out.println("Fin afficher utilisateur");
 
 		return "view-utilisateur";
 	}
@@ -128,24 +119,24 @@ public class UtilisateurControlleur {
 
 	@PostMapping("/modifier")
 	public String modifUtilisateurParPseudo(@ModelAttribute("utilisateur") @Valid Utilisateur utilisateur, BindingResult bindingResult) {
-				
+
 		// Vérification du mot de passe actuel
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUsername = authentication.getName();
         Utilisateur currentUser = utilisateurService.findByPseudo(currentUsername);
-        
+
         System.out.println("Mdp actuel : "+utilisateur.getMotDePasseActuel()+" Mdp saisi : "+currentUser.getMotDePasse());
-        
+
         if (!passwordEncoder.matches(utilisateur.getMotDePasseActuel(), currentUser.getMotDePasse())) {
             bindingResult.rejectValue("motDePasseActuel", "error.utilisateur", "Le mot de passe actuel est incorrect");
             return "view-profil-modification";
         }
-		
+
 		if (bindingResult.hasErrors()) {
 			return "view-profil-modification";
 		} else {
 			System.out.println("Modification de l'utilisateur = " + utilisateur);
-			//Appel du service en charge de la création de l'utilisateur		
+			//Appel du service en charge de la création de l'utilisateur
 			try {
 				this.utilisateurService.modifierUtilisateur(utilisateur);
 				return "redirect:/home";
@@ -163,12 +154,12 @@ public class UtilisateurControlleur {
 
 	//Création d'un utilisateur
 	@PostMapping("/creer")
-	public String creerUtilisateur(@Valid 
-			@ModelAttribute("utilisateur") Utilisateur utilisateur, 								
+	public String creerUtilisateur(@Valid
+			@ModelAttribute("utilisateur") Utilisateur utilisateur,
 			BindingResult bindingResult) {
-		
-		Utilisateur u = new Utilisateur();				
-		
+
+		Utilisateur u = new Utilisateur();
+
 		if (bindingResult.hasErrors()) {
 			return "view-profil-creation";
 		} else {
