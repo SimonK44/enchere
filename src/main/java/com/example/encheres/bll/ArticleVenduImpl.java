@@ -171,11 +171,9 @@ public class ArticleVenduImpl implements ArticleVenduService {
 	public List<ArticleVendu> findAllComplexe(String transactionType, int requete,  String nomArticle, int noCategorie, int noUtilisateurVendeur, int noUtilisateurAcheteur) {
 		List<ArticleVendu> articles = articleVenduDynamiqueDAO.findDynamique(transactionType, requete, nomArticle, noCategorie, noUtilisateurVendeur, noUtilisateurAcheteur);
 
-<<<<<<< Updated upstream
+
 		System.out.println("articles"+ articles);
 
-=======
->>>>>>> Stashed changes
 		for(ArticleVendu a : articles ) {
 			System.out.println("a"+ a);
     		a.setVendeur(utilisateurDAO.read(a.getVendeur().getNoUtilisateur()));
