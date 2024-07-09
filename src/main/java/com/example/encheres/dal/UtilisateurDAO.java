@@ -10,7 +10,7 @@ public interface UtilisateurDAO {
 	void create (Utilisateur utilisateur);
 	Utilisateur read(int noUtlisateur);
 	void update (Utilisateur utilisateur);
-	void updateCredit (int noUtilisateur, float credit);
+	void updateCredit (int noUtilisateur, int credit);
 	void delete(int noUtilisateur);
 	List<Utilisateur> findAll();
 	Utilisateur findByPseudo(String pseudo);

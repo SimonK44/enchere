@@ -129,7 +129,7 @@ public UtilisateurDAOimpl(NamedParameterJdbcTemplate jdbcTemplate) {
 		jdbcTemplate.update(UPDATE, mapParameterSource);
 	}
 	@Override
-	public void updateCredit(int noUtilisateur, float credit) {
+	public void updateCredit(int noUtilisateur, int credit) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
 		mapParameterSource.addValue("noUtilisateur", noUtilisateur);
 		mapParameterSource.addValue("credit", credit);
@@ -178,7 +178,7 @@ public UtilisateurDAOimpl(NamedParameterJdbcTemplate jdbcTemplate) {
 
 		return jdbcTemplate.queryForObject(COUNT_BY_PSEUDO , mapParameterSource, Integer.class) ;
 	}
-	
+
 /**
  * controle avec un count des doublons mail en creation
  */
@@ -190,8 +190,8 @@ public UtilisateurDAOimpl(NamedParameterJdbcTemplate jdbcTemplate) {
 
 		return jdbcTemplate.queryForObject(COUNT_BY_MAIL , mapParameterSource, Integer.class) ;
 	}
-	
-	
+
+
 /**
  * controle avec un count des doublons nom/prenom en modification
  */
@@ -268,7 +268,7 @@ public class UtilisateurRowMapper implements RowMapper<Utilisateur> {
 	@Override
 	public Utilisateur mapRow(ResultSet rs, int rowNum) throws SQLException {
 		Utilisateur utilisateur = new Utilisateur();
-		
+
 		utilisateur.setNoUtilisateur(rs.getInt("no_utilisateur"));
 		utilisateur.setPseudo(rs.getString("pseudo"));
 		utilisateur.setNom(rs.getString("nom"));
