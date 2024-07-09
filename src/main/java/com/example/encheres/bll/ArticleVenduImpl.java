@@ -172,8 +172,6 @@ public class ArticleVenduImpl implements ArticleVenduService {
 		List<ArticleVendu> articles = articleVenduDynamiqueDAO.findDynamique(transactionType, requete, nomArticle, noCategorie, noUtilisateurVendeur, noUtilisateurAcheteur);
 
 
-		System.out.println("articles"+ articles);
-
 		for(ArticleVendu a : articles ) {
 			System.out.println("a"+ a);
     		a.setVendeur(utilisateurDAO.read(a.getVendeur().getNoUtilisateur()));

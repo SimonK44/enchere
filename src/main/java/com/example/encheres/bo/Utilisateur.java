@@ -26,12 +26,12 @@ public class Utilisateur {
 	private String email;
 	@NotBlank
 	@Size(min=10)
-	@Digits(fraction = 0, integer = 10, message = "Le téléphone doit comporter 10 chiffres")
+	@Digits(fraction = 0, integer = 10, message = "Le téléphone doit être compose de chiffres uniquement")
 	private String telephone;
 	@NotBlank
 	private String rue;
 	@NotBlank
-	@Digits(fraction = 0, integer = 10, message = "Le téléphone doit comporter 5 chiffres")
+	@Digits(fraction = 0, integer = 10, message = "Le code postal doit être compose de chiffres uniquement")
 	@Size(min=5)
 	private String codePostal;
 	@NotBlank
@@ -42,7 +42,6 @@ public class Utilisateur {
 	@Size(min = 8)
 	private String motDePasse;
 	@NotBlank
-	@Size(min = 8)
 	private String confirmMotDePasse;
 	private int credit;
 	private boolean administrateur;	
