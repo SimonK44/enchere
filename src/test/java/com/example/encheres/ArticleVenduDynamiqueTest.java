@@ -367,5 +367,78 @@ public class ArticleVenduDynamiqueTest {
 				logger.info("Test 14 : mes ventes en cours mes ventes en cours mes encheres debutees ventes terminees ");
 				logger.info(a);	
 			
-			}		
+			}	
+	/// ------------------------------ libellé categorie -----------------------------------		
+	@Test
+	void test15_liblle() {
+// test libelle
+		System.out.println("---------------- debut test libelle 15");
+		transactionType = "achat";
+		requete = 1;
+		nomArticle = "PC";
+		noUtilisateurVendeur = 8;
+		noUtilisateurAcheteur = 7;
+		
+		try {
+			a = articleVenduDynamiqueDAO.findDynamique(transactionType, requete, nomArticle,noCategorie,noUtilisateurVendeur,noUtilisateurAcheteur );
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
+		System.out.println("test 15 resultat : " + a);
+		assertNotNull(a);
+		logger.info("Test 15 : libelle");
+		logger.info(a);	
+	
+	}
+	@Test
+	void test16_categorie() {
+// test categorie
+		System.out.println("---------------- debut test categorie 16");
+		transactionType = "achat";
+		requete = 1;
+		nomArticle = null;
+		noUtilisateurVendeur = 8;
+		noUtilisateurAcheteur = 7;
+		noCategorie = 1;
+		
+		try {
+			a = articleVenduDynamiqueDAO.findDynamique(transactionType, requete, nomArticle,noCategorie,noUtilisateurVendeur,noUtilisateurAcheteur );
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
+		System.out.println("test 16 resultat : " + a);
+		assertNotNull(a);
+		logger.info("Test 16 : libelle");
+		logger.info(a);	
+	
+	}	
+	
+	@Test
+	void test17_Libelle_categorie() {
+// test categorie
+		System.out.println("---------------- debut test libelle categorie 17");
+		transactionType = "achat";
+		requete = 1;
+		nomArticle = "T";
+		noUtilisateurVendeur = 8;
+		noUtilisateurAcheteur = 7;
+		noCategorie = 1;
+		
+		try {
+			a = articleVenduDynamiqueDAO.findDynamique(transactionType, requete, nomArticle,noCategorie,noUtilisateurVendeur,noUtilisateurAcheteur );
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
+		System.out.println("test 17 resultat : " + a);
+		assertNotNull(a);
+		logger.info("Test 17 : libelle categorie");
+		logger.info(a);	
+	
+	}	
 }
