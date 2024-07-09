@@ -46,7 +46,8 @@ CREATE TABLE UTILISATEURS (
                               ville            VARCHAR(30) NOT NULL,
                               mot_de_passe     VARCHAR(68) NOT NULL,
                               credit           INTEGER NOT NULL,
-                              administrateur   bit NOT NULL
+                              administrateur   bit NOT NULL,
+                              date_histo       DATE NULL
 )
 
 ALTER TABLE UTILISATEURS ADD constraint utilisateur_pk PRIMARY KEY (no_utilisateur)

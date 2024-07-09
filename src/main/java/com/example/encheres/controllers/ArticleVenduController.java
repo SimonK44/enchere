@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -107,7 +108,8 @@ public class ArticleVenduController {
 	public String encherir(
 		@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession,
 		@RequestParam("noArticleVendu") int noArticleVendu,
-		@RequestParam("proposition") int proposition
+		@RequestParam("proposition") int proposition,
+		RedirectAttributes redirectAttributes
 	) {
 		// Logique pour gérer l'enchère, par exemple enregistrer dans la base de données
 		System.out.println("Enchère pour l'article avec ID : " + utilisateurSession);
@@ -115,7 +117,7 @@ public class ArticleVenduController {
 		System.out.println("Proposition d'enchère : " + proposition);
 
 		this.articleVenduService.encherirArticle(noArticleVendu, proposition, utilisateurSession);
-
+		redirectAttributes.addFlashAttribute("errorMessage", "Une erreur est survenue lors de la soumission de l'enchère.");
 		// Redirection ou affichage d'une nouvelle vue après traitement
 		return "redirect:/view-encher-detail?id=" + noArticleVendu; // Redirige vers une page de confirmation
 	}
