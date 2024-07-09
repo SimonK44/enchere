@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,19 +15,24 @@ import com.example.encheres.exception.BusinessException;
 
 @Service
 public class UtilisateurServiceImpl implements UtilisateurService {
+	
 	@Autowired
 	private UtilisateurDAO utilisateurDAO;
+	
+	@Autowired
+    private PasswordEncoder passwordEncoder;
 
 	@Override
 	@Transactional(rollbackFor = BusinessException.class)
 	public void creerUtilisateur(Utilisateur utilisateur) throws BusinessException {
-		BusinessException be = new BusinessException() ;
-
-		cryptMotDePasse(utilisateur);
-
+		BusinessException be = new BusinessException();
+		
 		boolean isValid = controleNomPrenom(utilisateur.getNom(),utilisateur.getPrenom(),be);
 		isValid &= controlePseudo(utilisateur.getPseudo(), be);
+		isValid &= controleConfirmMotDePasse(utilisateur.getMotDePasse(), utilisateur.getConfirmMotDePasse(), be);		
 
+		cryptMotDePasse(utilisateur);
+		
 		if (isValid) {
 
 			try {
@@ -38,6 +43,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				throw be;
 			}
 		} else {
+			System.out.println(be);
 			throw be;
 		}
 
@@ -54,11 +60,12 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	public void modifierUtilisateur(Utilisateur utilisateur) throws BusinessException {
 		BusinessException be = new BusinessException() ;
 
-		cryptMotDePasse(utilisateur);
-
 		boolean isValid = controleModifierNomPrenom(utilisateur.getNoUtilisateur(), utilisateur.getNom(),utilisateur.getPrenom(),be);
 		isValid &= controleModifierPseudo(utilisateur.getNoUtilisateur(),utilisateur.getPseudo(),be );
+		isValid &= controleConfirmMotDePasse(utilisateur.getMotDePasse(), utilisateur.getConfirmMotDePasse(), be);
 
+		cryptMotDePasse(utilisateur);
+		
 		if (isValid) {
 			try {
 				utilisateurDAO.update(utilisateur);
@@ -176,10 +183,23 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		return isValid;
 	}
+	
+	private boolean controleConfirmMotDePasse(String motDePasse, String confMotDePasse, BusinessException be) {
+		boolean isValid = false;
+
+		if (motDePasse.equals(confMotDePasse)) {
+		   isValid = true;
+		} else {
+			System.out.println("mot de passe : "+motDePasse+" conf : "+confMotDePasse);
+			be.addError(BusinessException.ERREUR_6);
+		}
+
+		return isValid;
+	}
 
 	private void cryptMotDePasse(Utilisateur utilisateur) {
 		System.out.println("generation mdp");
-		utilisateur.setMotDePasse(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode(utilisateur.getMotDePasse()));
+		utilisateur.setMotDePasse(passwordEncoder.encode(utilisateur.getMotDePasse()));
 		System.out.println(utilisateur.getMotDePasse());
 	}
 

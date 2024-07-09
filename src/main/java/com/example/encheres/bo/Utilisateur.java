@@ -37,17 +37,15 @@ public class Utilisateur {
 	@NotBlank
 	private String ville;
 	@NotBlank
+	private String motDePasseActuel;
+	@NotBlank
 	@Size(min = 8)
 	private String motDePasse;
-//	@Transient
-//    private String confirmPassword;    
-//    @AssertTrue(message = "Les mots de passe ne correspondent pas")
-//    private boolean isPasswordConfirmed() {
-//        return motDePasse != null && motDePasse.equals(confirmPassword);
-//    }
+	@NotBlank
+	@Size(min = 8)
+	private String confirmMotDePasse;
 	private int credit;
-	private boolean administrateur;
-	
+	private boolean administrateur;	
 	private LocalDate dateHisto;
 	
 	
@@ -195,11 +193,27 @@ public void setDateHisto(LocalDate dateHisto) {
 	this.dateHisto = dateHisto;
 }
 
+public String getConfirmMotDePasse() {
+	return confirmMotDePasse;
+}
+
+public void setConfirmMotDePasse(String confirmMotDePasse) {
+	this.confirmMotDePasse = confirmMotDePasse;
+}
+
+public String getMotDePasseActuel() {
+	return motDePasseActuel;
+}
+
+public void setMotDePasseActuel(String motDePasseActuel) {
+	this.motDePasseActuel = motDePasseActuel;
+}
+
 @Override
 public String toString() {
 	return "Utilisateur [noUtilisateur=" + noUtilisateur + ", pseudo=" + pseudo + ", nom=" + nom + ", prenom=" + prenom
 			+ ", email=" + email + ", telephone=" + telephone + ", rue=" + rue + ", codePostal=" + codePostal
-			+ ", ville=" + ville + ", motDePasse=" + motDePasse + ", credit=" + credit + ", administrateur="
+			+ ", ville=" + ville + ", motDePasse=" + motDePasse + ", confmotDePasse=" + confirmMotDePasse + ", credit=" + credit + ", administrateur="
 			+ administrateur + ", dateHisto=" + dateHisto + "]";
 }
 

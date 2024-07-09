@@ -1,6 +1,11 @@
 package com.example.encheres.controllers;
 
 import com.example.encheres.bll.UtilisateurService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,7 +23,10 @@ import jakarta.validation.Valid;
 @RequestMapping("/utilisateurs")
 public class UtilisateurControlleur {
 
+	@Autowired
+    private PasswordEncoder passwordEncoder;
 
+	@Autowired
 	UtilisateurService utilisateurService;
 
 	public UtilisateurControlleur (UtilisateurService utilisateurService) {
@@ -101,9 +109,19 @@ public class UtilisateurControlleur {
 
 
 	@PostMapping("/modifier")
-	public String modifUtilisateurParId(@Valid @ModelAttribute("utilisateur") Utilisateur utilisateur, BindingResult bindingResult) {
-
-		Utilisateur u = new Utilisateur();
+	public String modifUtilisateurParId(@ModelAttribute("utilisateur") @Valid Utilisateur utilisateur, BindingResult bindingResult) {
+				
+		// Vérification du mot de passe actuel
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+        Utilisateur currentUser = utilisateurService.findByPseudo(currentUsername);
+        
+        System.out.println("Mdp actuel : "+utilisateur.getMotDePasseActuel()+" Mdp saisi : "+currentUser.getMotDePasse());
+        
+        if (!passwordEncoder.matches(utilisateur.getMotDePasseActuel(), currentUser.getMotDePasse())) {
+            bindingResult.rejectValue("motDePasseActuel", "error.utilisateur", "Le mot de passe actuel est incorrect");
+            return "view-profil-modification";
+        }
 		
 		if (bindingResult.hasErrors()) {
 			return "view-profil-modification";
@@ -128,13 +146,11 @@ public class UtilisateurControlleur {
 	//Création d'un utilisateur
 	@PostMapping("/creer")
 	public String creerUtilisateur(@Valid 
-			@RequestParam(name = "confirmPassword") String confirmPassword,
 			@ModelAttribute("utilisateur") Utilisateur utilisateur, 								
 			BindingResult bindingResult) {
-//		@RequestParam("confirmPassword") String confirmPassword,
-		System.out.println(confirmPassword);
-		Utilisateur u = new Utilisateur();
-
+		
+		Utilisateur u = new Utilisateur();				
+		
 		if (bindingResult.hasErrors()) {
 			return "view-profil-creation";
 		} else {
