@@ -1,16 +1,21 @@
 package com.example.encheres.dal;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import com.example.encheres.bo.ArticleVendu;
+import com.example.encheres.bo.Categorie;
 import com.example.encheres.bo.Utilisateur;
 
 
@@ -19,11 +24,11 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 	private NamedParameterJdbcTemplate jdbcTemplate;
 // requete SQL sans histo
 	private static final String CREATE   = "INSERT INTO UTILISATEURS ( pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) VALUES ( :pseudo, :nom, :prenom, :email, :telephone, :rue, :codePostal, :ville, :motDePasse, :credit, :administrateur)";
-	private static final String READ     = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur, date_histo FROM UTILISATEURS WHERE no_utilisateur = :noUtlisateur";
+	private static final String READ     = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE no_utilisateur = :noUtlisateur";
 	private static final String UPDATE   = "UPDATE UTILISATEURS SET pseudo = :pseudo, nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, rue = :rue, code_postal = :codePostal, ville = :ville, mot_de_passe = :motDePasse WHERE no_utilisateur = :noUtilisateur";
 	private static final String UPDATE_CREDIT   = "UPDATE UTILISATEURS SET credit = :credit WHERE no_utilisateur = :noUtilisateur";
 	private static final String DELETE   = "DELETE FROM utilisateurs WHERE no_utilisateur = :noUtilisateur";
-	private static final String FIND_ALL = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE date_histo  IS NULL ORDER BY pseudo";
+	private static final String FIND_ALL = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS ORDER BY pseudo";
 	private static final String FIND_BY_PSEUDO = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE pseudo = :pseudo AND date_histo  IS NULL ORDER BY pseudo";
 
 	private static final String COUNT_BY_NOM_PRENOM  = "SELECT COUNT(*) FROM UTILISATEURS WHERE nom = :nom AND prenom = :prenom AND date_histo  IS NULL" ;
@@ -96,8 +101,8 @@ public UtilisateurDAOimpl(NamedParameterJdbcTemplate jdbcTemplate) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
 // ajout parametre pour la requete
 		mapParameterSource.addValue("noUtlisateur",noUtilisateur);
-
-		return jdbcTemplate.queryForObject(READ, mapParameterSource,new BeanPropertyRowMapper<>(Utilisateur.class));
+		System.out.println("Utilisateur read : " + noUtilisateur );
+		return jdbcTemplate.queryForObject(READ, mapParameterSource,new UtilisateurRowMapper());
 	}
 /**
  *  mise à jour utilisateur sans crédit, sans admin
@@ -146,8 +151,7 @@ public UtilisateurDAOimpl(NamedParameterJdbcTemplate jdbcTemplate) {
  */
 	@Override
 	public List<Utilisateur> findAll() {
-		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();	
-		return jdbcTemplate.query(FIND_ALL,mapParameterSource,new BeanPropertyRowMapper<>(Utilisateur.class));
+		return jdbcTemplate.query(FIND_ALL, new UtilisateurRowMapper());
 	}
 
 /**
@@ -240,6 +244,30 @@ public void updateHisto(int noUtilisateur) {
 	mapParameterSource.addValue("noUtilisateur",noUtilisateur);
 	jdbcTemplate.update(UPDATE_HISTO, mapParameterSource);
 
+}
+
+
+public class UtilisateurRowMapper implements RowMapper<Utilisateur> {
+
+	@Override
+	public Utilisateur mapRow(ResultSet rs, int rowNum) throws SQLException {
+		Utilisateur utilisateur = new Utilisateur();
+		
+		utilisateur.setNoUtilisateur(rs.getInt("no_utilisateur"));
+		utilisateur.setPseudo(rs.getString("pseudo"));
+		utilisateur.setNom(rs.getString("nom"));
+		utilisateur.setPrenom(rs.getString("prenom"));
+		utilisateur.setEmail(rs.getString("email"));
+		utilisateur.setTelephone(rs.getString("telephone"));
+		utilisateur.setRue(rs.getString("rue"));
+		utilisateur.setCodePostal(rs.getString("code_postal"));
+		utilisateur.setVille(rs.getString("ville"));
+		utilisateur.setMotDePasse(rs.getString("mot_de_passe"));
+		utilisateur.setCredit(rs.getInt("credit"));
+		utilisateur.setAdministrateur(rs.getBoolean("administrateur"));
+
+		return utilisateur;
+	}
 }
 
 }

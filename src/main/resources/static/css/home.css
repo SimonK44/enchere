@@ -18,12 +18,17 @@ main {
 h1 {
     text-align: center;
     color: #333;
+    margin-bottom: 40px;    
 }
 
-
-.filtersFelx{
+.filtersFlex{
+	max-width: 420px;
 	display: flex;
+	/*justify-content: start;*/
+	justify-content: space-between;
+	
 }
+
 
 .filter-container {
     margin-top: 20px;
@@ -33,30 +38,46 @@ h1 {
     margin-bottom: 15px;
 }
 
+
 .boxEnsemble{
-	 max-width: 500px;
-	
+	 max-width: 500px;	
+    /* margin: 10px 50px 20px 0;*/
 }
 
 
-label {
+.box300{
+	max-width: 300px;	
+}
+
+label,
+input {
     display: inline;
-    margin-bottom: 5px;
-    font-weight: bold;
+}
+
+
+.bold{
+	font-weight: bold;
 }
 
 input[type="text"],
 select {
-    width: 100%;
-    padding: 8px;
+    padding: 7px;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+    margin-bottom: 5px;
 }
+
+.categorie{
+	   /*width:100%;*/
+}
+
 
 button.search-button {
     display: inline;
-    padding: 10px 20px;
+   /* padding: 5px 10px; */
+    width:130px;
+    height:50px;
     background-color: #007BFF;
     color: #fff;
     border: none;
@@ -91,7 +112,7 @@ fieldset div {
 .auction-item {
     display: inline-flex;
     align-items: center;
-   justify-content: space-between;
+    justify-content: space-between;
 	width: 500px;
     background-color: #fff;
     padding: 20px;
