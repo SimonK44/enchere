@@ -11,8 +11,8 @@ public class ArticleVendu {
 	private String description;
 	private LocalDate dateDebutEnchere;
 	private LocalDate dateFinEnchere;
-	private float prixInitial;
-	private float prixVente;
+	private int prixInitial;
+	private int prixVente;
 
 	private Categorie categorie;
 
@@ -24,8 +24,8 @@ public class ArticleVendu {
 
 
 public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEnchere,
-			LocalDate dateFinEnchere, float prixInitial, float prixVente, Categorie categorie, Utilisateur vendeur, Utilisateur acheteur,
-			List<Enchere> encheres, LocalDate dateHisto) {
+			LocalDate dateFinEnchere, int prixInitial, int prixVente, Categorie categorie, Utilisateur vendeur, Utilisateur acheteur,
+			List<Enchere> encheres) {
 		super();
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
@@ -96,7 +96,7 @@ public float getPrixInitial() {
 	return prixInitial;
 }
 
-public void setPrixInitial(float prixInitial) {
+public void setPrixInitial(int prixInitial) {
 	this.prixInitial = prixInitial;
 }
 
@@ -104,7 +104,7 @@ public float getPrixVente() {
 	return prixVente;
 }
 
-public void setPrixVente(float prixVente) {
+public void setPrixVente(int prixVente) {
 	this.prixVente = prixVente;
 }
 
