@@ -93,7 +93,7 @@ public class ArticleVenduDAOImpl implements ArticleVenduDAO {
 	}
 
 	@Override
-	public void updatePrixVente(int noArticle, float prixVente) {
+	public void updatePrixVente(int noArticle, int prixVente) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
 		mapParameterSource.addValue("noArticle",noArticle);
 		mapParameterSource.addValue("prixVente", prixVente);
@@ -163,7 +163,7 @@ public class ArticleVenduDAOImpl implements ArticleVenduDAO {
 			articleVendu.setDateFinEnchere(rs.getObject("date_fin_encheres", LocalDate.class));
 			articleVendu.setPrixInitial(rs.getInt("prix_initial"));
 			articleVendu.setPrixVente(rs.getInt("prix_vente"));
-			articleVendu.setDateHisto(rs.getObject("date_histo", LocalDate.class));
+			/*articleVendu.setDateHisto(rs.getObject("date_histo", LocalDate.class));*/
 
 			// Map Categorie
 			Categorie categorie = new Categorie();

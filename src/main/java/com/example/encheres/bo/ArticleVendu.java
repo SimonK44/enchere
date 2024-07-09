@@ -92,7 +92,7 @@ public void setDateFinEnchere(LocalDate dateFinEnchere) {
 	this.dateFinEnchere = dateFinEnchere;
 }
 
-public float getPrixInitial() {
+public int getPrixInitial() {
 	return prixInitial;
 }
 
@@ -100,7 +100,7 @@ public void setPrixInitial(int prixInitial) {
 	this.prixInitial = prixInitial;
 }
 
-public float getPrixVente() {
+public int getPrixVente() {
 	return prixVente;
 }
 

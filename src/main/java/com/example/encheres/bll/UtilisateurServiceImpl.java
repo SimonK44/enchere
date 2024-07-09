@@ -15,10 +15,10 @@ import com.example.encheres.exception.BusinessException;
 
 @Service
 public class UtilisateurServiceImpl implements UtilisateurService {
-	
+
 	@Autowired
 	private UtilisateurDAO utilisateurDAO;
-	
+
 	@Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -26,14 +26,14 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Transactional(rollbackFor = BusinessException.class)
 	public void creerUtilisateur(Utilisateur utilisateur) throws BusinessException {
 		BusinessException be = new BusinessException();
-		
+
 		boolean isValid = controleNomPrenom(utilisateur.getNom(),utilisateur.getPrenom(),be);
 		isValid &= controlePseudo(utilisateur.getPseudo(), be);
 		isValid &= controleEmail(utilisateur.getEmail(), be);
-		isValid &= controleConfirmMotDePasse(utilisateur.getMotDePasse(), utilisateur.getConfirmMotDePasse(), be);		
+		isValid &= controleConfirmMotDePasse(utilisateur.getMotDePasse(), utilisateur.getConfirmMotDePasse(), be);
 
 		cryptMotDePasse(utilisateur);
-		
+
 		if (isValid) {
 
 			try {
@@ -67,7 +67,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		isValid &= controleConfirmMotDePasse(utilisateur.getMotDePasse(), utilisateur.getConfirmMotDePasse(), be);
 
 		cryptMotDePasse(utilisateur);
-		
+
 		if (isValid) {
 			try {
 				utilisateurDAO.update(utilisateur);
@@ -85,7 +85,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	}
 	@Override
 	@Transactional(rollbackFor = BusinessException.class)
-	public void modifierUtilisateurCredit(int noUtilisateur, float credit){
+	public void modifierUtilisateurCredit(int noUtilisateur, int credit){
 		utilisateurDAO.updateCredit(noUtilisateur, credit);
 	}
 
@@ -148,7 +148,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		return isValid;
 	}
-	
+
 	private boolean controleEmail (String email, BusinessException be) {
 		boolean isValid = false;
 
@@ -198,7 +198,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		return isValid;
 	}
-	
+
 	private boolean controleConfirmMotDePasse(String motDePasse, String confMotDePasse, BusinessException be) {
 		boolean isValid = false;
 
