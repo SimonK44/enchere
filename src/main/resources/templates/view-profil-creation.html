@@ -69,7 +69,8 @@
 				</div>
 				<div class="form-col">
 					<label for="confirmPassword">Confirmation :</label>
-					<input id="confirmPassword" type="password" name="confirmPassword" required/>
+					<input id="confirmPassword" type="password" name="confirmPassword" th:field="*{confirmMotDePasse}" required/>
+					<div data-th-replace="~{/fragments/fragment-error :: frag-error('confirmMotDePasse')}"></div>
 				</div>
 			</div>
 			<div class="form-actions">
