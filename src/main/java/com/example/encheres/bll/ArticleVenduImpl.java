@@ -43,14 +43,14 @@ public class ArticleVenduImpl implements ArticleVenduService {
 			UtilisateurDAO utilisateurDAO,
 			RetraitDAO retraitDAO,
 			EnchereDAO enchereDAO
-	) {		
+	) {
 		this.articleVenduDAO = articleVenduDAO;
 		this.articleVenduDynamiqueDAO = articleVenduDynamiqueDAO;
 		this.utilisateurDAO = utilisateurDAO;
 		this.retraitDAO = retraitDAO;
 		this.enchereDAO = enchereDAO;
 	}
-	
+
 
 	@Override
 	public void create(ArticleVendu articleVendu) {
@@ -131,14 +131,6 @@ public class ArticleVenduImpl implements ArticleVenduService {
 	@Transactional
 	public void encherirArticle(int noArticleVendu, int proposition, Utilisateur user) {
 		Utilisateur utilisateur = this.utilisateurDAO.read(user.getNoUtilisateur());
-
-		ArticleVendu art = this.articleVenduDAO.read(noArticleVendu);
-		if ( art.getDateFinEnchere() == LocalDate.now() ) {
-
-		}
-
-
-
 		// RECUPERER DERNIERE OFFRE
 		Optional<Enchere> lastEnchereMax = this.enchereDAO.montantMax(noArticleVendu);
 		if (lastEnchereMax.isEmpty()) { // SI NULL
@@ -178,13 +170,17 @@ public class ArticleVenduImpl implements ArticleVenduService {
 
 	public List<ArticleVendu> findAllComplexe(String transactionType, int requete,  String nomArticle, int noCategorie, int noUtilisateurVendeur, int noUtilisateurAcheteur) {
 		List<ArticleVendu> articles = articleVenduDynamiqueDAO.findDynamique(transactionType, requete, nomArticle, noCategorie, noUtilisateurVendeur, noUtilisateurAcheteur);
+
+<<<<<<< Updated upstream
 		System.out.println("articles"+ articles);
 
+=======
+>>>>>>> Stashed changes
 		for(ArticleVendu a : articles ) {
 			System.out.println("a"+ a);
     		a.setVendeur(utilisateurDAO.read(a.getVendeur().getNoUtilisateur()));
     	}
-		
+
 		return articles;
 	}
 

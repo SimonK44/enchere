@@ -108,3 +108,7 @@ p, label {
 .proposition-input {
     max-width: 120px;
 }
+.info {
+    padding-top: 20px;
+    font-weight: bold;
+}
