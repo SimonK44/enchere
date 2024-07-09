@@ -25,20 +25,18 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 	private final static String ACHAT                   = "achat";
 	private final static String VENTES                  = "ventes";
 	
-	private final static String SELECT = "SELECT no_article, nom_article, description, date_debut_encheres , date_fin_encheres, prix_initial, prix_vente, no_utilisateur_vendeur, no_utilisateur_acheteur , no_categorie FROM ARTICLES_VENDUS";
+	private final static String SELECT = "SELECT A.no_article, nom_article, description, date_debut_encheres , date_fin_encheres, prix_initial, prix_vente, no_utilisateur_vendeur, no_utilisateur_acheteur , no_categorie FROM ARTICLES_VENDUS AS A";
 // union pour mes encheres en cours   
-	private final static String UNION  = " AS A INNER JOIN ENCHERES AS E ON E.no_article = A.no_article" ; 
+	private final static String UNION  = " INNER JOIN ENCHERES AS E ON E.no_article = A.no_article" ; 
 	
-	private final static String WHERE = " WHERE";
-	private final static String AND   = " AND";
-	private final static String OR   = " OR";
+	private final static String WHERE    = " WHERE";	
+	private final static String OR       = " OR";
 	private final static String POURCENT = "%";
 	
 // where des encheres_ouvertes
-//	private final static String ENCHERES_OUVERTES       = " ( date_debut_encheres <= GETDATE() AND date_fin_encheres  >= GETDATE() )";
 	private final static String ENCHERES_OUVERTES       = " ( date_debut_encheres <= GETDATE() AND date_fin_encheres  >= GETDATE() )";
-	private final static String MES_ENCHERES_EN_COURS   = " ( date_debut_encheres <= GETDATE() AND date_fin_encheres >= GETDATE() AND E.no_utilisateur = :noUtilisateur ) ";	
-	private final static String MES_ENCHERES_REMPORTEES = " ( date_fin_encheres < :dateDuJour AND no_utilisateur_acheteur = :noUtilisateurAcheteur )";
+	private final static String MES_ENCHERES_EN_COURS   = " ( date_debut_encheres <= GETDATE() AND date_fin_encheres >= GETDATE() AND E.no_utilisateur = :noUtilisateurAcheteur ) ";	
+	private final static String MES_ENCHERES_REMPORTEES = " ( date_fin_encheres < GETDATE() AND no_utilisateur_acheteur = :noUtilisateurAcheteur )";
 	
 	private final static String MES_VENTES_EN_COURS     = " ( date_debut_encheres >= GETDATE() AND no_utilisateur_vendeur = :noUtilisateurVendeur )";
 	private final static String VENTES_NON_DEBUTEES     = " ( date_debut_encheres >= GETDATE() AND no_utilisateur_vendeur = :noUtilisateurVendeur )";
@@ -64,14 +62,14 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 
 		mapParameterSource.addValue("noCategorie",noCategorie);
 		mapParameterSource.addValue("nomArticle",nomArticle);
-		mapParameterSource.addValue("no_utilisateur_vendeur",noUtilisateurVendeur);		
-		mapParameterSource.addValue("no_utilisateur_acheteur",noUtilisateurAcheteur);
+		mapParameterSource.addValue("noUtilisateurVendeur",noUtilisateurVendeur);		
+		mapParameterSource.addValue("noUtilisateurAcheteur",noUtilisateurAcheteur);
 				
 		
 		System.out.println("ArticleVenduDynamiqueDAOImpl requeteFinale : " + requeteFinale);
 		System.out.println("ArticleVenduDynamiqueDAOImpl parametres: " + mapParameterSource.toString());
 
-		return jdbcTemplate.query(requeteFinale,new ArticleVenduRowMapper());
+		return jdbcTemplate.query(requeteFinale,mapParameterSource,new ArticleVenduRowMapper());
 
 
 	}
@@ -151,7 +149,7 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 // ajout du like sur le nom si besoin
 		System.out.println(nomArticle);
 		if ( nomArticle != null  ) {
-			requeteFinale = requeteFinale + LIKE_NOM + POURCENT ;
+			requeteFinale = requeteFinale +  LIKE_NOM + POURCENT ;
 		}
 // ajout du filtre sur categorie
 		if (noCategorie != 0) {
