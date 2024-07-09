@@ -32,7 +32,8 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 	private static final String FIND_BY_PSEUDO = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE pseudo = :pseudo AND date_histo  IS NULL ORDER BY pseudo";
 
 	private static final String COUNT_BY_NOM_PRENOM  = "SELECT COUNT(*) FROM UTILISATEURS WHERE nom = :nom AND prenom = :prenom AND date_histo  IS NULL" ;
-    private static final String COUNT_BY_PSEUDO      = "SELECT COUNT(*) FROM UTILISATEURS WHERE pseudo = :pseudo AND date_histo  IS NULL";
+    private static final String COUNT_BY_PSEUDO      = "SELECT COUNT(*) FROM UTILISATEURS WHERE pseudo = :pseudo AND date_histo IS NULL";
+    private static final String COUNT_BY_MAIL      = "SELECT COUNT(*) FROM UTILISATEURS WHERE email = :email AND date_histo IS NULL";
 
     private static final String COUNT_BY_NOM_PRENOMMODIFIER  = "SELECT COUNT(*) FROM UTILISATEURS WHERE nom = :nom AND prenom = :prenom AND no_utilisateur != :noUtilisateur AND date_histo  IS NULL";
     private static final String COUNT_BY_PSEUDOMODIFIER      = "SELECT COUNT(*) FROM UTILISATEURS WHERE pseudo = :pseudo AND no_utilisateur != :noUtilisateur AND date_histo  IS NULL";
@@ -177,6 +178,20 @@ public UtilisateurDAOimpl(NamedParameterJdbcTemplate jdbcTemplate) {
 
 		return jdbcTemplate.queryForObject(COUNT_BY_PSEUDO , mapParameterSource, Integer.class) ;
 	}
+	
+/**
+ * controle avec un count des doublons mail en creation
+ */
+	@Override
+	public int countByMail(String email) {
+		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
+		// ajout parametre pour la requete
+		mapParameterSource.addValue("email",email);
+
+		return jdbcTemplate.queryForObject(COUNT_BY_MAIL , mapParameterSource, Integer.class) ;
+	}
+	
+	
 /**
  * controle avec un count des doublons nom/prenom en modification
  */
@@ -209,8 +224,9 @@ public UtilisateurDAOimpl(NamedParameterJdbcTemplate jdbcTemplate) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
 // ajout parametre pour la requete
 		mapParameterSource.addValue("pseudo",pseudo);
+		System.out.println(pseudo+" dans utilisateurDAO");
 
-		return jdbcTemplate.queryForObject(FIND_BY_PSEUDO, mapParameterSource,new BeanPropertyRowMapper<>(Utilisateur.class));
+		return jdbcTemplate.queryForObject(FIND_BY_PSEUDO, mapParameterSource, new BeanPropertyRowMapper<>(Utilisateur.class));
 }
 
 /**

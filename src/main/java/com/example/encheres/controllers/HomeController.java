@@ -76,6 +76,7 @@ public class HomeController {
     }
 
    //à developer
+
     
    @PostMapping({"/","home","encheres","listes-articles"})
    
@@ -106,6 +107,25 @@ public class HomeController {
     		
     	return "home";
 	}
+
+//   @PostMapping({"/","home","encheres","listes-articles"})
+//    public String homeRecherche(
+//    		@RequestParam int requete,  String nomArticle, int noCategorie, int noUtilisateurVendeur, int noUtilisateurAcheteur,
+//    		Model model) {
+//	   System.out.println();
+//    	//à developper 
+//	   //int requete,  String nomArticle, int noCategorie, int noUtilisateurVendeur, int noUtilisateurAcheteur
+//    	List<ArticleVendu> articlesRecherches = this.articleVenduService.findAllComplexe
+//    									( requete, nomArticle, noCategorie, noUtilisateurVendeur, noUtilisateurAcheteur); 	 	
+//    	List<Categorie> categories = this.categorieService.findAll();
+//    	System.out.println("homeRecherche" + articlesRecherches);
+//    	
+//    	model.addAttribute("articlesRecherches", articlesRecherches);
+//    	model.addAttribute("categories", categories);    	
+//    		
+//    	return "home";
+//	}
+
 }
 
 

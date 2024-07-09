@@ -38,7 +38,7 @@ public class LoginController {
 
 		Utilisateur utilisateur = this.contexteService.charger(currentPrincipalName);
 
-		System.out.println("utilisateurutilisateur : " + utilisateur);
+		System.out.println("Utilisateur utilisateur : " + utilisateur);
 
 		if(utilisateur != null) {
 			//mettre à jour utilisateurSession avec l'utilisateur chargé
@@ -55,7 +55,7 @@ public class LoginController {
 			utilisateurSession.setCredit(utilisateur.getCredit());
 			utilisateurSession.setAdministrateur(utilisateur.isAdministrateur());
 
-		}else {
+		} else {
 			//mettre à jour utilisateurSession avec attributs null
 			utilisateurSession.setNoUtilisateur(0);
 			utilisateurSession.setPseudo(null);

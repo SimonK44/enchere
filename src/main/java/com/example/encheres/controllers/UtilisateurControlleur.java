@@ -54,21 +54,39 @@ public class UtilisateurControlleur {
 		model.addAttribute("utilisateur", u); // 1 objet utilisateur avec tous ses paramètres
 
 		return "view-profil-modification";
-
-	}
-
+	}	
+	
+	//Suppression du compte par l'utilisateur
+	@GetMapping("/supprimer")
+	public String supprimerUtilisateurParId(@RequestParam (name="noUtilisateur") int noUtilisateur,
+											@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession,
+											BindingResult bingingResult) {
+		
+		try {
+			utilisateurService.historiserUtilisateur(noUtilisateur);		
+			return "redirect:/login";
+		} catch (BusinessException e) {
+			e.getErreurs().forEach(err -> {
+				ObjectError error = new ObjectError("globalError", err);
+				bingingResult.addError(error);
+				}
+			);	
+			return "view-profil-modification";
+		}
+	}	
+	
 	//Afficher une page de profil simple
 	@GetMapping("/afficher")
 	public String afficherUtilisateurParId(
 			Model model,
-			@SessionAttribute(value = "utilisateurSession", required = false) Utilisateur utilisateurSession,
-			@RequestParam(value = "id", required = false) Integer noUtilisateur // Utilisez Integer au lieu de int
+			@SessionAttribute("utilisateurSession") Utilisateur utilisateurSession, 
+			@RequestParam(name = "noUtilisateur", required = false) Integer noUtilisateur // Utilisez Integer au lieu de int
 	) {
 		System.out.println("afficherUtilisateurParId" + utilisateurSession);
-		System.out.println("\n \n afficherUtilisateurParId  : noUtilisateur" + utilisateurSession);
+		
 		// Si aucun utilisateur en session et aucun ID fourni, redirigez vers la page de connexion
 		if (utilisateurSession == null && noUtilisateur == null) {
-			System.out.println(" premier ");
+			System.out.println("utilisateur session null et noutilisateur null");
 			return "redirect:/login";
 		}
 
@@ -81,35 +99,35 @@ public class UtilisateurControlleur {
 			model.addAttribute("isDifferentUser", true); // Ajoutez cette variable
 			return "view-utilisateur";
 		}
-		System.out.println(" tresss ");
+		System.out.println("pas d'utilisateur en session mais noUtilisateur ok");
 
 		// Si un utilisateur est en session
 		Utilisateur utilisateur;
 		boolean isDifferentUser = false;
 		if (noUtilisateur == null || noUtilisateur.equals(utilisateurSession.getNoUtilisateur())) {
-			System.out.println(" azerty ");
+			System.out.println("utilisateur en session : "+noUtilisateur+"No en session : "+utilisateurSession.getNoUtilisateur());
 
 			utilisateur = this.utilisateurService.lectureUtilisateur(utilisateurSession.getNoUtilisateur());
 		} else {
-			System.out.println(" ytreza ");
+			System.out.println("Utilisateur différent de celui en session : "+noUtilisateur+" No en Session : "+utilisateurSession.getNoUtilisateur());
 			utilisateur = this.utilisateurService.lectureUtilisateur(noUtilisateur);
 			isDifferentUser = true; // L'utilisateur demandé est différent de l'utilisateur en session
 		}
 
 		if (utilisateur != null) {
-			System.out.println("vers login ");
-			model.addAttribute("utilisateur", utilisateur); // 1 objet utilisateur avec tous ses paramètres
+			System.out.println("Utilisateur présent, préparation du model" + utilisateur);
+			model.addAttribute("utilisateur : ", utilisateur); // 1 objet utilisateur avec tous ses paramètres
 		}
 		model.addAttribute("isDifferentUser", isDifferentUser); // Ajoutez cette variable au modèle
 
-		System.out.println("vFininiisssh ");
+		System.out.println("Fin afficher utilisateur");
 
 		return "view-utilisateur";
 	}
 
 
 	@PostMapping("/modifier")
-	public String modifUtilisateurParId(@ModelAttribute("utilisateur") @Valid Utilisateur utilisateur, BindingResult bindingResult) {
+	public String modifUtilisateurParPseudo(@ModelAttribute("utilisateur") @Valid Utilisateur utilisateur, BindingResult bindingResult) {
 				
 		// Vérification du mot de passe actuel
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

@@ -25,5 +25,9 @@ public interface UtilisateurDAO {
 // methodes avec les utlisateurs historisés
 	List<Utilisateur> findAllHisto();
 	void updateHisto (int noUtilisateur);
+	/**
+	 * controle avec un count des doublons mail en creation
+	 */
+	int countByMail(String email);
 
 }
