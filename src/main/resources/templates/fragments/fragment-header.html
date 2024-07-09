@@ -4,12 +4,13 @@
     </h1>
     <nav>
         <ul>
-            <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">S'inscrire - Se connecter</a></li>
             <li><a th:href="@{/listes-articles}">Enchères</a></li>
             <li><a th:href="@{/vendre-article}">Vendre un article</a></li>
             <li sec:authorize="isAuthenticated()"><a th:href="@{/utilisateurs/afficher}"><span sec:authentication="name"></a></li>
             <li><a sec:authorize="hasRole('ADMIN')" th:href="@{/administrateur}">Administrateur</a></li>
             <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Déconnexion</a></li>
+            <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">S'inscrire - Se connecter</a></li>
+
         </ul>
     </nav>
     <div class="navbar-toggle">

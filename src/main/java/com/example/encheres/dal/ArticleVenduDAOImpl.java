@@ -108,7 +108,7 @@ public class ArticleVenduDAOImpl implements ArticleVenduDAO {
 		mapParameterSource.addValue("noArticle",noArticle);
 		jdbcTemplate.update(DELETE, mapParameterSource);
 	}
-	
+
 	/*
 	 *  recherche article vendu par numero d' utilisateur
 	 */
@@ -161,8 +161,8 @@ public class ArticleVenduDAOImpl implements ArticleVenduDAO {
 			articleVendu.setDescription(rs.getString("description"));
 			articleVendu.setDateDebutEnchere(rs.getObject("date_debut_encheres", LocalDate.class));
 			articleVendu.setDateFinEnchere(rs.getObject("date_fin_encheres", LocalDate.class));
-			articleVendu.setPrixInitial(rs.getFloat("prix_initial"));
-			articleVendu.setPrixVente(rs.getFloat("prix_vente"));
+			articleVendu.setPrixInitial(rs.getInt("prix_initial"));
+			articleVendu.setPrixVente(rs.getInt("prix_vente"));
 			articleVendu.setDateHisto(rs.getObject("date_histo", LocalDate.class));
 
 			// Map Categorie

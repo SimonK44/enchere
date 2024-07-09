@@ -86,7 +86,8 @@ public class ArticleVenduController {
 	@GetMapping("/view-encher-detail")
 	public String pageArticleDetail(
 			@RequestParam(value = "id", required = false) int noArticleVendu,
-			Model model
+			Model model,
+			@ModelAttribute("utilisateurSession") Utilisateur user
 	) {
 		ArticleVendu article = this.articleVenduService.lectureArticleVendu(noArticleVendu);
 
@@ -99,9 +100,33 @@ public class ArticleVenduController {
 		Retrait adresse = this.retraitService.read(article.getNoArticle());
 		System.out.println(adresse);
 
-		model.addAttribute("article", article);
-		model.addAttribute("adresse", adresse);
-		return "/view-encher-detail";
+		boolean hideButtonEncherir = false;
+		boolean lastEnchereUser = false;
+
+		System.out.println("\n \n Mon Article detail");
+		System.out.println(article);
+		System.out.println("\n \n");
+
+		if (article.getAcheteur().getNoUtilisateur() == user.getNoUtilisateur()) {
+			model.addAttribute("lastEnchereUser", lastEnchereUser);
+		}
+		lastEnchereUser = true;
+		model.addAttribute("lastEnchereUser", lastEnchereUser);
+
+
+		if (article.getDateFinEnchere().isBefore(LocalDate.now()) || article.getDateFinEnchere().isEqual(LocalDate.now())) {
+			System.out.println("DAte exprirer");
+			model.addAttribute("article", article);
+			model.addAttribute("adresse", adresse);
+			model.addAttribute("button", hideButtonEncherir);
+			return "/view-encher-detail";
+		} else {
+			hideButtonEncherir = true;
+			model.addAttribute("article", article);
+			model.addAttribute("adresse", adresse);
+			model.addAttribute("button", hideButtonEncherir);
+			return "/view-encher-detail";
+		}
 	}
 
 	@PostMapping("/encherir")
