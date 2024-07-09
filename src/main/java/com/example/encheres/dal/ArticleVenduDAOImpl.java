@@ -161,8 +161,8 @@ public class ArticleVenduDAOImpl implements ArticleVenduDAO {
 			articleVendu.setDescription(rs.getString("description"));
 			articleVendu.setDateDebutEnchere(rs.getObject("date_debut_encheres", LocalDate.class));
 			articleVendu.setDateFinEnchere(rs.getObject("date_fin_encheres", LocalDate.class));
-			articleVendu.setPrixInitial(rs.getFloat("prix_initial"));
-			articleVendu.setPrixVente(rs.getFloat("prix_vente"));
+			articleVendu.setPrixInitial(rs.getInt("prix_initial"));
+			articleVendu.setPrixVente(rs.getInt("prix_vente"));
 
 			// Map Categorie
 			Categorie categorie = new Categorie();
