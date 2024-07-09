@@ -33,7 +33,7 @@ public class ArticleVenduDynamiqueTest {
 	@Autowired
 	private ArticleVenduDynamiqueDAO articleVenduDynamiqueDAO;
 	
-	
+	/// ------------------------------ achat -----------------------------------		
 	@Test
 	void test01_enchereOuverte() {
 // test encheres ouvertes
@@ -200,4 +200,172 @@ public class ArticleVenduDynamiqueTest {
 				logger.info(a);	
 			
 			}	
+	
+/// ------------------------------ ventes -----------------------------------	
+	@Test
+	void test08_mes_ventes_en_cours() {
+// test mes ventes en cours
+		System.out.println("---------------- debut test ventes 1");
+		transactionType = "ventes";
+		requete = 1;
+		nomArticle = null;
+		noUtilisateurVendeur = 8;
+		noUtilisateurAcheteur = 7;
+		
+		try {
+			a = articleVenduDynamiqueDAO.findDynamique(transactionType, requete, nomArticle,noCategorie,noUtilisateurVendeur,noUtilisateurAcheteur );
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
+		System.out.println("test 8 resultat : " + a);
+		assertNotNull(a);
+		logger.info("Test 8 : mes ventes en cours");
+		logger.info(a);	
+	
+	}
+
+	@Test
+	void test09_ventes_non_debutees() {
+		// test encheres en cours
+				System.out.println("---------------- debut test ventes 9");
+				transactionType = "ventes";
+				requete = 2;
+				nomArticle = null;
+				noUtilisateurVendeur = 8;
+				noUtilisateurAcheteur = 7;
+				
+				try {
+					a = articleVenduDynamiqueDAO.findDynamique(transactionType, requete, nomArticle,noCategorie,noUtilisateurVendeur,noUtilisateurAcheteur );
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			    
+				System.out.println("test 9 resultat : " + a);
+				assertNotNull(a);
+				logger.info("Test 9 : encheres en cours");
+				logger.info(a);	
+			
+			}	
+	
+	@Test
+	void test10_mes_ventes_en_cours_ventes_non_debutees() {
+		// test mes ventes en cours ventes non_debutees
+		System.out.println("---------------- debut test ventes 10");
+				transactionType = "ventes";
+				requete = 3;
+				nomArticle = null;
+				noUtilisateurVendeur = 8;
+				noUtilisateurAcheteur = 7;
+				
+				try {
+					a = articleVenduDynamiqueDAO.findDynamique(transactionType, requete, nomArticle,noCategorie,noUtilisateurVendeur,noUtilisateurAcheteur );
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			    
+				System.out.println("test 10 resultat : " + a);
+				assertNotNull(a);
+				logger.info("Test 10 : mes ventes en cours ventes non_debutees ");
+				logger.info(a);	
+			
+			}	
+	
+	@Test
+	void test11_ventes_terminees() {
+		System.out.println("---------------- debut test ventes 11");
+		// test ventes terminees
+				transactionType = "ventes";
+				requete = 4;
+				nomArticle = null;
+				noUtilisateurVendeur = 8;
+				noUtilisateurAcheteur = 7;
+				
+				try {
+					a = articleVenduDynamiqueDAO.findDynamique(transactionType, requete, nomArticle,noCategorie,noUtilisateurVendeur,noUtilisateurAcheteur );
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			    
+				System.out.println("test 11 resultat : " + a);
+				assertNotNull(a);
+				logger.info("Test 11 : ventes terminees ");
+				logger.info(a);	
+			
+			}	
+
+	@Test
+	void test12_mes_ventes_en_cours_ventes_terminees() {
+		System.out.println("---------------- debut test ventes 12");
+		// test mes ventes en cours ventes terminees
+				transactionType = "ventes";
+				requete = 5;
+				nomArticle = null;
+				noUtilisateurVendeur = 8;
+				noUtilisateurAcheteur = 7;
+				
+				try {
+					a = articleVenduDynamiqueDAO.findDynamique(transactionType, requete, nomArticle,noCategorie,noUtilisateurVendeur,noUtilisateurAcheteur );
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			    
+				System.out.println("test 12 resultat : " + a);
+				assertNotNull(a);
+				logger.info("Test 12 : mes ventes en cours ventes terminees ");
+				logger.info(a);	
+			
+			}	
+	@Test
+	void test13_ventes_non_debutees_ventes_terminees() {
+		System.out.println("---------------- debut test ventes 13");
+		// test ventes_non_debutees_ventes_terminees
+				transactionType = "ventes";
+				requete = 6;
+				nomArticle = null;
+				noUtilisateurVendeur = 8;
+				noUtilisateurAcheteur = 7;
+				
+				try {
+					a = articleVenduDynamiqueDAO.findDynamique(transactionType, requete, nomArticle,noCategorie,noUtilisateurVendeur,noUtilisateurAcheteur );
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			    
+				System.out.println("test 13 resultat : " + a);
+				assertNotNull(a);
+				logger.info("Test 13: ventes_non_debutees_ventes_terminees ");
+				logger.info(a);	
+			
+			}	
+	
+	@Test
+	void test14_mes_ventes_en_cours_ventes_non_debutees_ventes_terminees() {
+		System.out.println("---------------- debut test achat 6");
+		// test mes ventes en cours mes ventes en cours mes encheres debutees ventes terminees
+				transactionType = "ventes";
+				requete = 7;
+				nomArticle = null;
+				noUtilisateurVendeur = 8;
+				noUtilisateurAcheteur = 7;
+				
+				try {
+					a = articleVenduDynamiqueDAO.findDynamique(transactionType, requete, nomArticle,noCategorie,noUtilisateurVendeur,noUtilisateurAcheteur );
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			    
+				System.out.println("test 14 resultat : " + a);
+				assertNotNull(a);
+				logger.info("Test 14 : mes ventes en cours mes ventes en cours mes encheres debutees ventes terminees ");
+				logger.info(a);	
+			
+			}		
 }
