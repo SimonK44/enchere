@@ -38,6 +38,7 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 		// ecriture de la requete
 		String requeteFinale = preparationRequete( transactionType, requete, noCategorie, nomArticle, noUtilisateurVendeur, noUtilisateurAcheteur);
        // recuperation date du jour
+		System.out.println(requeteFinale);
 		String dateDuJour = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-mm-dd"));
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
 

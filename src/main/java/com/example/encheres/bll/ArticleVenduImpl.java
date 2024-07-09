@@ -76,8 +76,6 @@ public class ArticleVenduImpl implements ArticleVenduService {
     	//dateDebutEnchere=2024-07-01, dateFinEnchere=2024-07-30, prixInitial=100.0, prixVente=150.0,
     	//categorie=Categorie [noCategorie=1, libelle=null], acheteur=Utilisateur [noUtilisateur=2, pseudo=null, nom=null, prenom=null, email=null, telephone=null, rue=null, codePostal=null, ville=null, motDePasse=null, credit=0, administrateur=false],
     	//vendeur=Utilisateur [noUtilisateur=1, pseudo=null, nom=null, prenom=null, email=null, telephone=null, rue=null, codePostal=null, ville=null, motDePasse=null, credit=0, administrateur=false], encheres=[]],
-
-    	System.out.println(utilisateurDAO.read(7));
 //		articles.foreach(u->u.setUtilisateur(u))
 //    	Utilisateur u -> u.s(this.utilisateurService.lectureUtilisateur();))
 
@@ -180,8 +178,10 @@ public class ArticleVenduImpl implements ArticleVenduService {
 
 	public List<ArticleVendu> findAllComplexe(String transactionType, int requete,  String nomArticle, int noCategorie, int noUtilisateurVendeur, int noUtilisateurAcheteur) {
 		List<ArticleVendu> articles = articleVenduDynamiqueDAO.findDynamique(transactionType, requete, nomArticle, noCategorie, noUtilisateurVendeur, noUtilisateurAcheteur);
-		
+		System.out.println("articles"+ articles);
+
 		for(ArticleVendu a : articles ) {
+			System.out.println("a"+ a);
     		a.setVendeur(utilisateurDAO.read(a.getVendeur().getNoUtilisateur()));
     	}
 		

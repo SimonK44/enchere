@@ -1,0 +1,75 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <main>
+        <h1>Liste des enchères</h1>
+        <div>
+            <h2> Filtres : </h2>
+             <div>
+                <input type="text">
+             </div> 
+             <div class="dropdown">
+                    <label for="categorie">Catégorie :</label>
+                    <select id="categorie" name="categorie">
+                        <option value="toutes">Toutes</option>
+                        <option value="informatique">Informatique</option>
+                        <option value="ameublement">Ameublement</option>
+                        <option value="vetement">Vêtement</option>
+                        <option value="sportLoisirs">Sport&Loisirs</option>
+                    </select>
+                </div>
+
+            </div>         
+            <button>Rechercher</button>
+        </div>
+        <div>
+            <fieldset>
+             
+                <div>
+                  <input type="radio" id="achat" name="achat" value="achat" checked />
+                  <label for="achat">Achat</label>
+                  <form action="">   
+                        <input type="checkbox" id="encheresOuvertes" name="encheresOuverte" value="ouvertes">
+                        <label for="encheresOuverte">enchères ouvertes</label><br>
+                        <input type="checkbox" id="encheresEnCours" name="encheresEnCours" value="encours">
+                        <label for="encheresEnCours"> mes enchère en cours</label><br>
+                        <input type="checkbox" id="encheresRemportees" name="encheresRemportees" value="remportees">
+                        <label for="encheresRemportees"> mes enchères remportées</label><br>
+                   </form>
+                </div>
+              
+                <div>
+                  <input type="radio" id="ventes" name="ventes" value="ventes" />
+                  <label for="ventes">Mes ventes</label>
+                  <form action="">   
+                        <input type="checkbox" id="venteCours" name="venteCours" value="venteCours">
+                        <label for="venteCours"> mes vente en cours</label><br>
+                        <input type="checkbox" id="venteCours" name="venteCours" value="venteCours">
+                        <label for="venteNonDebute"> ventes non débutées</label><br>
+                        <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">
+                        <label for="vehicle3"> ventes terminées</label><br>
+                    </form>
+                </div>
+              
+              </fieldset>
+
+        </div>
+        <div>
+            <div class="rectangle"></div>
+            <div>
+                <p>Fauteuil </p>
+                <p>Prix : <span> 310 </span> points </p>
+                <p>Fin de l'enchère : <span>01/09/2018</span></p>
+                <p>Vendeur : <span>NineJae</span></p>
+            </div>
+        </div>
+
+       
+    </main>
+
+</body>
+</html>
