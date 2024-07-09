@@ -47,7 +47,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			System.out.println(be);
 			throw be;
 		}
-
 	}
 
 	@Override
@@ -64,6 +63,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		boolean isValid = controleModifierNomPrenom(utilisateur.getNoUtilisateur(), utilisateur.getNom(),utilisateur.getPrenom(),be);
 		isValid &= controleModifierPseudo(utilisateur.getNoUtilisateur(),utilisateur.getPseudo(),be );
 		isValid &= controleEmail(utilisateur.getEmail(), be);
+		isValid &= controleMotDePasseActuel(utilisateur.getMotDePasseActuel(), utilisateur.getMotDePasse(), be);
 		isValid &= controleConfirmMotDePasse(utilisateur.getMotDePasse(), utilisateur.getConfirmMotDePasse(), be);
 
 		cryptMotDePasse(utilisateur);
@@ -211,6 +211,20 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		return isValid;
 	}
+	
+	private boolean controleMotDePasseActuel(String motDePasseActuel, String motDePasse, BusinessException be) {
+		boolean isValid = false;
+
+		if (passwordEncoder.matches(motDePasseActuel, motDePasse)) {
+		   isValid = true;
+		} else {
+			System.out.println("mot de passe : "+motDePasseActuel+" conf : "+motDePasse);
+			be.addError(BusinessException.ERREUR_8);
+		}
+
+		return isValid;
+	}
+	
 
 	private void cryptMotDePasse(Utilisateur utilisateur) {
 		System.out.println("generation mdp");

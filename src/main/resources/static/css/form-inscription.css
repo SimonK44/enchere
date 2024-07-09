@@ -60,12 +60,25 @@ button {
     border-radius: 4px;
 }
 
-button {
+button, #suppression {
     background-color: #333;
     color: #fff;
     border: none;
     cursor: pointer;
     transition: background-color 0.3s;
+    font-size: 15px;
+}
+
+#suppression{
+	background-color: red;	
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+    text-decoration: none;
 }
 
 button:hover {
