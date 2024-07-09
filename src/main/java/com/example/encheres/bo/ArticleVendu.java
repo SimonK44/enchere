@@ -19,6 +19,7 @@ public class ArticleVendu {
 	private Utilisateur vendeur;
 	private Utilisateur acheteur;
 	private List<Enchere> encheres;
+	private LocalDate dateHisto;
 
 
 
@@ -37,6 +38,7 @@ public ArticleVendu(int noArticle, String nomArticle, String description, LocalD
 		this.vendeur =  vendeur;
 		this.acheteur =  acheteur;
 		this.encheres = encheres;
+		this.dateHisto = dateHisto;
 	}
 
 	public ArticleVendu() {
@@ -138,6 +140,15 @@ public void setCategorie(Categorie categorie) {
 	this.categorie = categorie;
 }
 
+
+
+public LocalDate getDateHisto() {
+	return dateDebutEnchere;
+}
+
+public void setDateHisto(LocalDate dateHisto) {
+	this.dateHisto = dateHisto;
+}
 @Override
 public String toString() {
 	return "ArticleVendu [noArticle="
@@ -150,8 +161,8 @@ public String toString() {
 			+ prixVente + ", categorie="
 			+ categorie + ", acheteur="
 			+ acheteur + ", vendeur="
-			+ vendeur+ ", encheres=" + encheres
-			+ "]";
+			+ vendeur+ ", encheres=" + encheres + ", dateHisto="
+					+ dateHisto + "]";
 }
 
 

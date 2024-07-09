@@ -57,7 +57,9 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 	public List<ArticleVendu> findDynamique(String transactionType,int requete,  String nomArticle, int noCategorie, int noUtilisateurVendeur, int noUtilisateurAcheteur) {
 		// ecriture de la requete
 		String requeteFinale = preparationRequete( transactionType, requete, noCategorie, nomArticle, noUtilisateurVendeur, noUtilisateurAcheteur);
- 
+       // recuperation date du jour
+		System.out.println(requeteFinale);
+		String dateDuJour = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-mm-dd"));
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
 
 		mapParameterSource.addValue("noCategorie",noCategorie);

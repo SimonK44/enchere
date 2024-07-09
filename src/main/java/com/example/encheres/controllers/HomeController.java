@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -25,6 +26,7 @@ import com.example.encheres.dal.ArticleVenduDynamiqueDAO;
 
 @Controller
 @SessionAttributes({"utilisateurSession"})
+
 public class HomeController {
 	private ArticleVenduService articleVenduService;
 	private UtilisateurService utilisateurService;
@@ -56,6 +58,7 @@ public class HomeController {
     	Model model ) {
     	System.out.println("before");
     	List<ArticleVendu> articles = this.articleVenduService.findAll();
+    	System.out.println("a");
         List<Categorie> categories = this.categorieService.findAll();
     	System.out.println("after");
 
@@ -73,15 +76,28 @@ public class HomeController {
     }
 
    //à developer
+    
    @PostMapping({"/","home","encheres","listes-articles"})
-    public String homeRecherche(
-    		@RequestParam int requete,  String nomArticle, int noCategorie, int noUtilisateurVendeur, int noUtilisateurAcheteur,
+   
+   public String homeRecherche(
+    		@RequestParam("filtre")String nomArticle,
+    		@RequestParam("categorie") int noCategorie,
+    		@RequestParam("transactionType")String transactionType,
+    		@RequestParam("encheresOuvertes") int encheresOuvertes,
+    		@RequestParam("encheresEnCours") int encheresEnCours,
+    		@RequestParam("encheresRemportees") int encheresRemportees,
+    		@RequestParam("venteCours") int venteCours,
+    		@RequestParam("venteNonDebute") int venteNonDebute,
+    		@RequestParam("venteTerminees") int venteTerminees,
+    		@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession,
     		Model model) {
-	   System.out.println();
-    	//à developper 
-	   //int requete,  String nomArticle, int noCategorie, int noUtilisateurVendeur, int noUtilisateurAcheteur
-    	List<ArticleVendu> articlesRecherches = this.articleVenduService.findAllComplexe
-    									( requete, nomArticle, noCategorie, noUtilisateurVendeur, noUtilisateurAcheteur); 	 	
+	   System.out.println("nomArticle:"+ nomArticle + "noCategorie: " + noCategorie + "transactionType:" + transactionType + "encheresOuvertes: " +encheresOuvertes+"encheresEnCours" +"encheresEnCours"+encheresEnCours+"encheresRemportees: "+ encheresRemportees+ "venteCours: "+venteCours+"venteNonDebute: " +"venteNonDebute :"+ venteNonDebute+"venteTerminees: "+venteTerminees+ "utilisateurSession: "+utilisateurSession);
+	   int requete = encheresOuvertes + encheresEnCours + encheresRemportees + venteCours + venteNonDebute + venteTerminees;
+    	 
+    	
+	   //String transactionType, int requete,  String nomArticle, int noCategorie, int noUtilisateurVendeur, int noUtilisateurAcheteur
+	   List<ArticleVendu> articlesRecherches = this.articleVenduService.findAllComplexe
+   									(transactionType, requete, nomArticle, noCategorie,utilisateurSession.getNoUtilisateur() , utilisateurSession.getNoUtilisateur()); 	 	
     	List<Categorie> categories = this.categorieService.findAll();
     	System.out.println("homeRecherche" + articlesRecherches);
     	
