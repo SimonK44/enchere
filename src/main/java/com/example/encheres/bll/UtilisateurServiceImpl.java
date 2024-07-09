@@ -29,6 +29,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		
 		boolean isValid = controleNomPrenom(utilisateur.getNom(),utilisateur.getPrenom(),be);
 		isValid &= controlePseudo(utilisateur.getPseudo(), be);
+		isValid &= controleEmail(utilisateur.getEmail(), be);
 		isValid &= controleConfirmMotDePasse(utilisateur.getMotDePasse(), utilisateur.getConfirmMotDePasse(), be);		
 
 		cryptMotDePasse(utilisateur);
@@ -62,6 +63,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		boolean isValid = controleModifierNomPrenom(utilisateur.getNoUtilisateur(), utilisateur.getNom(),utilisateur.getPrenom(),be);
 		isValid &= controleModifierPseudo(utilisateur.getNoUtilisateur(),utilisateur.getPseudo(),be );
+		isValid &= controleEmail(utilisateur.getEmail(), be);
 		isValid &= controleConfirmMotDePasse(utilisateur.getMotDePasse(), utilisateur.getConfirmMotDePasse(), be);
 
 		cryptMotDePasse(utilisateur);
@@ -143,6 +145,19 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			be.addError(BusinessException.ERREUR_1);
 		}
 
+
+		return isValid;
+	}
+	
+	private boolean controleEmail (String email, BusinessException be) {
+		boolean isValid = false;
+
+		if (utilisateurDAO.countByMail(email) == 0 ) {
+		   isValid = true;
+		} else {
+			System.out.println("utlisateur service pb mail");
+			be.addError(BusinessException.ERREUR_7);
+		}
 
 		return isValid;
 	}
