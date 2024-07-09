@@ -2,9 +2,12 @@ package com.example.encheres.bll;
 
 import com.example.encheres.bo.ArticleVendu;
 import com.example.encheres.bo.Categorie;
+import com.example.encheres.dal.ArticleVenduDynamiqueDAOImpl;
 import com.example.encheres.dal.CategorieDAO;
 import com.example.encheres.exception.BusinessException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +17,8 @@ import java.util.List;
 
 @Service
 public class CategorieImpl implements CategorieService {
+	Logger logger =LoggerFactory.getLogger(CategorieImpl.class);
+
 
 	private CategorieDAO categorieDAO;
 
@@ -39,8 +44,9 @@ public class CategorieImpl implements CategorieService {
 		
 		try {
 			this.categorieDAO.delete(noCategorie);
+			this.logger.debug("Suppression catégorie :" +  noCategorie);
 		} catch (DataAccessException e) {
-			System.out.println("utlisateur service pb Creation");
+			this.logger.error("Probleme suppression categorie " + noCategorie);			
 			be.addError(BusinessException.ERREUR_0);
 			throw be;
 		}	
@@ -59,8 +65,9 @@ public class CategorieImpl implements CategorieService {
 		
 		try {
 			this.categorieDAO.updateDateSuppression(noCategorie);
-		} catch (DataAccessException e) {
-			System.out.println("utlisateur service pb Creation");
+			this.logger.debug("MAJ catégorie :" +  noCategorie);
+		} catch (DataAccessException e) {			
+			this.logger.error("Probleme MAJ categorie " + noCategorie);		
 			be.addError(BusinessException.ERREUR_0);
 			throw be;
 		}	

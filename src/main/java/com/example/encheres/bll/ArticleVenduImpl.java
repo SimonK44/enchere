@@ -8,7 +8,11 @@ import com.example.encheres.dal.ArticleVenduDAO;
 import com.example.encheres.dal.EnchereDAO;
 import com.example.encheres.dal.RetraitDAO;
 import com.example.encheres.dal.ArticleVenduDynamiqueDAO;
+import com.example.encheres.dal.ArticleVenduDynamiqueDAOImpl;
 import com.example.encheres.dal.UtilisateurDAO;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +22,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +34,7 @@ public class ArticleVenduImpl implements ArticleVenduService {
 	private UtilisateurDAO utilisateurDAO;
 	private RetraitDAO retraitDAO;
 	private EnchereDAO enchereDAO;
+	Logger logger =LoggerFactory.getLogger(ArticleVenduImpl.class);
 
 
 	@Value("${upload.path}")
@@ -122,7 +126,9 @@ public class ArticleVenduImpl implements ArticleVenduService {
 				byte[] bytes = image.getBytes();
 				Path path = Paths.get(uploadPath + articleVendu.getNoArticle() + ".jpg");
 				Files.write(path, bytes);
+				this.logger.debug("Fichier " + articleVendu.getNoArticle() + ".jpg téléchargé " );
 			} catch (IOException e) {
+				this.logger.error("Probleme sur le téléchargement du fichier " + articleVendu.getNoArticle() + ".jpg téléchargé " );
 				e.printStackTrace();
 			}
 		}
