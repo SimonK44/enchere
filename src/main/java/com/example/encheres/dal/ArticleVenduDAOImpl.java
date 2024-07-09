@@ -117,7 +117,7 @@ public class ArticleVenduDAOImpl implements ArticleVenduDAO {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
 // ajout parametre pour la requete
 		mapParameterSource.addValue("no_utilisateur",noUtilisateur);
-		return jdbcTemplate.query(FIND_BY_UTILISATEUR ,new BeanPropertyRowMapper<>(ArticleVendu.class));
+		return jdbcTemplate.query(FIND_BY_UTILISATEUR,mapParameterSource,new BeanPropertyRowMapper<>(ArticleVendu.class));
 	}
 
 	@Override
@@ -132,7 +132,7 @@ public class ArticleVenduDAOImpl implements ArticleVenduDAO {
 	public List<ArticleVendu> findByCategorie(int noCategorie) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
 		mapParameterSource.addValue("no_categorie",noCategorie);
-		return jdbcTemplate.query(FIND_BY_CATEGORIE ,new BeanPropertyRowMapper<>(ArticleVendu.class));
+		return jdbcTemplate.query(FIND_BY_CATEGORIE,mapParameterSource,new BeanPropertyRowMapper<>(ArticleVendu.class));
 	}
 
 	/**
