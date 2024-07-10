@@ -25,8 +25,9 @@ public class RetraitServiceImpl implements RetraitService {
 		BusinessException be = new BusinessException() ;
 		try {
 			this.retraitDao.create(retrait);
+			this.logger.debug("creation retrait ok  : " +  retrait.getNoArticle());
 		} catch (DataAccessException e) {			
-			this.logger.error("Probleme creation retrait" + retrait.getNoArticle() );		
+			this.logger.error("Probleme creation retrait : " + retrait.getNoArticle() );		
 			be.addError(BusinessException.ERREUR_0);
 			throw be;
 		}
