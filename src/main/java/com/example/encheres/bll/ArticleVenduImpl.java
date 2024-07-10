@@ -8,7 +8,6 @@ import com.example.encheres.dal.ArticleVenduDAO;
 import com.example.encheres.dal.EnchereDAO;
 import com.example.encheres.dal.RetraitDAO;
 import com.example.encheres.dal.ArticleVenduDynamiqueDAO;
-import com.example.encheres.dal.ArticleVenduDynamiqueDAOImpl;
 import com.example.encheres.dal.UtilisateurDAO;
 import com.example.encheres.exception.BusinessException;
 
@@ -193,6 +192,15 @@ public class ArticleVenduImpl implements ArticleVenduService {
     	}
 
 		return articles;
+	}
+
+
+	@Override
+	public void retirerArticle(int noArticle) throws BusinessException {
+		
+		articleVenduDAO.updateRetrait(noArticle);
+		
+		
 	}
 
 }
