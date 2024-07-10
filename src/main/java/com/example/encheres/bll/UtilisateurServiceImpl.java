@@ -247,11 +247,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         Utilisateur currentUser = this.findByPseudo(currentUsername);
         
 		if (!motDePasseActuel.isBlank()) {	
-			System.out.println("service : mdp non null");
+			System.out.println("service, controleMotDePasseActuel : mdp non null");
 			if (passwordEncoder.matches(motDePasseActuel, currentUser.getMotDePasse())) {
 			   isValid = true;
 			} else {
-				System.out.println("(service) mot de passe actuel : "+motDePasseActuel+" confirmation : "+currentUser.getMotDePasse());
+				System.out.println("(service, controleMotDePasseActuel) mot de passe actuel : "+motDePasseActuel+" confirmation : "+currentUser.getMotDePasse());
 				be.addError(BusinessException.ERREUR_8);
 			}
 		} else {
