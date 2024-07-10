@@ -52,9 +52,9 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 	public List<ArticleVendu> findDynamique(String transactionType,int requete,  String nomArticle, int noCategorie, int noUtilisateurVendeur, int noUtilisateurAcheteur) {
 		// controle donnée 
 		
-		System.out.println("articleVenduDynamique transactionType" + transactionType + "requete: " + requete );
-		System.out.println("articleVenduDynamique noCategorie" + noCategorie + "article " + nomArticle  );
-		System.out.println("articleVenduDynamique noUtilisateurVendeur" + noUtilisateurVendeur + "article " + noUtilisateurAcheteur  );
+		System.out.println("articleVenduDynamique transactionType : " + transactionType + " requete : " + requete );
+		System.out.println("articleVenduDynamique noCategorie : " + noCategorie + " nom article : " + nomArticle  );
+		System.out.println("articleVenduDynamique noUtilisateurVendeur : " + noUtilisateurVendeur + " noUtilisateurAcheteur : " + noUtilisateurAcheteur  );
 		
 		if ( ! transactionType.equals(ACHAT) && ! transactionType.equals(VENTES)) {
 			System.out.println("pas bien transactiontype");
@@ -110,7 +110,7 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 				requeteFinale = SELECT + WHERE + ENCHERES_OUVERTES + OR + MES_ENCHERES_REMPORTEES;
 				break;
 // mes encheres en cours + mes encheres remportées
-		case 6 :
+		    case 6 :
 				requeteFinale = SELECT + UNION + WHERE + MES_ENCHERES_EN_COURS + OR + MES_ENCHERES_REMPORTEES;
 				break;
 // mes enchere ouverte + mes encheres en cours + mes encheres remportées
@@ -142,7 +142,7 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 				requeteFinale = SELECT + WHERE + MES_VENTES_EN_COURS + OR + VENTES_TERMINEES ;
 				break;
 // ventes non debutées + ventes terminées
-		case 6 :
+			case 6 :
 				requeteFinale = SELECT + WHERE + VENTES_NON_DEBUTEES + OR + VENTES_TERMINEES     ;
 				break;
 // mes ventes en cours + ventes non debutées + ventes terminées
