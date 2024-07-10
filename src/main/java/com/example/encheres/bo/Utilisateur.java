@@ -36,7 +36,7 @@ public class Utilisateur {
 	private String codePostal;
 	@NotBlank
 	private String ville;
-	@NotBlank
+//	@NotBlank
 	private String motDePasseActuel;
 	@NotBlank
 	@Size(min = 8)
