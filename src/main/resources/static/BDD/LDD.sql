@@ -64,7 +64,8 @@ CREATE TABLE ARTICLES_VENDUS (
                                  no_utilisateur_vendeur        INTEGER NOT NULL,
                                  no_utilisateur_acheteur       INTEGER,
                                  no_categorie                  INTEGER NOT NULL,
-                                 date_histo                    DATE NULL
+                                 date_histo                    DATE NULL,
+                                 isRetrait                     bit NOT NULL DEFAULT 0
 )
 
 CREATE TABLE ROLE (

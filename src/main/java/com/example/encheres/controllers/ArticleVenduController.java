@@ -5,18 +5,17 @@ import com.example.encheres.bll.CategorieService;
 import com.example.encheres.bll.RetraitService;
 import com.example.encheres.bll.UtilisateurService;
 import com.example.encheres.bo.*;
+import com.example.encheres.exception.BusinessException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 
 @Controller
@@ -101,7 +100,8 @@ public class ArticleVenduController {
 		System.out.println(adresse);
 
 		boolean hideButtonEncherir = false;
-		boolean lastEnchereUser = false;
+		boolean lastEnchereUser    = false;
+		boolean BoolVendeur        = false;
 
 		System.out.println("\n \n Mon Article detail");
 		System.out.println(article.getAcheteur().getNoUtilisateur());
@@ -109,6 +109,14 @@ public class ArticleVenduController {
 		System.out.println("\n \n");
 
 
+		System.out.println("article.getVendeur().getNoUtilisateur()" + article.getVendeur().getNoUtilisateur());
+		System.out.println("user.getNoUtilisateur()" + user.getNoUtilisateur());
+		
+		if  (article.getVendeur().getNoUtilisateur() == user.getNoUtilisateur()) {
+			BoolVendeur = true;
+			System.out.println(" BoolVendeur true");
+			model.addAttribute("BoolVendeur", BoolVendeur);
+		}
 
 		if (article.getAcheteur().getNoUtilisateur() == user.getNoUtilisateur()) {
 			System.out.println("true");
@@ -155,4 +163,20 @@ public class ArticleVenduController {
 		// Redirection ou affichage d'une nouvelle vue après traitement
 		return "redirect:/view-encher-detail?id=" + noArticleVendu; // Redirige vers une page de confirmation
 	}
+	
+	@GetMapping("/retrait")
+	public String retrait (@RequestParam("noArticle") int noArticle,
+		                   @ModelAttribute("utilisateurSession") Utilisateur utilisateurSession,
+		                   BindingResult bingingResult) {
+		try {
+			articleVenduService.retirerArticle(noArticle);
+		} catch (BusinessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return "redirect:/view-encher-detail?id=\" + noArticleVendu";
+	}
+	
+	
 }
