@@ -23,9 +23,7 @@ import jakarta.validation.Valid;
 @RequestMapping("/utilisateurs")
 public class UtilisateurControlleur {
 
-	@Autowired
-    private PasswordEncoder passwordEncoder;
-
+	
 	@Autowired
 	UtilisateurService utilisateurService;
 
@@ -127,10 +125,10 @@ public class UtilisateurControlleur {
 
         System.out.println("Mdp actuel : "+utilisateur.getMotDePasseActuel()+" Mdp saisi : "+currentUser.getMotDePasse());
 
-        if (!passwordEncoder.matches(utilisateur.getMotDePasseActuel(), currentUser.getMotDePasse())) {
-            bindingResult.rejectValue("motDePasseActuel", "error.utilisateur", "Le mot de passe actuel est incorrect");
-            return "view-profil-modification";
-        }
+//        if (!passwordEncoder.matches(utilisateur.getMotDePasseActuel(), currentUser.getMotDePasse())) {
+//            bindingResult.rejectValue("motDePasseActuel", "error.utilisateur", "Le mot de passe actuel est incorrect");
+//            return "view-profil-modification";
+//        }
 
 		if (bindingResult.hasErrors()) {
 			return "view-profil-modification";
@@ -161,6 +159,7 @@ public class UtilisateurControlleur {
 		Utilisateur u = new Utilisateur();
 
 		if (bindingResult.hasErrors()) {
+			System.out.println(bindingResult);
 			return "view-profil-creation";
 		} else {
 			System.out.println("Création de l'utilisateur = " + utilisateur);
