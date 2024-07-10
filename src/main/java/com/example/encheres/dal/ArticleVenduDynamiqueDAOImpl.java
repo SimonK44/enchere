@@ -35,7 +35,7 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 	private final static String MES_ENCHERES_EN_COURS   = " ( date_debut_encheres <= GETDATE() AND date_fin_encheres >= GETDATE() AND E.no_utilisateur = :noUtilisateurAcheteur ) ";	
 	private final static String MES_ENCHERES_REMPORTEES = " ( date_fin_encheres < GETDATE() AND no_utilisateur_acheteur = :noUtilisateurAcheteur )";
 	
-	private final static String MES_VENTES_EN_COURS     = " ( date_debut_encheres >= GETDATE() AND no_utilisateur_vendeur = :noUtilisateurVendeur )";
+	private final static String MES_VENTES_EN_COURS     = " ( date_debut_encheres <= GETDATE() AND no_utilisateur_vendeur = :noUtilisateurVendeur )";
 	private final static String VENTES_NON_DEBUTEES     = " ( date_debut_encheres >= GETDATE() AND no_utilisateur_vendeur = :noUtilisateurVendeur )";
 	 private final static String VENTES_TERMINEES       = " ( date_fin_encheres < GETDATE() AND no_utilisateur_vendeur = :noUtilisateurVendeur )"; 
 	
