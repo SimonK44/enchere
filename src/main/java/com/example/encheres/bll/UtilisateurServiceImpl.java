@@ -20,8 +20,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	private UtilisateurDAO utilisateurDAO;
 
 	@Autowired
-    private PasswordEncoder passwordEncoder;
-
+    private PasswordEncoder passwordEncoder;	
+	
 	@Override
 	@Transactional(rollbackFor = BusinessException.class)
 	public void creerUtilisateur(Utilisateur utilisateur) throws BusinessException {
@@ -57,13 +57,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	@Override
 	@Transactional(rollbackFor = BusinessException.class)
-	public void modifierUtilisateur(Utilisateur utilisateur) throws BusinessException {
+	public void modifierUtilisateur(Utilisateur utilisateur, String motDePasseActuel) throws BusinessException {
 		BusinessException be = new BusinessException() ;
 
 		boolean isValid = controleModifierNomPrenom(utilisateur.getNoUtilisateur(), utilisateur.getNom(),utilisateur.getPrenom(),be);
 		isValid &= controleModifierPseudo(utilisateur.getNoUtilisateur(),utilisateur.getPseudo(),be );
-		isValid &= controleEmail(utilisateur.getEmail(), be);
-		isValid &= controleMotDePasseActuel(utilisateur.getMotDePasseActuel(), utilisateur.getMotDePasse(), be);
+		isValid &= controleModifierEmail(utilisateur.getNoUtilisateur(), utilisateur.getEmail(), be);
+		isValid &= controleMotDePasseActuel(motDePasseActuel, utilisateur.getMotDePasse(), be);
 		isValid &= controleConfirmMotDePasse(utilisateur.getMotDePasse(), utilisateur.getConfirmMotDePasse(), be);
 
 		cryptMotDePasse(utilisateur);
@@ -174,6 +174,19 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		return isValid;
 	}
+	
+	private boolean controleModifierEmail(int no_utilisateur, String email, BusinessException be) {
+		boolean isValid = false;
+
+		if (utilisateurDAO.countByMailModifier(no_utilisateur, email) == 0 ) {
+		   isValid = true;
+		} else {
+			System.out.println("utlisateur service pb mail modif");
+			be.addError(BusinessException.ERREUR_7);
+		}
+
+		return isValid;
+	}
 
 	private boolean controleModifierNomPrenom (int no_utilisateur,String nom, String prenom, BusinessException be) {
 		boolean isValid = false;
@@ -215,11 +228,16 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	private boolean controleMotDePasseActuel(String motDePasseActuel, String motDePasse, BusinessException be) {
 		boolean isValid = false;
 
-		if (passwordEncoder.matches(motDePasseActuel, motDePasse)) {
-		   isValid = true;
+		if (motDePasseActuel != null) {		
+			if (passwordEncoder.matches(motDePasseActuel, motDePasse)) {
+			   isValid = true;
+			} else {
+				System.out.println("(service) mot de passe actuel : "+motDePasseActuel+" confirmation : "+motDePasse);
+				be.addError(BusinessException.ERREUR_8);
+			}
 		} else {
-			System.out.println("mot de passe : "+motDePasseActuel+" conf : "+motDePasse);
-			be.addError(BusinessException.ERREUR_8);
+			System.out.println("mot de passe actuel vide");
+			be.addError(BusinessException.ERREUR_9);
 		}
 
 		return isValid;

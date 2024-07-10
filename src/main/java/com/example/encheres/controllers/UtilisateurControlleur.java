@@ -116,19 +116,16 @@ public class UtilisateurControlleur {
 
 
 	@PostMapping("/modifier")
-	public String modifUtilisateurParPseudo(@ModelAttribute("utilisateur") @Valid Utilisateur utilisateur, BindingResult bindingResult) {
+	public String modifUtilisateurParPseudo(@RequestParam("motDePasseActuel") String motDePasseActuel,
+											@ModelAttribute("utilisateur") 
+											@Valid Utilisateur utilisateur, BindingResult bindingResult) {
 
 		// Vérification du mot de passe actuel
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUsername = authentication.getName();
         Utilisateur currentUser = utilisateurService.findByPseudo(currentUsername);
 
-        System.out.println("Mdp actuel : "+utilisateur.getMotDePasseActuel()+" Mdp saisi : "+currentUser.getMotDePasse());
-
-//        if (!passwordEncoder.matches(utilisateur.getMotDePasseActuel(), currentUser.getMotDePasse())) {
-//            bindingResult.rejectValue("motDePasseActuel", "error.utilisateur", "Le mot de passe actuel est incorrect");
-//            return "view-profil-modification";
-//        }
+        System.out.println("Mdp formulaire : "+motDePasseActuel+" Mdp en base : "+currentUser.getMotDePasse());
 
 		if (bindingResult.hasErrors()) {
 			return "view-profil-modification";
@@ -136,7 +133,7 @@ public class UtilisateurControlleur {
 			System.out.println("Modification de l'utilisateur = " + utilisateur);
 			//Appel du service en charge de la création de l'utilisateur
 			try {
-				this.utilisateurService.modifierUtilisateur(utilisateur);
+				this.utilisateurService.modifierUtilisateur(utilisateur, motDePasseActuel);
 				return "redirect:/home";
 			} catch (BusinessException e) {
 				e.getErreurs().forEach(err -> {
@@ -152,8 +149,7 @@ public class UtilisateurControlleur {
 
 	//Création d'un utilisateur
 	@PostMapping("/creer")
-	public String creerUtilisateur(@Valid
-			@ModelAttribute("utilisateur") Utilisateur utilisateur,
+	public String creerUtilisateur(@ModelAttribute("utilisateur") @Valid Utilisateur utilisateur,
 			BindingResult bindingResult) {
 
 		Utilisateur u = new Utilisateur();

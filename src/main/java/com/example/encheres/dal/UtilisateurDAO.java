@@ -29,5 +29,9 @@ public interface UtilisateurDAO {
 	 * controle avec un count des doublons mail en creation
 	 */
 	int countByMail(String email);
+	/**
+	 * controle avec un count des doublons mail en modification
+	 */
+	int countByMailModifier(int noUtilisateur, String email);
 
 }

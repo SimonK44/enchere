@@ -66,8 +66,7 @@
 			<div class="form-row">
 				<div class="form-col">
 					<label for="inputPassordAct">Mot de passe actuel :</label>
-					<input id="inputPassordAct" type="password" name="password" th:field="*{motDePasseActuel}"/>	
-					<div data-th-replace="~{/fragments/fragment-error :: frag-error('motDePasseActuel')}"></div>				
+					<input id="inputPassordAct" type="password" name="motDePasseActuel"/>	
 				</div>
 				<div class="form-col">										
 				</div>
@@ -75,7 +74,7 @@
 			<div class="form-row">
 				<div class="form-col">
 					<label for="inputPassordNew">Nouveau mot de passe :</label>
-					<input id="inputPassordNew" type="password" name="passwordNew" th:field="*{motDePasse}"/>
+					<input id="inputPassordNew" type="password" th:field="*{motDePasse}"/>
 					<div data-th-replace="~{/fragments/fragment-error :: frag-error('motDePasse')}"></div>					
 				</div>
 				<div class="form-col">

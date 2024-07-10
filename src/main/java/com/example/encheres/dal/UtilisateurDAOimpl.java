@@ -33,12 +33,13 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 
 	private static final String COUNT_BY_NOM_PRENOM  = "SELECT COUNT(*) FROM UTILISATEURS WHERE nom = :nom AND prenom = :prenom AND date_histo  IS NULL" ;
     private static final String COUNT_BY_PSEUDO      = "SELECT COUNT(*) FROM UTILISATEURS WHERE pseudo = :pseudo AND date_histo IS NULL";
-    private static final String COUNT_BY_MAIL      = "SELECT COUNT(*) FROM UTILISATEURS WHERE email = :email AND date_histo IS NULL";
+    private static final String COUNT_BY_MAIL        = "SELECT COUNT(*) FROM UTILISATEURS WHERE email = :email AND date_histo IS NULL";
 
     private static final String COUNT_BY_NOM_PRENOMMODIFIER  = "SELECT COUNT(*) FROM UTILISATEURS WHERE nom = :nom AND prenom = :prenom AND no_utilisateur != :noUtilisateur AND date_histo  IS NULL";
     private static final String COUNT_BY_PSEUDOMODIFIER      = "SELECT COUNT(*) FROM UTILISATEURS WHERE pseudo = :pseudo AND no_utilisateur != :noUtilisateur AND date_histo  IS NULL";
     private static final String COUNT_BY_NOUTILISATEUR       = "SELECT COUNT(*) FROM UTILISATEURS WHERE no_utilisateur = :noUtilisateur AND date_histo  IS NULL";
-
+    private static final String COUNT_BY_MAILMODIFIER      	 = "SELECT COUNT(*) FROM UTILISATEURS WHERE no_utilisateur = :noUtilisateur AND email = :email AND date_histo IS NULL";
+    
 //    requete SQL avec histo
 	private static final String FIND_ALL_HISTO = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur, date_histo FROM UTILISATEURS ORDER BY date_histo ASC, pseudo";
 	private static final String UPDATE_HISTO   = "UPDATE UTILISATEURS SET date_histo = GETDATE() WHERE no_utilisateur = :noUtilisateur";
@@ -190,6 +191,19 @@ public UtilisateurDAOimpl(NamedParameterJdbcTemplate jdbcTemplate) {
 
 		return jdbcTemplate.queryForObject(COUNT_BY_MAIL , mapParameterSource, Integer.class) ;
 	}
+	
+/**
+ * controle avec un count des doublons mail en modification
+ */
+	@Override
+	public int countByMailModifier(int noUtilisateur, String email) {
+		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
+		// ajout parametre pour la requete
+		mapParameterSource.addValue("noUtilisateur",noUtilisateur);
+		mapParameterSource.addValue("email",email);
+
+		return jdbcTemplate.queryForObject(COUNT_BY_MAILMODIFIER, mapParameterSource, Integer.class);
+	}
 
 
 /**
@@ -216,7 +230,7 @@ public UtilisateurDAOimpl(NamedParameterJdbcTemplate jdbcTemplate) {
 		mapParameterSource.addValue("noUtilisateur",noUtilisateur);
 		mapParameterSource.addValue("pseudo",pseudo);
 
-		return jdbcTemplate.queryForObject(COUNT_BY_PSEUDOMODIFIER , mapParameterSource, Integer.class) ;
+		return jdbcTemplate.queryForObject(COUNT_BY_PSEUDOMODIFIER , mapParameterSource, Integer.class);
 	}
 
 @Override
