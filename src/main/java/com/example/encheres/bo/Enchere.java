@@ -3,12 +3,10 @@ package com.example.encheres.bo;
 import java.time.LocalDate;
 
 public class Enchere {
-
 	private Utilisateur utilisateur;
 	private ArticleVendu articleVendu;
 	private LocalDate dateEnchere;
 	private int montantEnchere;
-
 	public Enchere() {
 	}
 	public Enchere(Utilisateur utilisateur, ArticleVendu articleVendu, LocalDate dateEnchere, int montantEnchere) {

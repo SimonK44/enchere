@@ -14,8 +14,8 @@ public class RetraitDAOimpl implements RetraitDAO {
 
 	private static final String CREATE = "INSERT INTO RETRAITS (no_article,rue, code_postal, ville) VALUES(:noArticle, :rue, :codePostal,:ville )";
 	private static final String READ   = "SELECT no_article, rue, code_postal, ville FROM RETRAITS WHERE no_article = :noArticle";
-	private static final String UPDATE = "UPDATE RETRAIT SET rue = :rue, cod_postal = :codePostal, ville = :ville";
-	private static final String DELETE = "DELETE FROM RETRAIT WHERE no_article = :noArticle";
+	private static final String UPDATE = "UPDATE RETRAITS SET rue = :rue, code_postal = :codePostal, ville = :ville WHERE no_article = :noArticle";
+	private static final String DELETE = "DELETE FROM RETRAITS WHERE no_article = :noArticle";
 
 
 
@@ -53,14 +53,11 @@ public class RetraitDAOimpl implements RetraitDAO {
 	@Override
 	public void update(Retrait retrait) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
-// ajout parametres pour la requete
 		mapParameterSource.addValue("noArticle",retrait.getNoArticle());
 		mapParameterSource.addValue("rue",retrait.getRue());
 		mapParameterSource.addValue("codePostal",retrait.getCodePostal());
 		mapParameterSource.addValue("ville",retrait.getVille());
-
 		jdbcTemplate.update(UPDATE, mapParameterSource);
-
 	}
 /**
  * suppression du retrait
