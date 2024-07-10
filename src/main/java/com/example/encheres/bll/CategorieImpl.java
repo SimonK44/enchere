@@ -1,8 +1,6 @@
 package com.example.encheres.bll;
 
-import com.example.encheres.bo.ArticleVendu;
 import com.example.encheres.bo.Categorie;
-import com.example.encheres.dal.ArticleVenduDynamiqueDAOImpl;
 import com.example.encheres.dal.CategorieDAO;
 import com.example.encheres.exception.BusinessException;
 

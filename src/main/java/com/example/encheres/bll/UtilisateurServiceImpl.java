@@ -2,6 +2,8 @@ package com.example.encheres.bll;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,7 +17,8 @@ import com.example.encheres.exception.BusinessException;
 
 @Service
 public class UtilisateurServiceImpl implements UtilisateurService {
-
+	Logger logger =LoggerFactory.getLogger(UtilisateurService.class);
+	
 	@Autowired
 	private UtilisateurDAO utilisateurDAO;
 
@@ -38,8 +41,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 			try {
 				utilisateurDAO.create(utilisateur);
+				this.logger.debug("creation utilisateur ok : " + utilisateur.getNoUtilisateur() );
 			} catch (DataAccessException e) {
 				System.out.println("utlisateur service pb Creation");
+				this.logger.error("creation utilisateur ko " + utilisateur.getNoUtilisateur() );	
 				be.addError(BusinessException.ERREUR_1);
 				throw be;
 			}
@@ -72,9 +77,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			try {
 				utilisateurDAO.update(utilisateur);
 				System.out.println("UtilisateurServImpl utilisateur : "+utilisateur);
+				this.logger.debug("Update utilisateur ok : " + utilisateur.getNoUtilisateur() );
 			} catch (DataAccessException e) {
 				e.printStackTrace();
 				be.addError(BusinessException.ERREUR_0);
+				this.logger.error("Update utilisateur ko " + utilisateur.getNoUtilisateur() );	
 				System.out.println("Error");
 				throw be;
 			}
@@ -98,8 +105,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		try {
 			utilisateurDAO.delete(noUtilisateur);
+			this.logger.debug("Delete utilisateur ok : " + noUtilisateur );
 		} catch (DataAccessException e ) {
 			be.addError(BusinessException.ERREUR_0);
+			this.logger.error("Update utilisateur ko " + noUtilisateur );	
 			throw be;
 		}
 	}
@@ -128,9 +137,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		try {
 			utilisateurDAO.updateHisto(noUtilisateur);
+			this.logger.debug("Historisation utilisateur ok : " + noUtilisateur );
 		} catch (DataAccessException e) {
 				e.printStackTrace();
 				be.addError(BusinessException.ERREUR_0);
+				this.logger.error("Historisation utilisateur ko " + noUtilisateur );	
 				throw be;
 		}
 	}
