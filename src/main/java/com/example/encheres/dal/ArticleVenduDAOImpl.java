@@ -25,11 +25,11 @@ public class ArticleVenduDAOImpl implements ArticleVenduDAO {
 	private final static String CREATE = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres , date_fin_encheres, prix_initial, prix_vente, no_utilisateur_vendeur, no_utilisateur_acheteur , no_categorie) VALUES (:nomArticle,:description,:dateDebutEnchere, :dateFinEnchere,:prixInitial, :prixVente ,:noUtilisateurVendeur, NULL, :noCategorie )";
 	private final static String READ   = "SELECT no_article, nom_article, description, date_debut_encheres , date_fin_encheres, prix_initial, prix_vente, no_utilisateur_vendeur, no_utilisateur_acheteur , no_categorie FROM ARTICLES_VENDUS WHERE no_article = :noArticle ";
 	private final static String FIND_ALL   = "SELECT no_article, nom_article, description, date_debut_encheres , date_fin_encheres, prix_initial, prix_vente, no_utilisateur_vendeur, no_utilisateur_acheteur , no_categorie, date_histo FROM ARTICLES_VENDUS ";
-	private final static String UPDATE = "UPDATE ARTICLES_VENDUS SET nom_article = :nomArticle, description = :description, date_debut_encheres := dateDebutEncheres, date_fin_encheres := dateFinEncheres, prix_initial = :prixInitial, prix_vente = :prixVente, no_utilisateur_vendeur = :noUtilisateurVendeur, no_utilisateur_acheteur = noUtilisateurVendeur, no_categorie :=noCategorie";
+	private final static String UPDATE = "UPDATE ARTICLES_VENDUS SET nom_article = :nom, description = :description, date_debut_encheres = :dateDebutEncheres, date_fin_encheres = :dateFinEncheres, prix_initial = :prixInitial, prix_vente = :prixVente, no_categorie = :noCategorie";
 	private final static String UPDATE_PRIX_VENTE = "UPDATE ARTICLES_VENDUS SET prix_vente = :prixVente WHERE no_article = :noArticle";
 	private final static String UPDATE_ACHETEUR = "UPDATE ARTICLES_VENDUS SET no_utilisateur_acheteur = :noAcheteur WHERE no_article = :noArticle";
 	private final static String UPDATE_RETRAIT = "UPDATE ARTICLES_VENDUS SET isRetrait = 1 WHERE no_article = :noArticle";
-	
+
 	private final static String DELETE = "DELETE ARTICLES_VENDUS WHERE no_article = :noArticle";
 	private final static String FIND_BY_UTILISATEUR = "SELECT nom_article, description, date_debut_encheres , date_fin_encheres, prix_initial, prix_vente, no_utilisateur_vendeur,no_utilisateur_acheteur , no_categorie FROM ARTICLES_VENDUS WHERE no_utilisateur_vendeur = :noUtilisateurVendeur";
 	private final static String FIND_BY_CATEGORIE = "SELECT nom_article, description, date_debut_encheres , date_fin_encheres, prix_initial, prix_vente, no_utilisateur_vendeur, no_utilisateur_acheteur , no_categorie FROM ARTICLES_VENDUS WHERE no_categorie = :noCategorie";
@@ -82,15 +82,13 @@ public class ArticleVenduDAOImpl implements ArticleVenduDAO {
 	public void update(ArticleVendu articleVendu) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
 // ajout parametre pour la requete
-		mapParameterSource.addValue("nomArticle",articleVendu.getNomArticle());
+		mapParameterSource.addValue("nom", articleVendu.getNomArticle());
 		mapParameterSource.addValue("description",articleVendu.getDescription());
-		mapParameterSource.addValue("dateDebutEnchere",articleVendu.getDateDebutEnchere());
-		mapParameterSource.addValue("dateFinEnchere",articleVendu.getDateFinEnchere());
+		mapParameterSource.addValue("dateDebutEncheres",articleVendu.getDateDebutEnchere());
+		mapParameterSource.addValue("dateFinEncheres",articleVendu.getDateFinEnchere());
 		mapParameterSource.addValue("prixInitial",articleVendu.getPrixInitial());
 		mapParameterSource.addValue("prixVente",articleVendu.getPrixVente());
-		mapParameterSource.addValue("noUtilisateurVendeur",articleVendu.getVendeur().getNoUtilisateur());
-		mapParameterSource.addValue("noUtilisateurAcheteur",articleVendu.getAcheteur().getNom());
-		mapParameterSource.addValue("no_categorie",articleVendu.getCategorie().getNoCategorie());
+		mapParameterSource.addValue("noCategorie",articleVendu.getCategorie().getNoCategorie());
 
 		jdbcTemplate.update(UPDATE, mapParameterSource);
 	}
@@ -104,20 +102,18 @@ public class ArticleVenduDAOImpl implements ArticleVenduDAO {
 	}
 	@Override
 	public void updateAcheteur(int noArticle, int noAcheteur) {
-		System.out.println("UpdateAcheteur");
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
 		mapParameterSource.addValue("noArticle",noArticle);
 		mapParameterSource.addValue("noAcheteur", noAcheteur);
 		jdbcTemplate.update(UPDATE_ACHETEUR, mapParameterSource);
 	}
-	
+
 	@Override
 	public void updateRetrait(int noArticle) {
-		System.out.println("UpdateAcheteur");
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
-		mapParameterSource.addValue("noArticle",noArticle);		
+		mapParameterSource.addValue("noArticle",noArticle);
 		jdbcTemplate.update(UPDATE_RETRAIT, mapParameterSource);
-		
+
 	}
 	/**
 	 *  delete Article Vendu

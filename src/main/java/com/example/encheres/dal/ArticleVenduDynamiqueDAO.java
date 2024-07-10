@@ -8,6 +8,4 @@ import com.example.encheres.bo.ArticleVendu;
 
 public interface ArticleVenduDynamiqueDAO {
 	List<ArticleVendu> findDynamique (String transactionType,int requete,  String nomArticle, int noCategorie, int noUtilisateurVendeur, int noUtilisateurAcheteur);
-	
-
 }

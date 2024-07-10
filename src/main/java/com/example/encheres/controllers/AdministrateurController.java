@@ -26,33 +26,30 @@ public class AdministrateurController {
 	UtilisateurService utilisateurService;
 	CategorieService categorieService;
 
-	public AdministrateurController(UtilisateurService utilisateurService, CategorieService categorieService) {
+	public AdministrateurController(
+			UtilisateurService utilisateurService,
+			CategorieService categorieService
+	) {
 		this.utilisateurService = utilisateurService;
 		this.categorieService = categorieService;
 	}
 
-	//Méthode permettant d'afficher la liste des utilisateur
 	@GetMapping("")
 	public String homeAdmin() {
 		return "view-admin-home";
 	}
 
-	//Méthode permettant d'afficher la liste des utilisateurs
+	// Méthode permettant d'afficher la liste des utilisateurs
 	@GetMapping("/liste")
 	public String afficherListeUtilisateur(
 			Model model,
 			@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession
 	) {
-
-		System.out.println(utilisateurSession);
-
 		List<Utilisateur> utilisateurs = utilisateurService.findAllHisto();
-
 		model.addAttribute("utilisateurs", utilisateurs);
-
 		return LIST_UTILISATEUR;
 	}
-	
+
 	// methode permettant d' historiser les utilisateurs
 	@GetMapping("/supprime")
 	public String historiserUtilisateur (
@@ -60,21 +57,18 @@ public class AdministrateurController {
 			@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession,
 			BindingResult bingingResult
 			) {
-//		System.out.println("AdministrateurControlleur hisot no Utilisateur : " + noUtilisateur);
-		
 		try {
-			utilisateurService.historiserUtilisateur(noUtilisateur);		
+			utilisateurService.historiserUtilisateur(noUtilisateur);
 			return "redirect: " +LIST_UTILISATEUR;
 		} catch (BusinessException e) {
 			e.getErreurs().forEach(err -> {
 				ObjectError error = new ObjectError("globalError", err);
 				bingingResult.addError(error);
 				}
-			);	
+			);
 			return LIST_UTILISATEUR;
 		}
 	}
-	
 
 	//Méthode permettant d'afficher la liste des categories
 	@GetMapping("/listeCategorie")
@@ -85,38 +79,42 @@ public class AdministrateurController {
 	}
 
 	@GetMapping("/listeCategorieUpdate")
-	public String modifDateSuppressionCategorieById(@RequestParam(value = "id", required = false) int noCategorie,
-													@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession,
-													BindingResult bingingResult) {
+	public String modifDateSuppressionCategorieById(
+			@RequestParam(value = "id", required = false) int noCategorie,
+			@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession,
+			BindingResult bingingResult
+	) {
 		try {
 			this.categorieService.updateDateSuppression(noCategorie);
-			return "redirect:" + LIST_CATEGORIE;
-		} catch (BusinessException e) {		
-			e.printStackTrace();
-			e.getErreurs().forEach(err -> {
-				ObjectError error = new ObjectError("globalError", err);
-				bingingResult.addError(error);
-				}
-			);	
-			return "redirect:" + LIST_CATEGORIE;
-		}
-	}
-	@GetMapping("/listeCategorieDelete")
-	public String deleteCategorie(@RequestParam(value = "id", required = false) int noCategorie,
-								  @ModelAttribute("utilisateurSession") Utilisateur utilisateurSession,
-								  BindingResult bingingResult) {
-		try {
-			this.categorieService.delete(noCategorie);
-			return "redirect:" + LIST_CATEGORIE;
+			return "redirect:" + "/administrateur/listeCategorie";
 		} catch (BusinessException e) {
 			e.printStackTrace();
 			e.getErreurs().forEach(err -> {
 				ObjectError error = new ObjectError("globalError", err);
 				bingingResult.addError(error);
 				}
-			);	
-			return "redirect:" + LIST_CATEGORIE;
+			);
+			return "redirect:" + "/administrateur/listeCategorie";
 		}
 	}
 
+	@GetMapping("/listeCategorieDelete")
+	public String deleteCategorie(
+			@RequestParam(value = "id", required = false) int noCategorie,
+			@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession,
+			BindingResult bingingResult
+	) {
+		try {
+			this.categorieService.delete(noCategorie);
+			return "redirect:" + "/administrateur/listeCategorie";
+		} catch (BusinessException e) {
+			e.printStackTrace();
+			e.getErreurs().forEach(err -> {
+				ObjectError error = new ObjectError("globalError", err);
+				bingingResult.addError(error);
+				}
+			);
+			return "redirect:" + "/administrateur/listeCategorie";
+		}
+	}
 }

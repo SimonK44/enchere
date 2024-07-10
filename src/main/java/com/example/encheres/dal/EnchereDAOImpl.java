@@ -41,7 +41,6 @@ public class EnchereDAOImpl implements EnchereDAO {
 	public void create(Enchere enchere) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
 // ajout parametres pour la requete
-		System.out.println("\n \n MON ENCHERE : enchere" + enchere);
 		mapParameterSource.addValue("noUtilisateur",enchere.getUtilisateur().getNoUtilisateur());
 		mapParameterSource.addValue("noArticle",enchere.getArticleVendu().getNoArticle());
 		mapParameterSource.addValue("montantEnchere",enchere.getMontantEnchere());
