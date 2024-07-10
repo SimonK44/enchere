@@ -22,7 +22,7 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 	private final static String ACHAT                   = "achat";
 	private final static String VENTES                  = "ventes";
 	
-	private final static String SELECT = "SELECT A.no_article, nom_article, description, date_debut_encheres , date_fin_encheres, prix_initial, prix_vente, no_utilisateur_vendeur, no_utilisateur_acheteur , no_categorie FROM ARTICLES_VENDUS AS A";
+	private final static String SELECT = "SELECT DISTINCT A.no_article, nom_article, description, date_debut_encheres , date_fin_encheres, prix_initial, prix_vente, no_utilisateur_vendeur, no_utilisateur_acheteur , no_categorie FROM ARTICLES_VENDUS AS A";
 // union pour mes encheres en cours   
 	private final static String UNION  = " INNER JOIN ENCHERES AS E ON E.no_article = A.no_article" ; 
 	
@@ -74,6 +74,8 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 		mapParameterSource.addValue("nomArticle",nomArticle + POURCENT);
 		mapParameterSource.addValue("noUtilisateurVendeur",noUtilisateurVendeur);		
 		mapParameterSource.addValue("noUtilisateurAcheteur",noUtilisateurAcheteur);
+		
+		//à mettre
 				
 		
 		System.out.println("ArticleVenduDynamiqueDAOImpl requeteFinale : " + requeteFinale);
