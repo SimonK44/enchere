@@ -10,6 +10,7 @@ import com.example.encheres.dal.RetraitDAO;
 import com.example.encheres.dal.ArticleVenduDynamiqueDAO;
 import com.example.encheres.dal.ArticleVenduDynamiqueDAOImpl;
 import com.example.encheres.dal.UtilisateurDAO;
+import com.example.encheres.exception.BusinessException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -126,9 +127,9 @@ public class ArticleVenduImpl implements ArticleVenduService {
 				byte[] bytes = image.getBytes();
 				Path path = Paths.get(uploadPath + articleVendu.getNoArticle() + ".jpg");
 				Files.write(path, bytes);
-				this.logger.debug("Fichier " + articleVendu.getNoArticle() + ".jpg téléchargé " );
+				this.logger.debug(BusinessException.LOGGER_4 + articleVendu.getNoArticle());
 			} catch (IOException e) {
-				this.logger.error("Probleme sur le téléchargement du fichier " + articleVendu.getNoArticle() + ".jpg téléchargé " );
+				this.logger.error(BusinessException.LOGGER_5 + articleVendu.getNoArticle());
 				e.printStackTrace();
 			}
 		}
