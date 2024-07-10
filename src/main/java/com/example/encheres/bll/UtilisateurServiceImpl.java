@@ -41,10 +41,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 			try {
 				utilisateurDAO.create(utilisateur);
-				this.logger.debug("creation utilisateur ok : " + utilisateur.getNoUtilisateur() );
+				this.logger.debug(BusinessException.LOGGER_6 + utilisateur.getNoUtilisateur() );
 			} catch (DataAccessException e) {
 				System.out.println("utlisateur service pb Creation");
-				this.logger.error("creation utilisateur ko " + utilisateur.getNoUtilisateur() );	
+				this.logger.error(BusinessException.LOGGER_7  + utilisateur.getNoUtilisateur() );	
 				be.addError(BusinessException.ERREUR_1);
 				throw be;
 			}
@@ -77,11 +77,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 			try {
 				utilisateurDAO.update(utilisateur);
 				System.out.println("UtilisateurServImpl utilisateur : "+utilisateur);
-				this.logger.debug("Update utilisateur ok : " + utilisateur.getNoUtilisateur() );
+				this.logger.debug(BusinessException.LOGGER_8  + utilisateur.getNoUtilisateur() );
 			} catch (DataAccessException e) {
 				e.printStackTrace();
 				be.addError(BusinessException.ERREUR_0);
-				this.logger.error("Update utilisateur ko " + utilisateur.getNoUtilisateur() );	
+				this.logger.error(BusinessException.LOGGER_9 + utilisateur.getNoUtilisateur() );	
 				System.out.println("Error");
 				throw be;
 			}
@@ -105,10 +105,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		try {
 			utilisateurDAO.delete(noUtilisateur);
-			this.logger.debug("Delete utilisateur ok : " + noUtilisateur );
+			this.logger.debug(BusinessException.LOGGER_10 + noUtilisateur );
 		} catch (DataAccessException e ) {
 			be.addError(BusinessException.ERREUR_0);
-			this.logger.error("Update utilisateur ko " + noUtilisateur );	
+			this.logger.error(BusinessException.LOGGER_11 + noUtilisateur );	
 			throw be;
 		}
 	}
@@ -137,11 +137,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 		try {
 			utilisateurDAO.updateHisto(noUtilisateur);
-			this.logger.debug("Historisation utilisateur ok : " + noUtilisateur );
+			this.logger.debug(BusinessException.LOGGER_12  + noUtilisateur );
 		} catch (DataAccessException e) {
 				e.printStackTrace();
 				be.addError(BusinessException.ERREUR_0);
-				this.logger.error("Historisation utilisateur ko " + noUtilisateur );	
+				this.logger.error(BusinessException.LOGGER_13  + noUtilisateur );	
 				throw be;
 		}
 	}

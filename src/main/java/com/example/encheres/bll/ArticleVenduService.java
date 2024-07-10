@@ -3,7 +3,6 @@ package com.example.encheres.bll;
 import com.example.encheres.bo.ArticleVendu;
 import com.example.encheres.bo.Retrait;
 import com.example.encheres.bo.Utilisateur;
-import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
