@@ -12,6 +12,7 @@ public interface ArticleVenduDAO {
 	ArticleVendu read (int noArticle);
 	void update (ArticleVendu articleVendu);
 	void updatePrixVente (int noArticle, int prixVente);
+	void updateAcheteur (int noArticle, int noAcheteur);
 	void delete (int noArticle);
 	List<ArticleVendu> findByUtilisateur(int noUtilisateur);
 	List<ArticleVendu> findAll();

@@ -104,24 +104,29 @@ public class ArticleVenduController {
 		boolean lastEnchereUser = false;
 
 		System.out.println("\n \n Mon Article detail");
-		System.out.println(article);
+		System.out.println(article.getAcheteur().getNoUtilisateur());
+		System.out.println("user : " + user.getNoUtilisateur());
 		System.out.println("\n \n");
 
+
+
 		if (article.getAcheteur().getNoUtilisateur() == user.getNoUtilisateur()) {
+			System.out.println("true");
+			lastEnchereUser = true;
 			model.addAttribute("lastEnchereUser", lastEnchereUser);
 		}
-		lastEnchereUser = true;
+		System.out.println("false");
 		model.addAttribute("lastEnchereUser", lastEnchereUser);
 
 
 		if (article.getDateFinEnchere().isBefore(LocalDate.now()) || article.getDateFinEnchere().isEqual(LocalDate.now())) {
+			hideButtonEncherir = true;
 			System.out.println("DAte exprirer");
 			model.addAttribute("article", article);
 			model.addAttribute("adresse", adresse);
 			model.addAttribute("button", hideButtonEncherir);
 			return "/view-encher-detail";
 		} else {
-			hideButtonEncherir = true;
 			model.addAttribute("article", article);
 			model.addAttribute("adresse", adresse);
 			model.addAttribute("button", hideButtonEncherir);
@@ -136,6 +141,10 @@ public class ArticleVenduController {
 		@RequestParam("proposition") int proposition,
 		RedirectAttributes redirectAttributes
 	) {
+
+		// TODO IF PAS ASSER DE SOUS REDIRIGER BOUTIQUE
+
+
 		// Logique pour gérer l'enchère, par exemple enregistrer dans la base de données
 		System.out.println("Enchère pour l'article avec ID : " + utilisateurSession);
 		System.out.println("Enchère pour l'article avec ID : " + noArticleVendu);
