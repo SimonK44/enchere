@@ -27,6 +27,7 @@ public class ArticleVenduDAOImpl implements ArticleVenduDAO {
 	private final static String FIND_ALL   = "SELECT no_article, nom_article, description, date_debut_encheres , date_fin_encheres, prix_initial, prix_vente, no_utilisateur_vendeur, no_utilisateur_acheteur , no_categorie, date_histo FROM ARTICLES_VENDUS ";
 	private final static String UPDATE = "UPDATE ARTICLES_VENDUS SET nom_article = :nomArticle, description = :description, date_debut_encheres := dateDebutEncheres, date_fin_encheres := dateFinEncheres, prix_initial = :prixInitial, prix_vente = :prixVente, no_utilisateur_vendeur = :noUtilisateurVendeur, no_utilisateur_acheteur = noUtilisateurVendeur, no_categorie :=noCategorie";
 	private final static String UPDATE_PRIX_VENTE = "UPDATE ARTICLES_VENDUS SET prix_vente = :prixVente WHERE no_article = :noArticle";
+	private final static String UPDATE_ACHETEUR = "UPDATE ARTICLES_VENDUS SET no_utilisateur_acheteur = :noAcheteur WHERE no_article = :noArticle";
 	private final static String DELETE = "DELETE ARTICLES_VENDUS WHERE no_article = :noArticle";
 	private final static String FIND_BY_UTILISATEUR = "SELECT nom_article, description, date_debut_encheres , date_fin_encheres, prix_initial, prix_vente, no_utilisateur_vendeur,no_utilisateur_acheteur , no_categorie FROM ARTICLES_VENDUS WHERE no_utilisateur_vendeur = :noUtilisateurVendeur";
 	private final static String FIND_BY_CATEGORIE = "SELECT nom_article, description, date_debut_encheres , date_fin_encheres, prix_initial, prix_vente, no_utilisateur_vendeur, no_utilisateur_acheteur , no_categorie FROM ARTICLES_VENDUS WHERE no_categorie = :noCategorie";
@@ -98,6 +99,14 @@ public class ArticleVenduDAOImpl implements ArticleVenduDAO {
 		mapParameterSource.addValue("noArticle",noArticle);
 		mapParameterSource.addValue("prixVente", prixVente);
 		jdbcTemplate.update(UPDATE_PRIX_VENTE, mapParameterSource);
+	}
+	@Override
+	public void updateAcheteur(int noArticle, int noAcheteur) {
+		System.out.println("UpdateAcheteur");
+		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
+		mapParameterSource.addValue("noArticle",noArticle);
+		mapParameterSource.addValue("noAcheteur", noAcheteur);
+		jdbcTemplate.update(UPDATE_ACHETEUR, mapParameterSource);
 	}
 	/**
 	 *  delete Article Vendu

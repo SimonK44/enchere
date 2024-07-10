@@ -104,6 +104,10 @@ public class ArticleVenduImpl implements ArticleVenduService {
 	public void modifierArticleVenduPrixVente(int noArticleVendu, int prixVente) {
 		this.articleVenduDAO.updatePrixVente(noArticleVendu, prixVente);
 	}
+	@Override
+	public void modifierArticleVenduVendeur(int noArticleVendu, int noVendeur) {
+		this.articleVenduDAO.updateAcheteur(noArticleVendu, noVendeur);
+	}
 
 	@Override
 	public void supprimerArticleVendu(int articleVendu) {
@@ -151,6 +155,8 @@ public class ArticleVenduImpl implements ArticleVenduService {
 			this.enchereDAO.create(nouvelleEnchere);
 			// MODIFIER ARTICLE VENDU PRIX VENTE
 			this.articleVenduDAO.updatePrixVente(noArticleVendu, proposition);
+			// MODIFIER ARTICLE VENDU ACHETEUR
+			this.articleVenduDAO.updateAcheteur(noArticleVendu, user.getNoUtilisateur());
 		} else {
 			// RECUPERER USER DERNIERE OFFRE
 			Utilisateur dernierAcheteur = this.utilisateurDAO.read(lastEnchereMax.get().getUtilisateur().getNoUtilisateur());
@@ -172,6 +178,8 @@ public class ArticleVenduImpl implements ArticleVenduService {
 			nouvelleEnchere.setUtilisateur(user);
 			this.enchereDAO.create(nouvelleEnchere); // AJOUT DE L'ENCHERE
 			this.articleVenduDAO.updatePrixVente(noArticleVendu, proposition); // MODIFIER ARTICLE VENDU PRIX VENTE
+			// MODIFIER ARTICLE VENDU ACHETEUR
+			this.articleVenduDAO.updateAcheteur(noArticleVendu, user.getNoUtilisateur());
 		}
 	}
 
