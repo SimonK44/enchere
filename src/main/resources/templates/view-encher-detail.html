@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="css/header-footer.css" />
   <link rel="stylesheet" href="css/encher-detail.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
   <title>ENI-Enchères</title>
 </head>
 <body>
@@ -55,7 +54,7 @@
         <form th:action="@{/encherir}" method="post">
           <input type="hidden" id="noArticleVendu" name="noArticleVendu" th:value="${article.noArticle}" />
           <label for="proposition">Ma proposition :</label>
-          <input type="number" id="proposition" name="proposition" th:min="${article.prixVente + 1}" class="proposition-input" />
+          <input type="number" id="proposition" name="proposition" th:min="${article.prixVente == 0 ? article.prixInitial : article.prixVente + 1}" class="proposition-input" />
           <button type="submit">Enchérir</button>
         </form>
       </div>
@@ -76,34 +75,6 @@
   </div>
 </main>
 <div th:replace="~{/fragments/fragment-footer :: frag-footer}"></div>
-
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-<script>
-  // Function to display a Toastr message
-  function showToastr(message, type) {
-    toastr[type](message, '', { timeOut: 5000 });
-  }
-
-  // Check if there is an error message from the server
-  var errorMessage = /*[[${errorMessage}]]*/ '';
-  if (errorMessage) {
-    showToastr(errorMessage, 'error');
-  }
-
-  // Check if there is a success message from the server
-  var successMessage = /*[[${successMessage}]]*/ '';
-  if (successMessage) {
-    showToastr(successMessage, 'success');
-  }
-  
-  function alertRetrait() {
-      return alert("l' objet a été retiré ");
-  }
-</script>
-
 
 </body>
 </html>

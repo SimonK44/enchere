@@ -8,7 +8,6 @@ import com.example.encheres.bo.*;
 import com.example.encheres.exception.BusinessException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Controller
 @SessionAttributes({"utilisateurSession"})
@@ -25,9 +25,6 @@ public class ArticleVenduController {
 	private CategorieService categorieService;
 	private UtilisateurService utilisateurService;
 	private RetraitService retraitService;
-
-	@Value("${upload.path}")
-	private String uploadPath;
 
 	@Autowired
 	public ArticleVenduController(
@@ -61,16 +58,9 @@ public class ArticleVenduController {
 		@ModelAttribute("utilisateurSession") Utilisateur user,
 		MultipartFile image
 	) {
-/*
-		byte[] bytes = image.getBytes();
-		Path path = Paths.get(uploadPath + image.getOriginalFilename());
-		Files.write(path, bytes);
-		article.setImagePath("/images/" + image.getOriginalFilename());*/
 		this.articleVenduService.createArticleWithRetrait(articleVendu, adresse, user, image);
 		return "redirect:view-encher-detail?id=" + articleVendu.getNoArticle();
 	}
-
-
 
 	@GetMapping("/view-resultat-gagnant")
 	public String resultatRetraitGagnant() {
@@ -97,49 +87,69 @@ public class ArticleVenduController {
 		article.setVendeur(vendeur);
 
 		Retrait adresse = this.retraitService.read(article.getNoArticle());
-		System.out.println(adresse);
 
-		boolean hideButtonEncherir = false;
-		boolean lastEnchereUser    = false;
-		boolean BoolVendeur        = false;
-
-		System.out.println("\n \n Mon Article detail");
-		System.out.println(article.getAcheteur().getNoUtilisateur());
-		System.out.println("user : " + user.getNoUtilisateur());
-		System.out.println("\n \n");
-
-
-		System.out.println("article.getVendeur().getNoUtilisateur()" + article.getVendeur().getNoUtilisateur());
-		System.out.println("user.getNoUtilisateur()" + user.getNoUtilisateur());
-		
 		if  (article.getVendeur().getNoUtilisateur() == user.getNoUtilisateur()) {
-			BoolVendeur = true;
-			System.out.println(" BoolVendeur true");
-			model.addAttribute("BoolVendeur", BoolVendeur);
+			model.addAttribute("BoolVendeur", true);
 		}
 
 		if (article.getAcheteur().getNoUtilisateur() == user.getNoUtilisateur()) {
-			System.out.println("true");
-			lastEnchereUser = true;
-			model.addAttribute("lastEnchereUser", lastEnchereUser);
+			model.addAttribute("lastEnchereUser", true);
+		} else {
+			model.addAttribute("lastEnchereUser", false);
 		}
-		System.out.println("false");
-		model.addAttribute("lastEnchereUser", lastEnchereUser);
-
 
 		if (article.getDateFinEnchere().isBefore(LocalDate.now()) || article.getDateFinEnchere().isEqual(LocalDate.now())) {
-			hideButtonEncherir = true;
-			System.out.println("DAte exprirer");
 			model.addAttribute("article", article);
 			model.addAttribute("adresse", adresse);
-			model.addAttribute("button", hideButtonEncherir);
+			model.addAttribute("button", true);
 			return "/view-encher-detail";
 		} else {
 			model.addAttribute("article", article);
 			model.addAttribute("adresse", adresse);
-			model.addAttribute("button", hideButtonEncherir);
+			model.addAttribute("button", false);
 			return "/view-encher-detail";
 		}
+	}
+
+	@PostMapping("/modifier")
+	public String modifierArticle(
+			@ModelAttribute ArticleVendu article,
+			@ModelAttribute("adresse") Retrait adresse
+	) {
+		articleVenduService.modifierArticleVendu(article);
+		retraitService.update(adresse);
+		return "redirect:view-encher-detail?id=" + article.getNoArticle();
+	}
+
+
+	@GetMapping("/modifier")
+	public String afficherModifierArticle(
+			@RequestParam(value = "id", required = false) int noArticleVendu,
+			Model model,
+			@ModelAttribute("utilisateurSession") Utilisateur user
+	) {
+		// Récupérer les informations de l'article
+		ArticleVendu article = articleVenduService.lectureArticleVendu(noArticleVendu);
+		if (article.getVendeur().getNoUtilisateur() != user.getNoUtilisateur()) {
+			return "redirect:/view-encher-detail?id=" + noArticleVendu;
+		}
+		if ( article == null || LocalDate.now().isAfter(article.getDateDebutEnchere()) )  {
+			return "redirect:/view-encher-detail?id=" + noArticleVendu;
+		}
+
+		// Récupérer la liste des catégories
+		List<Categorie> categories = categorieService.findAll();
+		Retrait adresse = this.retraitService.read(article.getNoArticle());
+
+		// Ajouter les données au modèle
+		model.addAttribute("article", article);
+		model.addAttribute("categories", categories);
+
+		// Ajouter l'adresse de retrait (si nécessaire)
+		model.addAttribute("adresse", adresse);
+
+		// Afficher la vue de modification de l'article
+		return "view-encher-modification";
 	}
 
 	@PostMapping("/encherir")
@@ -149,34 +159,33 @@ public class ArticleVenduController {
 		@RequestParam("proposition") int proposition,
 		RedirectAttributes redirectAttributes
 	) {
-
-		// TODO IF PAS ASSER DE SOUS REDIRIGER BOUTIQUE
-
-
-		// Logique pour gérer l'enchère, par exemple enregistrer dans la base de données
-		System.out.println("Enchère pour l'article avec ID : " + utilisateurSession);
-		System.out.println("Enchère pour l'article avec ID : " + noArticleVendu);
-		System.out.println("Proposition d'enchère : " + proposition);
-
+		// PAS ASSER DE SOUS REDIRIGER BOUTIQUE
+		Utilisateur utilisateur = this.utilisateurService.lectureUtilisateur(utilisateurSession.getNoUtilisateur());
+		if (utilisateur.getCredit() < proposition) {
+			return "redirect:/boutique";
+		}
+		// GESTION DE L'ENCHERE
 		this.articleVenduService.encherirArticle(noArticleVendu, proposition, utilisateurSession);
 		redirectAttributes.addFlashAttribute("errorMessage", "Une erreur est survenue lors de la soumission de l'enchère.");
 		// Redirection ou affichage d'une nouvelle vue après traitement
 		return "redirect:/view-encher-detail?id=" + noArticleVendu; // Redirige vers une page de confirmation
 	}
-	
+
 	@GetMapping("/retrait")
-	public String retrait (@RequestParam("noArticle") int noArticle,
-		                   @ModelAttribute("utilisateurSession") Utilisateur utilisateurSession,
-		                   BindingResult bingingResult) {
+	public String retrait (
+			@RequestParam("noArticle") int noArticle,
+			@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession,
+			BindingResult bingingResult
+	) {
 		try {
 			articleVenduService.retirerArticle(noArticle);
 		} catch (BusinessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return "redirect:/view-encher-detail?id=\" + noArticleVendu";
 	}
-	
-	
+
+
 }

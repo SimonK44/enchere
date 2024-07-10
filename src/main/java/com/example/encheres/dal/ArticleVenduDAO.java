@@ -7,7 +7,6 @@ import java.util.List;
 import com.example.encheres.bo.ArticleVendu;
 
 public interface ArticleVenduDAO {
-
 	void create (ArticleVendu articleVendu);
 	ArticleVendu read (int noArticle);
 	void update (ArticleVendu articleVendu);
@@ -19,7 +18,4 @@ public interface ArticleVenduDAO {
 	List<ArticleVendu> findAll();
 	List<ArticleVendu> findByCategorie(int noCategorie);
 	int countArticle ( int noArticle);
-	
-
-
 }
