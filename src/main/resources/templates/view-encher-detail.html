@@ -65,6 +65,9 @@
         </div>
         <div th:if="${button}">
           <p>Enchère terminée</p>
+          <div th:if="${BoolVendeur}">
+            <a id="retrait" th:href="@{/retrait/(noArticle=${article.noArticle})}" onclick=" return alertRetrait()"> Retrait</a>
+           </div>
         </div>
       </div>
       </div>
@@ -94,6 +97,10 @@
   var successMessage = /*[[${successMessage}]]*/ '';
   if (successMessage) {
     showToastr(successMessage, 'success');
+  }
+  
+  function alertRetrait() {
+      return alert("l' objet a été retiré ");
   }
 </script>
 
