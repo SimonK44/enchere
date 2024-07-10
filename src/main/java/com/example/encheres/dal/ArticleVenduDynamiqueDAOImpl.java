@@ -50,6 +50,19 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 
 	@Override
 	public List<ArticleVendu> findDynamique(String transactionType,int requete,  String nomArticle, int noCategorie, int noUtilisateurVendeur, int noUtilisateurAcheteur) {
+		// controle donnée 
+		
+		System.out.println("articleVenduDynamique transactionType" + transactionType + "requete: " + requete );
+		System.out.println("articleVenduDynamique noCategorie" + noCategorie + "article " + nomArticle  );
+		System.out.println("articleVenduDynamique noUtilisateurVendeur" + noUtilisateurVendeur + "article " + noUtilisateurAcheteur  );
+		
+		if ( ! transactionType.equals(ACHAT) && ! transactionType.equals(VENTES)) {
+			System.out.println("pas bien transactiontype");
+		}
+		if (requete < 1 || requete > 7) {
+			System.out.println("pas bien requete");
+		}
+		
 		// ecriture de la requete
 		String requeteFinale = preparationRequete( transactionType, requete, noCategorie, nomArticle, noUtilisateurVendeur, noUtilisateurAcheteur);
    
