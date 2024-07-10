@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,7 +70,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		boolean isValid = controleModifierNomPrenom(utilisateur.getNoUtilisateur(), utilisateur.getNom(),utilisateur.getPrenom(),be);
 		isValid &= controleModifierPseudo(utilisateur.getNoUtilisateur(),utilisateur.getPseudo(),be );
 		isValid &= controleModifierEmail(utilisateur.getNoUtilisateur(), utilisateur.getEmail(), be);
-		isValid &= controleMotDePasseActuel(motDePasseActuel, utilisateur.getMotDePasse(), be);
+		isValid &= controleMotDePasseActuel(motDePasseActuel, be);
 		isValid &= controleConfirmMotDePasse(utilisateur.getMotDePasse(), utilisateur.getConfirmMotDePasse(), be);
 
 		cryptMotDePasse(utilisateur);
@@ -189,7 +191,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	private boolean controleModifierEmail(int no_utilisateur, String email, BusinessException be) {
 		boolean isValid = false;
 
-		if (utilisateurDAO.countByMailModifier(no_utilisateur, email) == 0 ) {
+		if (utilisateurDAO.countByMailModifier(no_utilisateur, email) == 0) {
 		   isValid = true;
 		} else {
 			System.out.println("utlisateur service pb mail modif");
@@ -236,14 +238,20 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		return isValid;
 	}
 	
-	private boolean controleMotDePasseActuel(String motDePasseActuel, String motDePasse, BusinessException be) {
+	private boolean controleMotDePasseActuel(String motDePasseActuel, BusinessException be) {
 		boolean isValid = false;
-
-		if (motDePasseActuel != null) {		
-			if (passwordEncoder.matches(motDePasseActuel, motDePasse)) {
+						
+		// Vérification du mot de passe actuel
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+        Utilisateur currentUser = this.findByPseudo(currentUsername);
+        
+		if (!motDePasseActuel.isBlank()) {	
+			System.out.println("service : mdp non null");
+			if (passwordEncoder.matches(motDePasseActuel, currentUser.getMotDePasse())) {
 			   isValid = true;
 			} else {
-				System.out.println("(service) mot de passe actuel : "+motDePasseActuel+" confirmation : "+motDePasse);
+				System.out.println("(service) mot de passe actuel : "+motDePasseActuel+" confirmation : "+currentUser.getMotDePasse());
 				be.addError(BusinessException.ERREUR_8);
 			}
 		} else {

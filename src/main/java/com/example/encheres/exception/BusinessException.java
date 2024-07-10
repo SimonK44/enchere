@@ -16,7 +16,7 @@ public class BusinessException extends Exception {
 	public static final String ERREUR_3 = "Article inexistant";
 	public static final String ERREUR_4 = "Utilisateur inexistant";
 	public static final String ERREUR_5 = "Montant enchere trop basse";
-	public static final String ERREUR_6 = "Les mots de passe sont différents";
+	public static final String ERREUR_6 = "La confirmation est différente du nouveau mot de passe";
 	public static final String ERREUR_7 = "Le mail est deja existant";
 	public static final String ERREUR_8 = "Le mot de passe actuel est incorrect";
 	public static final String ERREUR_9 = "La saisie du mot de passe est obligatoire";
