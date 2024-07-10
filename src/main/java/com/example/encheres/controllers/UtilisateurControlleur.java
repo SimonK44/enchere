@@ -120,13 +120,6 @@ public class UtilisateurControlleur {
 											@ModelAttribute("utilisateur") 
 											@Valid Utilisateur utilisateur, BindingResult bindingResult) {
 
-		// Vérification du mot de passe actuel
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUsername = authentication.getName();
-        Utilisateur currentUser = utilisateurService.findByPseudo(currentUsername);
-
-        System.out.println("Mdp formulaire : "+motDePasseActuel+" Mdp en base : "+currentUser.getMotDePasse());
-
 		if (bindingResult.hasErrors()) {
 			return "view-profil-modification";
 		} else {
@@ -139,7 +132,6 @@ public class UtilisateurControlleur {
 				e.getErreurs().forEach(err -> {
 					ObjectError error = new ObjectError("globalError", err);
 					bindingResult.addError(error);
-					System.err.println(error);
 					}
 				);
 				return "view-profil-modification";

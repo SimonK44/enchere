@@ -198,14 +198,6 @@ public void setConfirmMotDePasse(String confirmMotDePasse) {
 	this.confirmMotDePasse = confirmMotDePasse;
 }
 
-//public String getMotDePasseActuel() {
-//	return motDePasseActuel;
-//}
-//
-//public void setMotDePasseActuel(String motDePasseActuel) {
-//	this.motDePasseActuel = motDePasseActuel;
-//}
-
 @Override
 public String toString() {
 	return "Utilisateur [noUtilisateur=" + noUtilisateur + ", pseudo=" + pseudo + ", nom=" + nom + ", prenom=" + prenom
