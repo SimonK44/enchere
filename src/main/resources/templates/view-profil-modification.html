@@ -17,6 +17,7 @@
 			<div class="form-row">
 				<div class="form-col">
 					<input type="hidden" name="noUtilisateur" data-th-value="${utilisateur.noUtilisateur}" />
+					<input type="hidden" name="administrateur" th:value="${utilisateur.administrateur}"/>
 					<label for="inputPseudo">Pseudo :</label>				
 					<input id="inputPseudo" type="text" name="pseudo" th:value="${utilisateur.pseudo}" th:field="*{pseudo}"/>
 					<div data-th-replace="~{/fragments/fragment-error :: frag-error('pseudo')}"></div>
@@ -86,7 +87,7 @@
 			<div class="form-row">				
 				<div class="form-col">
 					<label for="credit">Crédit :</label>
-					<input id="credit" type="text" name="credit" th:value="${utilisateur.credit}" disabled/>					
+					<input id="credit" type="text" name="credit" th:value="${utilisateur.credit}" readonly="readonly"/>										
 				</div>
 			</div>
 			<div class="form-actions">
