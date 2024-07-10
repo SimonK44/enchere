@@ -28,7 +28,7 @@ public class securityConfig {
 	@Bean
 	UserDetailsManager users(DataSource dataSource) {
 		JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
-		users.setUsersByUsernameQuery("select pseudo, mot_de_passe, 'true' as enabled from UTILISATEURS where pseudo = ?");
+		users.setUsersByUsernameQuery("select pseudo, mot_de_passe, 'true' as enabled from UTILISATEURS where pseudo = ? AND date_histo IS NULL");
 		users.setAuthoritiesByUsernameQuery("select pseudo, role from UTILISATEURS INNER JOIN ROLE ON ROLE.is_admin = UTILISATEURS.administrateur WHERE pseudo = ?");
 		return users;
 	}
@@ -40,8 +40,7 @@ public class securityConfig {
 	SecurityFilterChain web(HttpSecurity http) throws Exception {
 	    http
 	        .authorizeHttpRequests((authorize) -> authorize
-//	        .requestMatchers("/administrateur").hasRole("ADMIN")
-	        .requestMatchers("/administrateur/**").hasAnyRole("UTILISATEUR", "ADMIN")
+	        .requestMatchers("/administrateur").hasRole("ADMIN")
 	        .requestMatchers("/administrateur/liste").hasRole("ADMIN")
 		    .requestMatchers("/utilisateurs/afficher").hasAnyRole("UTILISATEUR", "ADMIN")
 		    .requestMatchers("/utilisateurs/modifier").hasAnyRole("UTILISATEUR", "ADMIN")
