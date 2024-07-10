@@ -24,7 +24,7 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 	
 	private final static String SELECT = "SELECT DISTINCT A.no_article, nom_article, description, date_debut_encheres , date_fin_encheres, prix_initial, prix_vente, no_utilisateur_vendeur, no_utilisateur_acheteur , no_categorie FROM ARTICLES_VENDUS AS A";
 // union pour mes encheres en cours   
-	private final static String UNION  = " INNER JOIN ENCHERES AS E ON E.no_article = A.no_article" ; 
+	private final static String UNION  = " LEFT JOIN ENCHERES AS E ON E.no_article = A.no_article" ; 
 	
 	private final static String WHERE    = " WHERE";	
 	private final static String OR       = " OR";

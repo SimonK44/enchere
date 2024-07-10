@@ -56,16 +56,11 @@ public class HomeController {
     @GetMapping({"/","/home","/encheres","/listes-articles"})
     public String home(
     	Model model ) {
-    	System.out.println("before");
     	List<ArticleVendu> articles = this.articleVenduService.findAll();
 
-    	System.out.println("a");
         List<Categorie> categories = this.categorieService.findAll();
-    	System.out.println("after");
 
-    	System.out.println("HomeControler articlesRecherches"+ articles);
     	//System.out.println("HomeControler articlesRecherches"+ articlesRecherches);
-    	System.out.println("HomeControler categories" + categories);
     	
     	model.addAttribute("articles", articles);
     	model.addAttribute("categories", categories);
@@ -103,8 +98,6 @@ public class HomeController {
 	   	   else{requete = venteCours + venteNonDebute + venteTerminees;
 	   }
 	  
-	   System.out.println(requete);	 
-	   //String transactionType, int requete,  String nomArticle, int noCategorie, int noUtilisateurVendeur, int noUtilisateurAcheteur
 	   List<ArticleVendu> articles = this.articleVenduService.findAllComplexe(transactionType, requete,nomArticle,noCategorie,utilisateurSession.getNoUtilisateur() , utilisateurSession.getNoUtilisateur()); 	 	
 
 	   List<Categorie> categories = this.categorieService.findAll();
