@@ -87,7 +87,8 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 	private String preparationRequete (String transactionType,int requete, int noCategorie, String nomArticle, int noUtilisateurVendeur, int noUtilisateurAcheteur) {
 		String requeteFinale = "";
 
-		if (transactionType == ACHAT ) {
+		if (transactionType.equals(ACHAT)) {
+			System.out.println("je suis rentré dans achat");
 			switch (requete) {
 // enchere ouverte
 			case 1 :
@@ -119,7 +120,8 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 				break;		
  			
 			}
-		} else { if (transactionType == VENTES ) { 
+		} else { if (transactionType.equals(VENTES )) { 
+			System.out.println("je suis rentré dans ventes");
 			switch (requete) {
 // mes ventes en cours
 			case 1 :
@@ -163,8 +165,10 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 		}
 // ajout du filtre sur categorie
 		if (noCategorie != 0) {
-			requeteFinale += CATEGORIE;
+			requeteFinale = requeteFinale +  CATEGORIE;
 		}	
+		
+		System.out.println("1 requete finale : " + requeteFinale );
 		
 		return requeteFinale;
 
