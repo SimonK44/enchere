@@ -36,8 +36,6 @@ public class Utilisateur {
 	private String codePostal;
 	@NotBlank
 	private String ville;
-//	@NotBlank
-	private String motDePasseActuel;
 	@NotBlank
 	@Size(min = 8)
 	private String motDePasse;
@@ -200,13 +198,13 @@ public void setConfirmMotDePasse(String confirmMotDePasse) {
 	this.confirmMotDePasse = confirmMotDePasse;
 }
 
-public String getMotDePasseActuel() {
-	return motDePasseActuel;
-}
-
-public void setMotDePasseActuel(String motDePasseActuel) {
-	this.motDePasseActuel = motDePasseActuel;
-}
+//public String getMotDePasseActuel() {
+//	return motDePasseActuel;
+//}
+//
+//public void setMotDePasseActuel(String motDePasseActuel) {
+//	this.motDePasseActuel = motDePasseActuel;
+//}
 
 @Override
 public String toString() {
