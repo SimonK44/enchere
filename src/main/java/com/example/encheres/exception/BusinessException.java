@@ -20,6 +20,21 @@ public class BusinessException extends Exception {
 	public static final String ERREUR_7 = "Le mail est deja existant";
 	public static final String ERREUR_8 = "Le mot de passe actuel est incorrect";
 	public static final String ERREUR_9 = "La saisie du mot de passe est obligatoire";
+	
+	public static final String LOGGER_0  = "Réussite suppression categorie : ";
+	public static final String LOGGER_1  = "Probleme suppression categorie : ";
+	public static final String LOGGER_2  = "Réussite MAJ categorie : ";
+	public static final String LOGGER_3  = "Probleme MAJ categorie : ";
+	public static final String LOGGER_4  = "Réussite téléchargement fichier : ";
+	public static final String LOGGER_5  = "Probleme téléchargement fichier : ";
+	public static final String LOGGER_6  = "Réussite creation utilisateur : ";
+	public static final String LOGGER_7  = "Probleme creation utilisateur : "; 
+	public static final String LOGGER_8  = "Réussite MAJ utilisateur : ";
+	public static final String LOGGER_9  = "Probleme MAJ utilisateur : "; 
+	public static final String LOGGER_10 = "Réussite suppression utilisateur : ";
+	public static final String LOGGER_11 = "Probleme suppression utilisateur : "; 
+	public static final String LOGGER_12 = "Réussite historisation utilisateur : ";
+	public static final String LOGGER_13 = "Probleme historisation utilisateur : "; 
 
 	public BusinessException() {
 		super();

@@ -42,9 +42,9 @@ public class CategorieImpl implements CategorieService {
 		
 		try {
 			this.categorieDAO.delete(noCategorie);
-			this.logger.debug("Suppression catégorie :" +  noCategorie);
+			this.logger.debug(BusinessException.LOGGER_0 +  noCategorie);
 		} catch (DataAccessException e) {
-			this.logger.error("Probleme suppression categorie " + noCategorie);			
+			this.logger.error(BusinessException.LOGGER_1  + noCategorie);			
 			be.addError(BusinessException.ERREUR_0);
 			throw be;
 		}	
@@ -63,9 +63,9 @@ public class CategorieImpl implements CategorieService {
 		
 		try {
 			this.categorieDAO.updateDateSuppression(noCategorie);
-			this.logger.debug("MAJ catégorie :" +  noCategorie);
+			this.logger.debug(BusinessException.LOGGER_2 +  noCategorie);
 		} catch (DataAccessException e) {			
-			this.logger.error("Probleme MAJ categorie " + noCategorie);		
+			this.logger.error(BusinessException.LOGGER_3 + noCategorie);		
 			be.addError(BusinessException.ERREUR_0);
 			throw be;
 		}	
