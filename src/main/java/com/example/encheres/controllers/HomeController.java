@@ -74,7 +74,7 @@ public class HomeController {
 
    @PostMapping({"/","home","encheres","listes-articles"})
 
-   public String homeRecherche(
+	public String homeRecherche(
     		@RequestParam("filtre")String nomArticle,
     		@RequestParam("categorie") int noCategorie,
     		@RequestParam("transactionType")String transactionType,
@@ -86,39 +86,31 @@ public class HomeController {
     		@RequestParam(name="venteTerminees",required = false,defaultValue="0") int venteTerminees,
     		@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession,
     		Model model,
-    		BindingResult bingingResult) {
-	   int requete = 0;
-	   if(transactionType.equals("achat")){
-     	   requete = encheresOuvertes + encheresEnCours + encheresRemportees;}
-	   	   else{requete = venteCours + venteNonDebute + venteTerminees;
-	   }
-
-	   List<ArticleVendu> articles;
-	try {
-		articles = this.articleVenduService.findAllComplexe(transactionType, requete,nomArticle,noCategorie,utilisateurSession.getNoUtilisateur() , utilisateurSession.getNoUtilisateur());
-		 List<Categorie> categories = this.categorieService.findAll();
-
-
-		   model.addAttribute("articles", articles);
-
-	   	   model.addAttribute("categories", categories);
-
-	   	 return "home";
-	
-	} catch (BusinessException e) {
-		e.getErreurs().forEach(err -> {
-			ObjectError error = new ObjectError("globalError", err);
-			bingingResult.addError(error);
-			
-			 } 
-		);
-		 return "home";
-	  
-
-     
+    		BindingResult bingingResult
+   ) {
+		int requete = 0;
+		if ( transactionType.equals("achat") ) {
+			requete = encheresOuvertes + encheresEnCours + encheresRemportees;
+		} else {
+			requete = venteCours + venteNonDebute + venteTerminees;
+		}
+		List<ArticleVendu> articles;
+		try {
+			System.out.println("noCategorie : " + noCategorie);
+			articles = this.articleVenduService.findAllComplexe(transactionType, requete, nomArticle,noCategorie,utilisateurSession.getNoUtilisateur() , utilisateurSession.getNoUtilisateur());
+			List<Categorie> categories = this.categorieService.findAll();
+			System.out.println("\n articles print : " + articles);
+			model.addAttribute("articles", articles);
+			model.addAttribute("categories", categories);
+			return "home";
+		} catch (BusinessException e) {
+			e.getErreurs().forEach(err -> {
+				ObjectError error = new ObjectError("globalError", err);
+				bingingResult.addError(error);
+			});
+			 return "home";
+		}
 	}
-
-}
 }
 
 
