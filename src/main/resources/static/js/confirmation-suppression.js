@@ -3,6 +3,7 @@
  * 
  */
 
-function confirmation() {
-            return confirm("Êtes-vous sûr de vouloir visiter ce lien ?");
-            }
+	function confirmation() {
+	    return confirm("Êtes-vous sûr de vouloir visiter ce lien ?");
+	    
+	}
