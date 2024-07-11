@@ -19,6 +19,7 @@ import com.example.encheres.bo.Utilisateur;
 public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 	private NamedParameterJdbcTemplate jdbcTemplate;
 
+
 	private final static String ACHAT                   = "achat";
 	private final static String VENTES                  = "ventes";
 
@@ -50,15 +51,7 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 
 	@Override
 	public List<ArticleVendu> findDynamique(String transactionType,int requete,  String nomArticle, int noCategorie, int noUtilisateurVendeur, int noUtilisateurAcheteur) {
-		// controle donnée
-
-		if ( ! transactionType.equals(ACHAT) && ! transactionType.equals(VENTES)) {
-			// System.out.println("pas bien transactiontype");
-		}
-		if (requete < 1 || requete > 7) {
-			// System.out.println("pas bien requete");
-		}
-
+				
 		// ecriture de la requete
 		String requeteFinale = preparationRequete( transactionType, requete, noCategorie, nomArticle, noUtilisateurVendeur, noUtilisateurAcheteur);
 
@@ -68,10 +61,7 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 		mapParameterSource.addValue("nomArticle",nomArticle + POURCENT);
 		mapParameterSource.addValue("noUtilisateurVendeur",noUtilisateurVendeur);
 		mapParameterSource.addValue("noUtilisateurAcheteur",noUtilisateurAcheteur);
-
-		//à mettre
-
-
+		
 		return jdbcTemplate.query(requeteFinale,mapParameterSource,new ArticleVenduRowMapper());
 
 
