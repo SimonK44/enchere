@@ -48,6 +48,7 @@ public class securityConfig {
 		    .requestMatchers("/view-resultat-gagnant").hasAnyRole("UTILISATEUR", "ADMIN")
 		    .requestMatchers("/view-resultat-retrait").hasAnyRole("UTILISATEUR", "ADMIN")
 		    .requestMatchers("/css/**").permitAll() //Accès au CSS pour tous le monde
+		    .requestMatchers("/js/**").permitAll() //Accès au JS pour tous le monde
 		    .requestMatchers("/images/**").permitAll() //Accès aux images pour tous le monde
 		    .requestMatchers("/image/**").permitAll() //Accès aux images pour tous le monde
 		    .requestMatchers("/").permitAll() //Accès à l'index pour tous le monde
