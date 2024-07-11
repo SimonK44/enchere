@@ -18,29 +18,29 @@ import com.example.encheres.bo.Utilisateur;
 @Repository
 public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 	private NamedParameterJdbcTemplate jdbcTemplate;
-	
+
 	private final static String ACHAT                   = "achat";
 	private final static String VENTES                  = "ventes";
-	
+
 	private final static String SELECT = "SELECT DISTINCT A.no_article, nom_article, description, date_debut_encheres , date_fin_encheres, prix_initial, prix_vente, no_utilisateur_vendeur, no_utilisateur_acheteur , no_categorie FROM ARTICLES_VENDUS AS A";
-// union pour mes encheres en cours   
-	private final static String UNION  = " LEFT JOIN ENCHERES AS E ON E.no_article = A.no_article" ; 
-	
-	private final static String WHERE    = " WHERE";	
+// union pour mes encheres en cours
+	private final static String UNION  = " LEFT JOIN ENCHERES AS E ON E.no_article = A.no_article" ;
+
+	private final static String WHERE    = " WHERE";
 	private final static String OR       = " OR";
 	private final static String POURCENT = "%";
-	
+
 // where des encheres_ouvertes
 	private final static String ENCHERES_OUVERTES       = " ( date_debut_encheres <= GETDATE() AND date_fin_encheres  >= GETDATE() )";
-	private final static String MES_ENCHERES_EN_COURS   = " ( date_debut_encheres <= GETDATE() AND date_fin_encheres >= GETDATE() AND E.no_utilisateur = :noUtilisateurAcheteur ) ";	
+	private final static String MES_ENCHERES_EN_COURS   = " ( date_debut_encheres <= GETDATE() AND date_fin_encheres >= GETDATE() AND E.no_utilisateur = :noUtilisateurAcheteur ) ";
 	private final static String MES_ENCHERES_REMPORTEES = " ( date_fin_encheres < GETDATE() AND no_utilisateur_acheteur = :noUtilisateurAcheteur )";
-	
+
 	private final static String MES_VENTES_EN_COURS     = " ( date_debut_encheres <= GETDATE() AND no_utilisateur_vendeur = :noUtilisateurVendeur )";
 	private final static String VENTES_NON_DEBUTEES     = " ( date_debut_encheres >= GETDATE() AND no_utilisateur_vendeur = :noUtilisateurVendeur )";
-	 private final static String VENTES_TERMINEES       = " ( date_fin_encheres < GETDATE() AND no_utilisateur_vendeur = :noUtilisateurVendeur )"; 
-	
+	 private final static String VENTES_TERMINEES       = " ( date_fin_encheres < GETDATE() AND no_utilisateur_vendeur = :noUtilisateurVendeur )";
+
 	private final static String LIKE_NOM                = " AND nom_article like :nomArticle";
-    private final static String CATEGORIE               = " AND no_categorie = :noCategorie";		
+    private final static String CATEGORIE               = " AND no_categorie = :noCategorie";
 
 	public ArticleVenduDynamiqueDAOImpl(NamedParameterJdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
@@ -50,36 +50,27 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 
 	@Override
 	public List<ArticleVendu> findDynamique(String transactionType,int requete,  String nomArticle, int noCategorie, int noUtilisateurVendeur, int noUtilisateurAcheteur) {
-		// controle donnée 
-		
-		System.out.println("articleVenduDynamique transactionType : " + transactionType + " requete : " + requete );
-		System.out.println("articleVenduDynamique noCategorie : " + noCategorie + " nom article : " + nomArticle  );
-		System.out.println("articleVenduDynamique noUtilisateurVendeur : " + noUtilisateurVendeur + " noUtilisateurAcheteur : " + noUtilisateurAcheteur  );
-		
+		// controle donnée
+
 		if ( ! transactionType.equals(ACHAT) && ! transactionType.equals(VENTES)) {
-			System.out.println("pas bien transactiontype");
+			// System.out.println("pas bien transactiontype");
 		}
 		if (requete < 1 || requete > 7) {
-			System.out.println("pas bien requete");
+			// System.out.println("pas bien requete");
 		}
-		
+
 		// ecriture de la requete
 		String requeteFinale = preparationRequete( transactionType, requete, noCategorie, nomArticle, noUtilisateurVendeur, noUtilisateurAcheteur);
-   
-		System.out.println(requeteFinale);
 
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
 
 		mapParameterSource.addValue("noCategorie",noCategorie);
 		mapParameterSource.addValue("nomArticle",nomArticle + POURCENT);
-		mapParameterSource.addValue("noUtilisateurVendeur",noUtilisateurVendeur);		
+		mapParameterSource.addValue("noUtilisateurVendeur",noUtilisateurVendeur);
 		mapParameterSource.addValue("noUtilisateurAcheteur",noUtilisateurAcheteur);
-		
+
 		//à mettre
-				
-		
-		System.out.println("ArticleVenduDynamiqueDAOImpl requeteFinale : " + requeteFinale);
-		System.out.println("ArticleVenduDynamiqueDAOImpl parametres: " + mapParameterSource.toString());
+
 
 		return jdbcTemplate.query(requeteFinale,mapParameterSource,new ArticleVenduRowMapper());
 
@@ -90,7 +81,6 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 		String requeteFinale = "";
 
 		if (transactionType.equals(ACHAT)) {
-			System.out.println("je suis rentré dans achat");
 			switch (requete) {
 // enchere ouverte
 			case 1 :
@@ -119,11 +109,10 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 // mes enchere ouverte + mes encheres en cours + mes encheres remportées
 			case 7 :
 				requeteFinale = SELECT + UNION +  WHERE + ENCHERES_OUVERTES + OR + MES_ENCHERES_EN_COURS + OR + MES_ENCHERES_REMPORTEES;
-				break;		
- 			
+				break;
+
 			}
-		} else { if (transactionType.equals(VENTES )) { 
-			System.out.println("je suis rentré dans ventes");
+		} else { if (transactionType.equals(VENTES )) {
 			switch (requete) {
 // mes ventes en cours
 			case 1 :
@@ -152,28 +141,23 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 // mes ventes en cours + ventes non debutées + ventes terminées
 			case 7 :
 				requeteFinale = SELECT + WHERE + MES_VENTES_EN_COURS + OR + VENTES_NON_DEBUTEES + OR + VENTES_TERMINEES    ;
-				break;		
-// 			
-			}	
-			
+				break;
+//
+			}
+
 			}
 		}
-		
-		
+
+
 // ajout du like sur le nom si besoin
-		System.out.println(nomArticle);
 		if ( nomArticle != null  ) {
 			requeteFinale = requeteFinale +  LIKE_NOM;
 		}
 // ajout du filtre sur categorie
 		if (noCategorie != 0) {
 			requeteFinale = requeteFinale +  CATEGORIE;
-		}	
-		
-		System.out.println("1 requete finale : " + requeteFinale );
-		
+		}
 		return requeteFinale;
-
 	}
 
 	public class ArticleVenduRowMapper implements RowMapper<ArticleVendu> {
@@ -210,7 +194,7 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 
 			return articleVendu;
 		}
-	}	
+	}
 
 }
 

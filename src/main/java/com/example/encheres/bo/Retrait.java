@@ -1,7 +1,6 @@
 package com.example.encheres.bo;
 
 public class Retrait {
-
 	private int noArticle;
 	private String rue;
 	private String codePostal;
@@ -58,7 +57,4 @@ public class Retrait {
 		return "Retrait [noArticle=" + noArticle + ", rue=" + rue + ", codePostal=" + codePostal + ", ville=" + ville
 				+ "]";
 	}
-
-
-
 }

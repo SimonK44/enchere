@@ -30,9 +30,9 @@ import com.example.encheres.dal.ArticleVenduDynamiqueDAO;
 public class HomeController {
 	private ArticleVenduService articleVenduService;
 	private UtilisateurService utilisateurService;
-	private CategorieService categorieService; 
+	private CategorieService categorieService;
 
-	
+
 	public HomeController(ArticleVenduService articleVenduService, UtilisateurService utilisateurService,
 			CategorieService categorieService) {
 		this.articleVenduService = articleVenduService;
@@ -60,23 +60,21 @@ public class HomeController {
 
         List<Categorie> categories = this.categorieService.findAll();
 
-    	//System.out.println("HomeControler articlesRecherches"+ articlesRecherches);
-    	
     	model.addAttribute("articles", articles);
     	model.addAttribute("categories", categories);
 
-    	//dateDebutEnchere=2024-07-01, dateFinEnchere=2024-07-30, prixInitial=100.0, prixVente=150.0, 
-    	//categorie=Categorie [noCategorie=1, libelle=null], acheteur=Utilisateur [noUtilisateur=2, pseudo=null, nom=null, prenom=null, email=null, telephone=null, rue=null, codePostal=null, ville=null, motDePasse=null, credit=0, administrateur=false], 
-    	//vendeur=Utilisateur [noUtilisateur=1, pseudo=null, nom=null, prenom=null, email=null, telephone=null, rue=null, codePostal=null, ville=null, motDePasse=null, credit=0, administrateur=false], encheres=[]], 
-    	
+    	//dateDebutEnchere=2024-07-01, dateFinEnchere=2024-07-30, prixInitial=100.0, prixVente=150.0,
+    	//categorie=Categorie [noCategorie=1, libelle=null], acheteur=Utilisateur [noUtilisateur=2, pseudo=null, nom=null, prenom=null, email=null, telephone=null, rue=null, codePostal=null, ville=null, motDePasse=null, credit=0, administrateur=false],
+    	//vendeur=Utilisateur [noUtilisateur=1, pseudo=null, nom=null, prenom=null, email=null, telephone=null, rue=null, codePostal=null, ville=null, motDePasse=null, credit=0, administrateur=false], encheres=[]],
+
   	return "home";
     }
 
    //à developer
 
-    
+
    @PostMapping({"/","home","encheres","listes-articles"})
-   
+
    public String homeRecherche(
     		@RequestParam("filtre")String nomArticle,
     		@RequestParam("categorie") int noCategorie,
@@ -89,27 +87,23 @@ public class HomeController {
     		@RequestParam(name="venteTerminees",required = false,defaultValue="0") int venteTerminees,
     		@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession,
     		Model model) {
-	   System.out.println("entrer dans homeRecherche dans le homecontroller");
-	   System.out.println("nomArticle: "+ nomArticle + " noCategorie: " + noCategorie + " transactionType: " + transactionType + " encheresOuvertes: " +encheresOuvertes+ " encheresEnCours: "+encheresEnCours+"encheresRemportees: "+ encheresRemportees+ " venteCours: "+venteCours+" venteNonDebute: " +" venteNonDebute: "+ venteNonDebute+" venteTerminees: "+venteTerminees);
-	   
 	   int requete = 0;
 	   if(transactionType.equals("achat")){
      	   requete = encheresOuvertes + encheresEnCours + encheresRemportees;}
 	   	   else{requete = venteCours + venteNonDebute + venteTerminees;
 	   }
-	  
-	   List<ArticleVendu> articles = this.articleVenduService.findAllComplexe(transactionType, requete,nomArticle,noCategorie,utilisateurSession.getNoUtilisateur() , utilisateurSession.getNoUtilisateur()); 	 	
+
+	   List<ArticleVendu> articles = this.articleVenduService.findAllComplexe(transactionType, requete,nomArticle,noCategorie,utilisateurSession.getNoUtilisateur() , utilisateurSession.getNoUtilisateur());
 
 	   List<Categorie> categories = this.categorieService.findAll();
 
-	   System.out.println("homeRecherche" + articles);
-    	
+
 	   model.addAttribute("articles", articles);
-   	   
+
    	   model.addAttribute("categories", categories);
 
 
-    		
+
       return "home";
 	}
 

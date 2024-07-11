@@ -32,13 +32,8 @@ public class LoginController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
 
-		System.out.println("Session : "+currentPrincipalName);
-
-		System.out.println("\n \n currentPrincipalName : " + currentPrincipalName);
 
 		Utilisateur utilisateur = this.contexteService.charger(currentPrincipalName);
-
-		System.out.println("Utilisateur utilisateur : " + utilisateur);
 
 		if(utilisateur != null) {
 			//mettre à jour utilisateurSession avec l'utilisateur chargé

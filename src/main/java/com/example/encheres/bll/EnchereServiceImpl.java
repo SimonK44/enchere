@@ -19,7 +19,6 @@ public class EnchereServiceImpl implements EnchereService {
 	private UtilisateurDAO  utilisateurDAO;
 
 
-
 /**
  *  creation d' une enchere
  */
@@ -46,20 +45,16 @@ public class EnchereServiceImpl implements EnchereService {
 			throw be;
 		}	*/
 	}
-/**
- * lecture enchere
- */
+
+	/*lecture enchere*/
 	@Override
 	public Enchere lectureEnchere(int noUtilisateur, int noArticle) {
-
 		return enchereDAO.read(noUtilisateur, noArticle);
 	}
-/**
- *  liste des encheres par article vendu
- */
+
+	/*liste des encheres par article vendu*/
 	@Override
 	public List<Enchere> listeEnchereParArticle(int noArticle) {
-
 		return enchereDAO.findByArticle(noArticle);
 	}
 

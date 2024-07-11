@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/header-footer.css" />
+    <link rel="stylesheet" href="css/encher-detail.css" />
+    <title>ENI-Enchères</title>
+</head>
+<body>
+<div th:replace="~{/fragments/fragment-header :: frag-header}"></div>
+<main>
+    <h1>Modifier l'article</h1>
+    <div>
+        <div>
+            <img th:src="@{'images/articles/'+${article.noArticle}+'.jpg'}" alt="image produit" />
+        </div>
+        <div>
+            <form th:action="@{/modifier}" method="post">
+                <input type="hidden" name="noArticle" th:value="${article.noArticle}" />
+
+                <label for="nomArticle">Nom de l'article</label>
+                <input type="text" id="nomArticle" name="nomArticle" th:value="${article.nomArticle}" required />
+
+                <label for="description">Description</label>
+                <textarea id="description" name="description" required th:text="${article.description}"></textarea>
+
+                <div class="dropdown">
+                    <label for="categorie">Catégorie :</label>
+                    <select id="categorie" name="categorie" required>
+                        <option th:each="cat : ${categories}"
+                                th:value="${cat.noCategorie}"
+                                th:text="${cat.libelle}"
+                                th:selected="${cat.noCategorie == article.categorie.noCategorie}"></option>
+                    </select>
+                </div>
+
+                <label for="prixInitial">Mise à prix</label>
+                <input type="number" id="prixInitial" th:field="${article.prixInitial}" required />
+
+                <label for="dateDebutEnchere">Début de l'enchère</label>
+                <input type="date" id="dateDebutEnchere" name="dateDebutEnchere" th:value="${article.dateDebutEnchere}" required />
+
+                <label for="dateFinEnchere">Fin de l'enchère</label>
+                <input type="date" id="dateFinEnchere" name="dateFinEnchere" th:value="${article.dateFinEnchere}" required />
+
+                <div>
+                    <label>Retrait</label>
+                    <input type="text" id="adresseRue" name="rue" th:value="${adresse.rue}" required />
+                    <input type="text" id="adresseVille" name="ville" th:value="${adresse.ville}" required />
+                    <input type="text" id="adresseCP" name="codePostal" th:value="${adresse.codePostal}" required />
+                </div>
+
+                <button type="submit">Enregistrer les modifications</button>
+            </form>
+        </div>
+    </div>
+</main>
+<div th:replace="~{/fragments/fragment-footer :: frag-footer}"></div>
+</body>
+</html>
