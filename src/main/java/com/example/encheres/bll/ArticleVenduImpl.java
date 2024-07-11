@@ -36,6 +36,9 @@ public class ArticleVenduImpl implements ArticleVenduService {
 	private RetraitDAO retraitDAO;
 	private EnchereDAO enchereDAO;
 	Logger logger =LoggerFactory.getLogger(ArticleVenduImpl.class);
+	
+	private final static String ACHAT   = "achat";
+	private final static String VENTES  = "ventes";
 
 
 	@Value("${upload.path}")
@@ -183,15 +186,31 @@ public class ArticleVenduImpl implements ArticleVenduService {
 		}
 	}
 
-	public List<ArticleVendu> findAllComplexe(String transactionType, int requete,  String nomArticle, int noCategorie, int noUtilisateurVendeur, int noUtilisateurAcheteur) {
-		List<ArticleVendu> articles = articleVenduDynamiqueDAO.findDynamique(transactionType, requete, nomArticle, noCategorie, noUtilisateurVendeur, noUtilisateurAcheteur);
+	public List<ArticleVendu> findAllComplexe(String transactionType, int requete,  String nomArticle, int noCategorie, int noUtilisateurVendeur, int noUtilisateurAcheteur) throws BusinessException {
+	// controle donnée
+		BusinessException be = new BusinessException();
+		
+		if ( ! transactionType.equals(ACHAT) && ! transactionType.equals(VENTES)) {
+			this.logger.error(BusinessException.LOGGER_16 +  transactionType);
+			be.addError(BusinessException.ERREUR_1);
+			throw be;
+		} else {
+			if (requete < 1 || requete > 7) {
+				this.logger.error(BusinessException.LOGGER_16 +  requete);
+				be.addError(BusinessException.ERREUR_1);
+				throw be;
+				} else {		
+			
+		
+					List<ArticleVendu> articles = articleVenduDynamiqueDAO.findDynamique(transactionType, requete, nomArticle, noCategorie, noUtilisateurVendeur, noUtilisateurAcheteur);
 
+					for(ArticleVendu a : articles ) {
+						a.setVendeur(utilisateurDAO.read(a.getVendeur().getNoUtilisateur()));
+					}
 
-		for(ArticleVendu a : articles ) {
-    		a.setVendeur(utilisateurDAO.read(a.getVendeur().getNoUtilisateur()));
-    	}
-
-		return articles;
+					return articles;
+				}
+		}
 	}
 
 
