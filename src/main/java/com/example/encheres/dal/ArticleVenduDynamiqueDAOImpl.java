@@ -30,6 +30,8 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 	private final static String WHERE    = " WHERE";
 	private final static String OR       = " OR";
 	private final static String POURCENT = "%";
+	private final static String PARENTHESE_1 = " ( ";
+	private final static String PARENTHESE_2 = " ) ";
 
 // where des encheres_ouvertes
 	private final static String ENCHERES_OUVERTES       = " ( date_debut_encheres <= GETDATE() AND date_fin_encheres  >= GETDATE() )";
@@ -74,31 +76,31 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 			switch (requete) {
 // enchere ouverte
 			case 1 :
-				requeteFinale = SELECT + WHERE + ENCHERES_OUVERTES ;
+				requeteFinale = SELECT + WHERE + PARENTHESE_1 +  ENCHERES_OUVERTES + PARENTHESE_2 ;
 				break;
 // mes encheres en cours
 			case 2 :
-				requeteFinale = SELECT + UNION + WHERE + MES_ENCHERES_EN_COURS;
+				requeteFinale = SELECT + UNION + WHERE + PARENTHESE_1 + MES_ENCHERES_EN_COURS + PARENTHESE_2;
 				break;
 //  encheres ouvertes + mes encheres en cours
 			case 3 :
-				requeteFinale = SELECT + UNION + WHERE + MES_ENCHERES_EN_COURS + OR + ENCHERES_OUVERTES;
+				requeteFinale = SELECT + UNION + WHERE +  PARENTHESE_1 + MES_ENCHERES_EN_COURS + OR + ENCHERES_OUVERTES + PARENTHESE_2;
 				break;
 // mes encheres remportees
 			case 4 :
-				requeteFinale = SELECT +  WHERE + MES_ENCHERES_REMPORTEES;
+				requeteFinale = SELECT +  WHERE + PARENTHESE_1 + MES_ENCHERES_REMPORTEES + PARENTHESE_2;
 				break;
 // mes encheres ouvertes + mes encheres remportées
 			case 5 :
-				requeteFinale = SELECT + WHERE + ENCHERES_OUVERTES + OR + MES_ENCHERES_REMPORTEES;
+				requeteFinale = SELECT + WHERE +  PARENTHESE_1 + ENCHERES_OUVERTES + OR + MES_ENCHERES_REMPORTEES + PARENTHESE_2;
 				break;
 // mes encheres en cours + mes encheres remportées
 		    case 6 :
-				requeteFinale = SELECT + UNION + WHERE + MES_ENCHERES_EN_COURS + OR + MES_ENCHERES_REMPORTEES;
+				requeteFinale = SELECT + UNION + WHERE + PARENTHESE_1 + MES_ENCHERES_EN_COURS + OR + MES_ENCHERES_REMPORTEES + PARENTHESE_2;
 				break;
 // mes enchere ouverte + mes encheres en cours + mes encheres remportées
 			case 7 :
-				requeteFinale = SELECT + UNION +  WHERE + ENCHERES_OUVERTES + OR + MES_ENCHERES_EN_COURS + OR + MES_ENCHERES_REMPORTEES;
+				requeteFinale = SELECT + UNION +  WHERE + PARENTHESE_1 + ENCHERES_OUVERTES + OR + MES_ENCHERES_EN_COURS + OR + MES_ENCHERES_REMPORTEES + PARENTHESE_2;
 				break;
 
 			}
@@ -106,31 +108,31 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 			switch (requete) {
 // mes ventes en cours
 			case 1 :
-				requeteFinale = SELECT + WHERE + MES_VENTES_EN_COURS  ;
+				requeteFinale = SELECT + WHERE + PARENTHESE_1 + MES_VENTES_EN_COURS + PARENTHESE_2  ;
 				break;
 // ventes non debutées
 			case 2 :
-				requeteFinale = SELECT +  WHERE + VENTES_NON_DEBUTEES ;
+				requeteFinale = SELECT +  WHERE + PARENTHESE_1 + VENTES_NON_DEBUTEES +  PARENTHESE_2 ;
 				break;
 //  mes ventes en cours + ventes non debutées
 			case 3 :
-				requeteFinale = SELECT + WHERE + MES_VENTES_EN_COURS + OR + VENTES_NON_DEBUTEES   ;
+				requeteFinale = SELECT + WHERE + PARENTHESE_1 + MES_VENTES_EN_COURS + OR + VENTES_NON_DEBUTEES +  PARENTHESE_2   ;
 				break;
 // Ventes terminées
 			case 4 :
-				requeteFinale = SELECT + WHERE + VENTES_TERMINEES  ;
+				requeteFinale = SELECT + WHERE + PARENTHESE_1 + VENTES_TERMINEES + PARENTHESE_2  ;
 				break;
 // mes ventes en cours + ventes terminées
 			case 5 :
-				requeteFinale = SELECT + WHERE + MES_VENTES_EN_COURS + OR + VENTES_TERMINEES ;
+				requeteFinale = SELECT + WHERE + PARENTHESE_1 + MES_VENTES_EN_COURS + OR + VENTES_TERMINEES +  PARENTHESE_2 ;
 				break;
 // ventes non debutées + ventes terminées
 			case 6 :
-				requeteFinale = SELECT + WHERE + VENTES_NON_DEBUTEES + OR + VENTES_TERMINEES     ;
+				requeteFinale = SELECT + WHERE + PARENTHESE_1 + VENTES_NON_DEBUTEES + OR + VENTES_TERMINEES + PARENTHESE_2 ;
 				break;
 // mes ventes en cours + ventes non debutées + ventes terminées
 			case 7 :
-				requeteFinale = SELECT + WHERE + MES_VENTES_EN_COURS + OR + VENTES_NON_DEBUTEES + OR + VENTES_TERMINEES    ;
+				requeteFinale = SELECT + WHERE + PARENTHESE_1 + MES_VENTES_EN_COURS + OR + VENTES_NON_DEBUTEES + OR + VENTES_TERMINEES + PARENTHESE_2 ;
 				break;
 //
 			}
@@ -147,6 +149,8 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 		if (noCategorie != 0) {
 			requeteFinale = requeteFinale +  CATEGORIE;
 		}
+		
+		System.out.println("requeteFinale" + requeteFinale );
 		return requeteFinale;
 	}
 

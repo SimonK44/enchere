@@ -114,7 +114,7 @@ public class ArticleVenduImpl implements ArticleVenduService {
 
 	@Override
 	public void supprimerArticleVendu(int articleVendu) {
-
+        this.articleVenduDAO.delete(articleVendu); 
 	}
 
 	@Override
