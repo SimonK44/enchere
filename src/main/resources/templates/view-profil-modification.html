@@ -92,7 +92,7 @@
 			</div>
 			<div class="form-actions">
 				<button type="submit">Enregistrer</button>
-				<a id="suppression" th:if="${utilisateur.dateHisto == null}" th:href="@{/utilisateurs/supprimer(noUtilisateur=${utilisateur.noUtilisateur})}" onclick="return confirmation()">Supprimer mon compte</a>
+				<a id="suppression" th:if="${utilisateur.dateHisto == null}" th:href="@{/utilisateurs/supprimer(noUtilisateur=${utilisateur.noUtilisateur})}">Supprimer mon compte</a>
 			</div>
 		</form>	
 	</main>

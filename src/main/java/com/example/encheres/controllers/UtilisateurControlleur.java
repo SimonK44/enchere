@@ -62,7 +62,7 @@ public class UtilisateurControlleur {
 
 		try {
 			utilisateurService.historiserUtilisateur(noUtilisateur);
-			return "redirect:/login";
+			return "redirect:/logout";
 		} catch (BusinessException e) {
 			e.getErreurs().forEach(err -> {
 				ObjectError error = new ObjectError("globalError", err);
