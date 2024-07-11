@@ -18,4 +18,5 @@ public interface ArticleVenduDAO {
 	List<ArticleVendu> findAll();
 	List<ArticleVendu> findByCategorie(int noCategorie);
 	int countArticle ( int noArticle);
+	List<ArticleVendu> findFilter(String nomArticle, int noCategorie );
 }
