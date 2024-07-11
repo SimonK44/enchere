@@ -62,12 +62,12 @@
         <div th:if="${lastEnchereUser}">
           <p>Vous avez l'offre la plus haute</p>
         </div>
-        <div th:if="${!button}" >
+        <div th:if="${ isVendeur && !button}" >
         	 <a id="supprimer" th:href="@{/supprimer(noArticle=${article.noArticle})}" >Supprimer vente </a>
         </div>
         <div th:if="${button}">
           <p>Enchère terminée</p>
-          <div th:if="${BoolVendeur}">           
+          <div th:if="${isVendeur}">           
             <a id="retrait" th:href="@{/retrait(noArticle=${article.noArticle})}" onclick=" return alertRetrait()"> Retrait</a>
            </div>           
            <div th:if="${article.isRetrait}">

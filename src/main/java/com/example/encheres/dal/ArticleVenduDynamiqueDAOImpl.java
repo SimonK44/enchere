@@ -150,7 +150,7 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 			requeteFinale = requeteFinale +  CATEGORIE;
 		}
 		
-		System.out.println("requeteFinale" + requeteFinale );
+//		System.out.println("requeteFinale" + requeteFinale );
 		return requeteFinale;
 	}
 
