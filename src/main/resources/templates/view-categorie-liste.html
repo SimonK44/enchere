@@ -11,7 +11,17 @@
 	<div th:replace="~{/fragments/fragment-header :: frag-header}"></div>
 	<main>
 
-	<table>
+
+
+		<h2>Créer une nouvelle catégorie</h2>
+		<form th:action="@{/administrateur/creerCategorie}" method="post">
+			<label for="libelle">Libellé:</label>
+			<input type="text" id="libelle" name="libelle" required />
+			<button type="submit">Créer</button>
+		</form>
+
+
+		<table>
 	  <thead>
 			<tr>
 				<th>Id</th>
