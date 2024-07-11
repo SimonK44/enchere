@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const noButton = document.getElementById('noButton');
     let hrefToNavigate = '';
 
-<<<<<<< Updated upstream
+
     confirmLink.addEventListener('click', function(event) {
         event.preventDefault(); // Empêche le comportement par défaut du lien
         hrefToNavigate = this.href; // Stocke l'URL du lien
@@ -24,9 +24,3 @@ document.addEventListener('DOMContentLoaded', function() {
         popup.style.display = 'none';
     });
 });
-=======
-	function confirmation() {
-	    return confirm("Êtes-vous sûr de vouloir visiter ce lien ?");
-	    
-	}
->>>>>>> Stashed changes

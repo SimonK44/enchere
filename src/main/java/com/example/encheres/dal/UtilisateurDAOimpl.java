@@ -131,10 +131,10 @@ public UtilisateurDAOimpl(NamedParameterJdbcTemplate jdbcTemplate) {
  *  suppression d' utilisateur
  */
 	@Override
-	public void delete(int noUtlisateur) {
+	public void delete(int noUtilisateur) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
 // ajout parametre pour la requete
-		mapParameterSource.addValue("noUtlisateur",noUtlisateur);
+		mapParameterSource.addValue("noUtilisateur",noUtilisateur);
 
 		jdbcTemplate.update(DELETE, mapParameterSource);
 
