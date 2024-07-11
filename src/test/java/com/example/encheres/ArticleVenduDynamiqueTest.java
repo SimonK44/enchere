@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.example.encheres.bo.ArticleVendu;
+import com.example.encheres.dal.ArticleVenduDAO;
 import com.example.encheres.dal.ArticleVenduDynamiqueDAO;
 
 @SpringBootTest
@@ -32,6 +33,8 @@ public class ArticleVenduDynamiqueTest {
 	
 	@Autowired
 	private ArticleVenduDynamiqueDAO articleVenduDynamiqueDAO;
+	@Autowired
+	private ArticleVenduDAO articleVenduDAO;
 	
 	/// ------------------------------ achat -----------------------------------		
 	@Test
@@ -441,4 +444,28 @@ public class ArticleVenduDynamiqueTest {
 		logger.info(a);	
 	
 	}	
+	@Test
+	void test18_() {
+		// test categorie
+				System.out.println("---------------- debut test 18");
+				transactionType = "achat";
+				requete = 1;
+				nomArticle = "T";
+				noUtilisateurVendeur = 8;
+				noUtilisateurAcheteur = 7;
+				noCategorie = 0;
+				
+				try {
+					a = articleVenduDAO.findFilter(nomArticle,noCategorie );
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			    
+				System.out.println("test 18 resultat : " + a);
+				assertNotNull(a);
+				logger.info("Test 18 : libelle categorie");
+				logger.info(a);	
+			
+			}		
 }

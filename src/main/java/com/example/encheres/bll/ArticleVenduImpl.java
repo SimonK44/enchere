@@ -190,7 +190,7 @@ public class ArticleVenduImpl implements ArticleVenduService {
 	// controle donnée
 		BusinessException be = new BusinessException();
 		
-		if ( ! transactionType.equals(ACHAT) && ! transactionType.equals(VENTES)) {
+		if ( ! transactionType.equals(ACHAT) && ! transactionType.equals(VENTES )) {
 			this.logger.error(BusinessException.LOGGER_16 +  transactionType);
 			be.addError(BusinessException.ERREUR_1);
 			throw be;
@@ -227,6 +227,13 @@ public class ArticleVenduImpl implements ArticleVenduService {
 		}
 
 
+	}
+
+
+	@Override
+	public List<ArticleVendu> findFilter(String nomArticle, int categorie) {
+		
+		return articleVenduDAO.findFilter(nomArticle, categorie);
 	}
 
 }
