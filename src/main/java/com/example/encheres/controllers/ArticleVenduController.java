@@ -7,6 +7,7 @@ import com.example.encheres.bll.UtilisateurService;
 import com.example.encheres.bo.*;
 import com.example.encheres.exception.BusinessException;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,7 +55,7 @@ public class ArticleVenduController {
 
 	@PostMapping("/creer")
 	public String creerArticle(
-		@ModelAttribute("vendre-article") ArticleVendu articleVendu,
+		@ModelAttribute("vendre-article") @Valid ArticleVendu articleVendu,
 		@ModelAttribute("adresse") Retrait adresse,
 		@ModelAttribute("utilisateurSession") Utilisateur user,
 		MultipartFile image
@@ -87,8 +88,8 @@ public class ArticleVenduController {
 		Utilisateur vendeur = this.utilisateurService.lectureUtilisateur(article.getVendeur().getNoUtilisateur());
 		article.setVendeur(vendeur);
 
-		Retrait adresse = this.retraitService.read(article.getNoArticle());		
-		
+		Retrait adresse = this.retraitService.read(article.getNoArticle());
+
 		if  (article.getVendeur().getNoUtilisateur() == user.getNoUtilisateur() && !article.isRetrait()) {
 			System.out.println("articleVenduController boolVendeur : ");
 			model.addAttribute("BoolVendeur", true);
@@ -115,7 +116,7 @@ public class ArticleVenduController {
 
 	@PostMapping("/modifier")
 	public String modifierArticle(
-			@ModelAttribute ArticleVendu article,
+			@ModelAttribute @Valid ArticleVendu article,
 			@ModelAttribute("adresse") Retrait adresse
 	) {
 		articleVenduService.modifierArticleVendu(article);
@@ -179,7 +180,7 @@ public class ArticleVenduController {
 			@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession,
 			BindingResult bingingResult
 	) {
-		
+
 		try {
 			articleVenduService.retirerArticle(noArticle);
 			return "redirect:/view-encher-detail?id=" + noArticle;

@@ -117,4 +117,13 @@ public class AdministrateurController {
 			return "redirect:" + "/administrateur/listeCategorie";
 		}
 	}
+
+
+	@PostMapping("/creerCategorie")
+	public String creerCategorie(@RequestParam("libelle") String libelle, Model model) {
+		Categorie nouvelleCategorie = new Categorie();
+		nouvelleCategorie.setLibelle(libelle);
+		categorieService.create(nouvelleCategorie);
+		return "redirect:/administrateur/listeCategorie"; // Redirige vers la liste des catégories
+	}
 }

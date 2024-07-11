@@ -1,15 +1,21 @@
 package com.example.encheres.bo;
 
+import jakarta.validation.constraints.NotBlank;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ArticleVendu {
 	private int           noArticle;
+	@NotBlank
 	private String        nomArticle;
 	private String        description;
+	@NotBlank
 	private LocalDate     dateDebutEnchere;
+	@NotBlank
 	private LocalDate     dateFinEnchere;
+	@NotBlank
 	private int           prixInitial;
 	private int           prixVente;
 	private Categorie     categorie;
@@ -33,7 +39,7 @@ public class ArticleVendu {
 			List<Enchere> encheres,
 			boolean       isRetrait
 	) {
-		
+
 		this.noArticle        = noArticle;
 		this.nomArticle       = nomArticle;
 		this.description      = description;
@@ -47,7 +53,7 @@ public class ArticleVendu {
 		this.encheres         = encheres;
 		this.dateHisto        = dateHisto;
 		this.isRetrait        = isRetrait;
-		
+
 	}
 
 	public ArticleVendu() {
@@ -133,8 +139,8 @@ public class ArticleVendu {
 	public void setDateHisto(LocalDate dateHisto) {
 		this.dateHisto = dateHisto;
 	}
-	
-	
+
+
 	public boolean isRetrait() {
 		return isRetrait;
 	}
