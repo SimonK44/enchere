@@ -55,7 +55,7 @@ public class ArticleVenduController {
 
 	@PostMapping("/creer")
 	public String creerArticle(
-		@ModelAttribute("vendre-article") @Valid ArticleVendu articleVendu,
+		@ModelAttribute("vendre-article") ArticleVendu articleVendu,
 		@ModelAttribute("adresse") Retrait adresse,
 		@ModelAttribute("utilisateurSession") Utilisateur user,
 		MultipartFile image
@@ -116,7 +116,7 @@ public class ArticleVenduController {
 
 	@PostMapping("/modifier")
 	public String modifierArticle(
-			@ModelAttribute @Valid ArticleVendu article,
+			@ModelAttribute ArticleVendu article,
 			@ModelAttribute("adresse") Retrait adresse
 	) {
 		articleVenduService.modifierArticleVendu(article);
