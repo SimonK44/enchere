@@ -22,7 +22,7 @@ public class CategorieImpl implements CategorieService {
 	}
 	@Override
 	public void create(Categorie categorie) {
-
+		this.categorieDAO.create(categorie);
 	}
 	@Override
 	public Categorie read(int noCategorie) {

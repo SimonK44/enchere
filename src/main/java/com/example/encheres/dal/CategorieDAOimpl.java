@@ -18,7 +18,7 @@ public class CategorieDAOimpl implements CategorieDAO {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
-	private final static String CREATE   = "INSERT INTO CATEGORIES (libelle) VALUE (:libelle)";
+	private final static String CREATE   = "INSERT INTO CATEGORIES (libelle) VALUES (:libelle)";
 	private final static String READ     = "SELECT no_categorie, libelle from CATEGORIES WHERE no_categorie = :noCategorie";
 	private final static String UPDATE   = "UPDATE CATEGORIES SET libelle = :libelle";
 	private final static String UPDATE_DATE_SUPPRESSION = "UPDATE CATEGORIES SET date_suppression = CASE WHEN date_suppression IS NULL THEN GETDATE() ELSE NULL END WHERE no_categorie = :noCategorie";
@@ -31,14 +31,9 @@ public class CategorieDAOimpl implements CategorieDAO {
 	@Override
 	public void create(Categorie categorie) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
-// ajout parametre pour la requete
-		mapParameterSource.addValue("libelle",categorie.getLibelle());
-
-         KeyHolder keyHolder = new GeneratedKeyHolder();
-
-
+		mapParameterSource.addValue("libelle", categorie.getLibelle());
+		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbcTemplate.update(CREATE, mapParameterSource, keyHolder);
-// recupération de la clef
 		if (keyHolder != null && keyHolder.getKey() != null) {
 			categorie.setNoCategorie(keyHolder.getKey().intValue());
 		}

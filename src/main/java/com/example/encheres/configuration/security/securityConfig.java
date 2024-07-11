@@ -49,14 +49,14 @@ public class securityConfig {
 	SecurityFilterChain web(HttpSecurity http) throws Exception {
 	    http
 	        .authorizeHttpRequests((authorize) -> authorize
-	        .requestMatchers("/administrateur").hasRole("ADMIN")
-	        .requestMatchers("/administrateur/liste").hasRole("ADMIN")
-		    .requestMatchers("/utilisateurs/afficher").hasAnyRole("UTILISATEUR", "ADMIN")
-		    .requestMatchers("/utilisateurs/modifier").hasAnyRole("UTILISATEUR", "ADMIN")
+	        .requestMatchers("/administrateur").permitAll()
+	        .requestMatchers("/administrateur/liste").permitAll()
+		    .requestMatchers("/utilisateurs/afficher").permitAll()
+		    .requestMatchers("/utilisateurs/modifier").permitAll()
 		    .requestMatchers("/utilisateurs/creer").permitAll()
-		    .requestMatchers("/vendre-article").hasAnyRole("UTILISATEUR", "ADMIN")
-		    .requestMatchers("/view-resultat-gagnant").hasAnyRole("UTILISATEUR", "ADMIN")
-		    .requestMatchers("/view-resultat-retrait").hasAnyRole("UTILISATEUR", "ADMIN")
+		    .requestMatchers("/vendre-article").permitAll()
+		    .requestMatchers("/view-resultat-gagnant").permitAll()
+		    .requestMatchers("/view-resultat-retrait").permitAll()
 		    .requestMatchers("/css/**").permitAll() //Accès au CSS pour tous le monde
 		    .requestMatchers("/images/**").permitAll() //Accès aux images pour tous le monde
 		    .requestMatchers("/image/**").permitAll() //Accès aux images pour tous le monde
