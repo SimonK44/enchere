@@ -26,6 +26,7 @@
     max-width: 380px;
     display: flex;
     justify-content: space-between;
+     
   }
 
   .filter-container {
@@ -51,6 +52,7 @@
 
   .bold {
     font-weight: bold;
+    
   }
 
   input[type="text"],
@@ -60,10 +62,6 @@
     border-radius: 4px;
     box-sizing: border-box;
     margin-bottom: 5px;
-  }
-
-  .categorie {
-    /* width: 100%; */
   }
 
   button.search-button {
@@ -251,7 +249,7 @@
 
   .auction-item .rectangle {
     max-width: 200px;
-    height: auto;
+    height: 180px;
     border-radius: 8px;
     margin-right: 20px;
   }
