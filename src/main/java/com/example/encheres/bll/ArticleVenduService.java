@@ -18,4 +18,5 @@ public interface ArticleVenduService {
 	void encherirArticle(int noArticleVendu, int proposition, Utilisateur user);
 	List<ArticleVendu> findAllComplexe(String transactionType, int requete,  String nomArticle, int noCategorie, int noUtilisateurVendeur, int noUtilisateurAcheteur) throws BusinessException;
     void retirerArticle(int noArticle) throws BusinessException;
+    List<ArticleVendu> findFilter(String nomArticle, int categorie );
 }
