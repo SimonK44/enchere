@@ -32,7 +32,7 @@ public class ArticleVenduController {
 	private RetraitService retraitService;
 	private EnchereService enchereService;
 
-	
+
 	@Autowired
 	public ArticleVenduController(
 			ArticleVenduService articleVenduService,
@@ -98,7 +98,7 @@ public class ArticleVenduController {
 		Retrait adresse = this.retraitService.read(article.getNoArticle());
 
 		if  (article.getVendeur().getNoUtilisateur() == user.getNoUtilisateur() && !article.isRetrait()) {
-			
+
 			model.addAttribute("isVendeur", true);
 		} else {
 			model.addAttribute("isVendeur", false);
@@ -204,33 +204,25 @@ public class ArticleVenduController {
 		}
 
 	}
-	
+
 	@GetMapping("supprimer")
 	public String supprimer (@RequestParam("noArticle") int noArticle,
 			@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession,
 			BindingResult bingingResult) {
-		
 		ArticleVendu articleVendu = articleVenduService.lectureArticleVendu(noArticle);
-		System.out.println("supprimer articleVendu    : " + articleVendu);
 		Utilisateur DernierAcheteur = utilisateurService.lectureUtilisateur(articleVendu.getAcheteur().getNoUtilisateur());
-		System.out.println("supprimer DernierAcheteur : " + DernierAcheteur);
 		Optional<Enchere> lastEnchereMax = enchereService.enchereMontantMax(noArticle);
-		System.out.println("supprimer lastEnchereMax  : " + lastEnchereMax);
-		
-		
-		
-		
-// si pas d' enchere		
+// si pas d' enchere
 		if (lastEnchereMax.isEmpty()  ) {
 			articleVenduService.supprimerArticleVendu(noArticle);
 		} else {
-			   int montant =  lastEnchereMax.get().getMontantEnchere() + DernierAcheteur.getCredit();				
+			   int montant =  lastEnchereMax.get().getMontantEnchere() + DernierAcheteur.getCredit();
 			   utilisateurService.modifierUtilisateurCredit(articleVendu.getAcheteur().getNoUtilisateur(),
-					                                        montant);	
+					                                        montant);
 			   articleVenduService.supprimerArticleVendu(noArticle);
 		}
-	
-		return "home";		
-		
+
+		return "home";
+
 	}
 }

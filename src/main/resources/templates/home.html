@@ -72,7 +72,7 @@
 			<p>Prix : <span th:text="${article.prixInitial}"> 310 </span> points </p>
 			<p>Fin de l'enchère : <span th:text="${article.dateFinEnchere}">01/09/2018</span></p>
 			<p th:if="${not #authentication.authenticated}" th:text="'Vendeur : '+ ${article.vendeur.pseudo}"></p>
-			<a th:if="${#authentication.authenticated}" th:href="@{/utilisateurs/afficher(id=${article.noArticle})}" th:text=" 'Vendeur : '+ ${article.vendeur.pseudo}">
+			<a th:if="${#authentication.authenticated}" th:href="@{/utilisateurs/afficher(id=${article.vendeur.noUtilisateur})}" th:text=" 'Vendeur : '+ ${article.vendeur.pseudo}">
 			</a>
 		</div>
 	</div>
