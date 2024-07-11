@@ -5,7 +5,7 @@
 	<link rel="stylesheet" th:href="@{/css/header-footer.css}" />
 	<link rel="stylesheet" th:href="@{/css/form-inscription.css}" />
 	<link rel="stylesheet" th:href="@{/css/error.css}" />
-	<script th:href="@{/js/confirmation-suppression.js}" ></script>
+	<link rel="stylesheet" th:href="@{/css/suppression.css}" />
 	<title>ENI-Enchères</title>
 </head>
 <body>	
@@ -93,8 +93,16 @@
 			<div class="form-actions">
 				<button type="submit">Enregistrer</button>
 				<a id="suppression" th:if="${utilisateur.dateHisto == null}" th:href="@{/utilisateurs/supprimer(noUtilisateur=${utilisateur.noUtilisateur})}">Supprimer mon compte</a>
-			</div>
+			</div>			
 		</form>	
+		<div id="popup" class="popup">
+		        <div class="popup-content">
+		            <p>Êtes-vous sûr de vouloir supprimer le compte ?</p>
+		            <button id="yesButton">Oui</button>
+		            <button id="noButton">Non</button>
+		        </div>
+    		</div>
+    		<script src="/js/confirmation-suppression.js"></script>
 	</main>
 	<div th:replace="~{/fragments/fragment-footer :: frag-footer}"></div>
 </body>

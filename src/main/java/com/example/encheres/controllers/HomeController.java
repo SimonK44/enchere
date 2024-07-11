@@ -62,7 +62,7 @@ public class HomeController {
     	List<ArticleVendu> articles = this.articleVenduService.findAll();
 
         List<Categorie> categories = this.categorieService.findAll();
-
+        
     	model.addAttribute("articles", articles);
     	model.addAttribute("categories", categories);
 
@@ -96,10 +96,8 @@ public class HomeController {
 		}
 		List<ArticleVendu> articles;
 		try {
-			System.out.println("noCategorie : " + noCategorie);
 			articles = this.articleVenduService.findAllComplexe(transactionType, requete, nomArticle,noCategorie,utilisateurSession.getNoUtilisateur() , utilisateurSession.getNoUtilisateur());
-			List<Categorie> categories = this.categorieService.findAll();
-			System.out.println("\n articles print : " + articles);
+			List<Categorie> categories = this.categorieService.findAll();			
 			model.addAttribute("articles", articles);
 			model.addAttribute("categories", categories);
 			return "home";
