@@ -15,7 +15,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class securityConfig {
-	
+
 	@Bean
     PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
@@ -23,11 +23,11 @@ public class securityConfig {
 
 	/*
 	 * Profil récupérés dans la BDD
-	 */	
+	 */
 	@Bean
 	UserDetailsManager users(DataSource dataSource) {
 		JdbcUserDetailsEnchereManager users = new JdbcUserDetailsEnchereManager(dataSource);
-		users.setUsersByUsernameQuery("select pseudo, mot_de_passe, 'true' as enabled from UTILISATEURS where (pseudo = ? OR email = ?) AND date_histo IS NULL");		
+		users.setUsersByUsernameQuery("select pseudo, mot_de_passe, 'true' as enabled from UTILISATEURS where (pseudo = ? OR email = ?) AND date_histo IS NULL");
 		users.setAuthoritiesByUsernameQuery("select pseudo, role from UTILISATEURS INNER JOIN ROLE ON ROLE.is_admin = UTILISATEURS.administrateur WHERE pseudo = ? OR email = ?");
 		return users;
 	}
@@ -36,15 +36,15 @@ public class securityConfig {
 	 * Définition des accès en fonction des profils
 	 */
 	@Bean
-	SecurityFilterChain web(HttpSecurity http) throws Exception {		
+	SecurityFilterChain web(HttpSecurity http) throws Exception {
 	    http
 	        .authorizeHttpRequests((authorize) -> authorize
-	        .requestMatchers("/administrateur").hasRole("ADMIN")	
+	        .requestMatchers("/administrateur").hasRole("ADMIN")
 	        .requestMatchers("/administrateur/liste").hasRole("ADMIN")
-		    .requestMatchers("/utilisateurs/afficher").hasAnyRole("UTILISATEUR", "ADMIN")	
-		    .requestMatchers("/utilisateurs/modifier").hasAnyRole("UTILISATEUR", "ADMIN")	
+		    .requestMatchers("/utilisateurs/afficher").hasAnyRole("UTILISATEUR", "ADMIN")
+		    .requestMatchers("/utilisateurs/modifier").hasAnyRole("UTILISATEUR", "ADMIN")
 		    .requestMatchers("/utilisateurs/creer").permitAll()
-		    .requestMatchers("/vendre-article").hasAnyRole("UTILISATEUR", "ADMIN")		    
+		    .requestMatchers("/vendre-article").hasAnyRole("UTILISATEUR", "ADMIN")
 		    .requestMatchers("/view-resultat-gagnant").hasAnyRole("UTILISATEUR", "ADMIN")
 		    .requestMatchers("/view-resultat-retrait").hasAnyRole("UTILISATEUR", "ADMIN")
 		    .requestMatchers("/css/**").permitAll() //Accès au CSS pour tous le monde
@@ -52,8 +52,10 @@ public class securityConfig {
 		    .requestMatchers("/image/**").permitAll() //Accès aux images pour tous le monde
 		    .requestMatchers("/").permitAll() //Accès à l'index pour tous le monde
 		    .requestMatchers("/home").permitAll() //Accès à l'index pour tous le monde
+		    .requestMatchers("/listes-articles").permitAll() //Accès à l'index pour tous le monde
 		    .requestMatchers("/session").permitAll()
 		    .requestMatchers("/login").permitAll() //Accès au login
+		    .requestMatchers("/view-encher-detail**").permitAll()
 		    .requestMatchers("/encheres").permitAll() //Accès à l'index pour tous le monde
 		    .requestMatchers("/view-test-connexion").permitAll()
 	            .anyRequest().authenticated()
