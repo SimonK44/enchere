@@ -14,10 +14,7 @@ public interface UtilisateurService {
 	void supprimerUtilisateur(int noUtilisateur)      throws BusinessException;
 	Utilisateur findByPseudo( String pseudo);
 	List<Utilisateur> findAll ();
-
 	// methodes avec les utilisateurs historisés
 	List<Utilisateur> findAllHisto();
 	void historiserUtilisateur (int noUtilisateur)    throws BusinessException;
-
-
 }

@@ -69,7 +69,6 @@ public class CategorieDAOimpl implements CategorieDAO {
 	@Override
 	public void updateDateSuppression(int noCategorie) {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
-		System.out.println("Ma cate ID" + noCategorie);
 		mapParameterSource.addValue("noCategorie", noCategorie);
 		jdbcTemplate.update(UPDATE_DATE_SUPPRESSION, mapParameterSource);
 	}

@@ -6,7 +6,6 @@ import java.util.Optional;
 import com.example.encheres.bo.Enchere;
 
 public interface EnchereDAO {
-
 	void create (Enchere enchere);
 	Enchere read(int noUtilisateur, int noArticle);
 	void update (Enchere enchere );
@@ -14,6 +13,4 @@ public interface EnchereDAO {
 	List<Enchere> findByUtilisateur(int noUtilisateur);
 	List<Enchere> findByArticle(int noArticle);
 	Optional<Enchere> montantMax(int noArticle);
-
-
 }

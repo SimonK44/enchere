@@ -23,7 +23,7 @@ import jakarta.validation.Valid;
 @RequestMapping("/utilisateurs")
 public class UtilisateurControlleur {
 
-	
+
 	@Autowired
 	UtilisateurService utilisateurService;
 
@@ -86,7 +86,6 @@ public class UtilisateurControlleur {
 			return "redirect:/login";
 		}
 
-		System.out.println("Utilisateur S" + utilisateurSession);
 		// Si aucun utilisateur en session mais un ID est fourni
 		if (utilisateurSession == null) {
 
@@ -117,13 +116,12 @@ public class UtilisateurControlleur {
 
 	@PostMapping("/modifier")
 	public String modifUtilisateurParPseudo(@RequestParam("motDePasseActuel") String motDePasseActuel,
-											@ModelAttribute("utilisateur") 
+											@ModelAttribute("utilisateur")
 											@Valid Utilisateur utilisateur, BindingResult bindingResult) {
 
 		if (bindingResult.hasErrors()) {
 			return "view-profil-modification";
 		} else {
-			System.out.println("Modification de l'utilisateur = " + utilisateur);
 			//Appel du service en charge de la création de l'utilisateur
 			try {
 				this.utilisateurService.modifierUtilisateur(utilisateur, motDePasseActuel);
@@ -147,10 +145,8 @@ public class UtilisateurControlleur {
 		Utilisateur u = new Utilisateur();
 
 		if (bindingResult.hasErrors()) {
-			System.out.println(bindingResult);
 			return "view-profil-creation";
 		} else {
-			System.out.println("Création de l'utilisateur = " + utilisateur);
 			//Appel du service en charge de la création de l'utilisateur
 			try {
 				this.utilisateurService.creerUtilisateur(utilisateur);
@@ -159,7 +155,6 @@ public class UtilisateurControlleur {
 				e.getErreurs().forEach(err -> {
 					ObjectError error = new ObjectError("globalError", err);
 					bindingResult.addError(error);
-					System.err.println(error);
 					}
 				);
 				return "view-profil-creation";

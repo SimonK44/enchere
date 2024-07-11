@@ -53,8 +53,8 @@
 		           </div> 
 		            
 		           <div id="achatCriteria" class="criteria">
-			                <input type="checkbox" id="encheresOuvertes" name="encheresOuverte" value="1" checked>
-			                <label for="encheresOuverte">Enchères ouvertes</label><br>
+			                <input type="checkbox" id="encheresOuvertes" name="encheresOuvertes" value="1" checked>
+			                <label for="encheresOuvertes">Enchères ouvertes</label><br>
 			                <input type="checkbox" id="encheresEnCours" name="encheresEnCours" value="2">
 			                <label for="encheresEnCours">Mes enchères en cours</label><br>
 			                <input type="checkbox" id="encheresRemportees" name="encheresRemportees" value="4">
@@ -80,7 +80,13 @@
     		 <img class="rectangle" th:src="@{'images/articles/'+${article.noArticle}+'.jpg'}" alt="image produit" />
             </div>
              <div>	
-                <p th:text="${article.nomArticle}">Fauteuil </p>
+                
+                <p th:if="${not #authentication.authenticated}" th:text="${article.nomArticle}">
+    Fauteuil
+</p>
+
+<a th:if="${#authentication.authenticated}" th:href="@{/view-encher-detail(id=${article.noArticle})}" th:text="${article.nomArticle}">
+</a>
                 <p>Prix : <span  th:text="${article.prixInitial}"> 310 </span> points </p>
                 <p>Fin de l'enchère : <span th:text="${article.dateFinEnchere}">01/09/2018</span></p>
                 <p>Vendeur : <span th:text="${article.vendeur.pseudo}">NineJae</span></p>   

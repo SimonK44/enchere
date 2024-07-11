@@ -26,13 +26,16 @@ public class RetraitServiceImpl implements RetraitService {
 		try {
 			this.retraitDao.create(retrait);
 			this.logger.debug("creation retrait ok  : " +  retrait.getNoArticle());
-		} catch (DataAccessException e) {			
-			this.logger.error("Probleme creation retrait : " + retrait.getNoArticle() );		
+		} catch (DataAccessException e) {
+			this.logger.error("Probleme creation retrait : " + retrait.getNoArticle() );
 			be.addError(BusinessException.ERREUR_0);
 			throw be;
 		}
 	}
-
+	@Override
+	public void update(Retrait retrait) {
+		this.retraitDao.update(retrait);
+	}
 	@Override
 	public Retrait read(int noArticle) {
 		return this.retraitDao.read(noArticle);
