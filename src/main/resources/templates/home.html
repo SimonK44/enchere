@@ -81,15 +81,16 @@
             </div>
              <div>	
                 
-                <p th:if="${not #authentication.authenticated}" th:text="${article.nomArticle}">
-    Fauteuil
-</p>
+                <p th:if="${not #authentication.authenticated}" th:text="${article.nomArticle}">Fauteuil</p>
 
-<a th:if="${#authentication.authenticated}" th:href="@{/view-encher-detail(id=${article.noArticle})}" th:text="${article.nomArticle}">
-</a>
+				<a th:if="${#authentication.authenticated}" th:href="@{/view-encher-detail(id=${article.noArticle})}" th:text="${article.nomArticle}">
+				</a>
                 <p>Prix : <span  th:text="${article.prixInitial}"> 310 </span> points </p>
                 <p>Fin de l'enchère : <span th:text="${article.dateFinEnchere}">01/09/2018</span></p>
-                <p>Vendeur : <span th:text="${article.vendeur.pseudo}">NineJae</span></p>   
+              
+                <p th:if="${not #authentication.authenticated}" th:text="'Vendeur : '+ ${article.vendeur.pseudo}"></p>
+				<a th:if="${#authentication.authenticated}" th:href="@{/utilisateurs/afficher(id=${article.noArticle})}" th:text=" 'Vendeur : '+ ${article.vendeur.pseudo}">
+				</a> 
     	    </div>
  		 </div>
     
