@@ -5,45 +5,49 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArticleVendu {
-	private int noArticle;
-	private String nomArticle;
-	private String description;
-	private LocalDate dateDebutEnchere;
-	private LocalDate dateFinEnchere;
-	private int prixInitial;
-	private int prixVente;
-	private Categorie categorie;
-	private Utilisateur vendeur;
-	private Utilisateur acheteur;
+	private int           noArticle;
+	private String        nomArticle;
+	private String        description;
+	private LocalDate     dateDebutEnchere;
+	private LocalDate     dateFinEnchere;
+	private int           prixInitial;
+	private int           prixVente;
+	private Categorie     categorie;
+	private Utilisateur   vendeur;
+	private Utilisateur   acheteur;
 	private List<Enchere> encheres;
-	private LocalDate dateHisto;
+	private LocalDate     dateHisto;
+	private boolean       isRetrait;
 
 	public ArticleVendu(
-			int noArticle,
-			String nomArticle,
-			String description,
-			LocalDate dateDebutEnchere,
-			LocalDate dateFinEnchere,
-			int prixInitial,
-			int prixVente,
-			Categorie categorie,
-			Utilisateur vendeur,
-			Utilisateur acheteur,
-			List<Enchere> encheres
+			int           noArticle,
+			String        nomArticle,
+			String        description,
+			LocalDate     dateDebutEnchere,
+			LocalDate     dateFinEnchere,
+			int           prixInitial,
+			int           prixVente,
+			Categorie     categorie,
+			Utilisateur   vendeur,
+			Utilisateur   acheteur,
+			List<Enchere> encheres,
+			boolean       isRetrait
 	) {
-		super();
-		this.noArticle = noArticle;
-		this.nomArticle = nomArticle;
-		this.description = description;
+		
+		this.noArticle        = noArticle;
+		this.nomArticle       = nomArticle;
+		this.description      = description;
 		this.dateDebutEnchere = dateDebutEnchere;
-		this.dateFinEnchere = dateFinEnchere;
-		this.prixInitial = prixInitial;
-		this.prixVente = prixVente;
-		this.categorie = categorie;
-		this.vendeur =  vendeur;
-		this.acheteur =  acheteur;
-		this.encheres = encheres;
-		this.dateHisto = dateHisto;
+		this.dateFinEnchere   = dateFinEnchere;
+		this.prixInitial      = prixInitial;
+		this.prixVente        = prixVente;
+		this.categorie        = categorie;
+		this.vendeur          =  vendeur;
+		this.acheteur         =  acheteur;
+		this.encheres         = encheres;
+		this.dateHisto        = dateHisto;
+		this.isRetrait        = isRetrait;
+		
 	}
 
 	public ArticleVendu() {
@@ -129,6 +133,16 @@ public class ArticleVendu {
 	public void setDateHisto(LocalDate dateHisto) {
 		this.dateHisto = dateHisto;
 	}
+	
+	
+	public boolean isRetrait() {
+		return isRetrait;
+	}
+
+	public void setRetrait(boolean isRetrait) {
+		this.isRetrait = isRetrait;
+	}
+
 	@Override
 	public String toString() {
 		return "ArticleVendu [noArticle="

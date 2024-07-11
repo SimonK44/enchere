@@ -14,6 +14,7 @@ import com.example.encheres.exception.BusinessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -196,8 +197,15 @@ public class ArticleVenduImpl implements ArticleVenduService {
 
 	@Override
 	public void retirerArticle(int noArticle) throws BusinessException {
-
-		articleVenduDAO.updateRetrait(noArticle);
+		BusinessException be = new BusinessException();
+		try {
+			articleVenduDAO.updateRetrait(noArticle);
+			this.logger.debug(BusinessException.LOGGER_14 + noArticle);
+		} catch (DataAccessException e) {
+				this.logger.error(BusinessException.LOGGER_15 + noArticle);
+				be.addError(BusinessException.ERREUR_1);
+				throw be;
+		}
 
 
 	}
