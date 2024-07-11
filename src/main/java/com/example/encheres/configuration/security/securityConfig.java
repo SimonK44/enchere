@@ -27,11 +27,7 @@ public class securityConfig {
 	@Bean
 	UserDetailsManager users(DataSource dataSource) {
 		JdbcUserDetailsEnchereManager users = new JdbcUserDetailsEnchereManager(dataSource);
-<<<<<<< Updated upstream
 		users.setUsersByUsernameQuery("select pseudo, mot_de_passe, 'true' as enabled from UTILISATEURS where (pseudo = ? OR email = ?) AND date_histo IS NULL");
-=======
-		users.setUsersByUsernameQuery("select pseudo, mot_de_passe, 'true' as enabled from UTILISATEURS where pseudo = ? OR email = ? AND date_histo IS NULL");		
->>>>>>> Stashed changes
 		users.setAuthoritiesByUsernameQuery("select pseudo, role from UTILISATEURS INNER JOIN ROLE ON ROLE.is_admin = UTILISATEURS.administrateur WHERE pseudo = ? OR email = ?");
 		return users;
 	}
