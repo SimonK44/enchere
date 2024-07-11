@@ -21,6 +21,7 @@ public class BusinessException extends Exception {
 	public static final String ERREUR_8  = "Le mot de passe actuel est incorrect";
 	public static final String ERREUR_9  = "La saisie du mot de passe est obligatoire";
 	public static final String ERREUR_10 = "Un probleme est survenu lors du retrait de l' article";
+	public static final String ERREUR_11 = "Probleme requete articleVendu dynamique";
 	
 	public static final String LOGGER_0  = "Réussite suppression categorie : ";
 	public static final String LOGGER_1  = "Probleme suppression categorie : ";
@@ -38,6 +39,7 @@ public class BusinessException extends Exception {
 	public static final String LOGGER_13 = "Probleme historisation utilisateur : "; 
 	public static final String LOGGER_14 = "Réussite retrait article : ";
 	public static final String LOGGER_15 = "Probleme retrait article : "; 
+	public static final String LOGGER_16 = "Probleme requete articleVendu dynamique : "; 
 
 	public BusinessException() {
 		super();
