@@ -15,7 +15,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class securityConfig {
-
+	
 	@Bean
     PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
@@ -23,7 +23,7 @@ public class securityConfig {
 
 	/*
 	 * Profil récupérés dans la BDD
-	 */
+	 */	
 	@Bean
 	UserDetailsManager users(DataSource dataSource) {
 		JdbcUserDetailsEnchereManager users = new JdbcUserDetailsEnchereManager(dataSource);
@@ -36,7 +36,7 @@ public class securityConfig {
 	 * Définition des accès en fonction des profils
 	 */
 	@Bean
-	SecurityFilterChain web(HttpSecurity http) throws Exception {
+	SecurityFilterChain web(HttpSecurity http) throws Exception {		
 	    http
 	        .authorizeHttpRequests((authorize) -> authorize
 	        .requestMatchers("/administrateur").hasRole("ADMIN")
@@ -44,10 +44,11 @@ public class securityConfig {
 		    .requestMatchers("/utilisateurs/afficher").hasAnyRole("UTILISATEUR", "ADMIN")
 		    .requestMatchers("/utilisateurs/modifier").hasAnyRole("UTILISATEUR", "ADMIN")
 		    .requestMatchers("/utilisateurs/creer").permitAll()
-		    .requestMatchers("/vendre-article").hasAnyRole("UTILISATEUR", "ADMIN")
+		    .requestMatchers("/vendre-article").hasAnyRole("UTILISATEUR", "ADMIN")		    
 		    .requestMatchers("/view-resultat-gagnant").hasAnyRole("UTILISATEUR", "ADMIN")
 		    .requestMatchers("/view-resultat-retrait").hasAnyRole("UTILISATEUR", "ADMIN")
 		    .requestMatchers("/css/**").permitAll() //Accès au CSS pour tous le monde
+		    .requestMatchers("/js/**").permitAll() //Accès au JS pour tous le monde
 		    .requestMatchers("/images/**").permitAll() //Accès aux images pour tous le monde
 		    .requestMatchers("/image/**").permitAll() //Accès aux images pour tous le monde
 		    .requestMatchers("/").permitAll() //Accès à l'index pour tous le monde

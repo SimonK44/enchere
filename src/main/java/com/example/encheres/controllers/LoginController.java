@@ -32,9 +32,8 @@ public class LoginController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
 
-
 		Utilisateur utilisateur = this.contexteService.charger(currentPrincipalName);
-				
+		
 		if(utilisateur != null) {
 			//mettre à jour utilisateurSession avec l'utilisateur chargé
 			utilisateurSession.setNoUtilisateur(utilisateur.getNoUtilisateur());
@@ -49,7 +48,7 @@ public class LoginController {
 			utilisateurSession.setMotDePasse(utilisateur.getMotDePasse());
 			utilisateurSession.setCredit(utilisateur.getCredit());
 			utilisateurSession.setAdministrateur(utilisateur.isAdministrateur());
-
+			
 		} else {
 			//mettre à jour utilisateurSession avec attributs null
 			utilisateurSession.setNoUtilisateur(0);
