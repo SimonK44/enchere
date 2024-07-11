@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +26,7 @@ import com.example.encheres.bo.Categorie;
 import com.example.encheres.bo.Enchere;
 import com.example.encheres.bo.Utilisateur;
 import com.example.encheres.dal.ArticleVenduDynamiqueDAO;
+import com.example.encheres.exception.BusinessException;
 
 @Controller
 @SessionAttributes({"utilisateurSession"})
@@ -63,10 +66,6 @@ public class HomeController {
     	model.addAttribute("articles", articles);
     	model.addAttribute("categories", categories);
 
-    	//dateDebutEnchere=2024-07-01, dateFinEnchere=2024-07-30, prixInitial=100.0, prixVente=150.0,
-    	//categorie=Categorie [noCategorie=1, libelle=null], acheteur=Utilisateur [noUtilisateur=2, pseudo=null, nom=null, prenom=null, email=null, telephone=null, rue=null, codePostal=null, ville=null, motDePasse=null, credit=0, administrateur=false],
-    	//vendeur=Utilisateur [noUtilisateur=1, pseudo=null, nom=null, prenom=null, email=null, telephone=null, rue=null, codePostal=null, ville=null, motDePasse=null, credit=0, administrateur=false], encheres=[]],
-
   	return "home";
     }
 
@@ -86,27 +85,40 @@ public class HomeController {
     		@RequestParam(name="venteNonDebute", required = false, defaultValue="0") int venteNonDebute,
     		@RequestParam(name="venteTerminees",required = false,defaultValue="0") int venteTerminees,
     		@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession,
-    		Model model) {
+    		Model model,
+    		BindingResult bingingResult) {
 	   int requete = 0;
 	   if(transactionType.equals("achat")){
      	   requete = encheresOuvertes + encheresEnCours + encheresRemportees;}
 	   	   else{requete = venteCours + venteNonDebute + venteTerminees;
 	   }
 
-	   List<ArticleVendu> articles = this.articleVenduService.findAllComplexe(transactionType, requete,nomArticle,noCategorie,utilisateurSession.getNoUtilisateur() , utilisateurSession.getNoUtilisateur());
-
-	   List<Categorie> categories = this.categorieService.findAll();
-
-
-	   model.addAttribute("articles", articles);
-
-   	   model.addAttribute("categories", categories);
+	   List<ArticleVendu> articles;
+	try {
+		articles = this.articleVenduService.findAllComplexe(transactionType, requete,nomArticle,noCategorie,utilisateurSession.getNoUtilisateur() , utilisateurSession.getNoUtilisateur());
+		 List<Categorie> categories = this.categorieService.findAll();
 
 
+		   model.addAttribute("articles", articles);
 
-      return "home";
+	   	   model.addAttribute("categories", categories);
+
+	   	 return "home";
+	
+	} catch (BusinessException e) {
+		e.getErreurs().forEach(err -> {
+			ObjectError error = new ObjectError("globalError", err);
+			bingingResult.addError(error);
+			
+			 } 
+		);
+		 return "home";
+	  
+
+     
 	}
 
+}
 }
 
 
