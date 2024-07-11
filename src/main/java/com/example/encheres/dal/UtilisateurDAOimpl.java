@@ -2,8 +2,6 @@ package com.example.encheres.dal;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -14,8 +12,6 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import com.example.encheres.bo.ArticleVendu;
-import com.example.encheres.bo.Categorie;
 import com.example.encheres.bo.Utilisateur;
 
 

@@ -12,21 +12,10 @@ main {
     padding: 20px;
 }
 
-/* li { */
-/*     display: flex; */
-/*     align-items: center; */
-/* } */
-
-/* input[type="checkbox"] { */
-/* 	display: flex; */
-/*     margin-right: 30px; */
-/* } */
-
 .checkbox {
 	display: flex;
 	align-self: center;
 }
-
 
 label {
     color: #333;
@@ -82,12 +71,26 @@ button {
     border-radius: 4px;
 }
 
+.creer-compte {	
+	width: calc(100% - 20px);
+	background-color: #333;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    font-size: 15px;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;	
+}
+
 button {
     background-color: #333;
     color: #fff;
     border: none;
     cursor: pointer;
     transition: background-color 0.3s;
+    font-size: 15px;
 }
 
 button:hover {
