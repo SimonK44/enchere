@@ -1,121 +1,148 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" th:href="@{/css/header-footer.css}" />
-    <link rel="stylesheet" th:href="@{/css/home.css}" />
-    <title>ENI-Enchères</title>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" th:href="@{/css/header-footer.css}" />
+	<link rel="stylesheet" th:href="@{/css/home.css}" />
+	<title>ENI-Enchères</title>
 </head>
 <body>
-  <div th:replace="~{/fragments/fragment-header :: frag-header}"></div>
-    <main>
-        <h1>Liste des enchères</h1>
-        <div class="filter-container">
-        
-		 <form th:action="@{/home}" method="post" class="filters" th:object="${article}">
-		    <div class="filtersFlex">
-		        <div class="boxEnsemble">
-		           	<div >
-			            <label for="filtre" class="blod">Filtres :</label>
-		   		        <input id="filtre"  name="filtre" type="text" placeholder="Rechercher">
-		   		   	</div>
-		   		   	<div >
-		                <label for="categorie" class="blod">Catégorie :</label>
-		              	<select id="categorie" name="categorie" class="box300">
-		              	 		  <option value="0">Tous</option>
-			                      <option 
-				                      th:each="categorie : ${categories}" 
-				                      th:value="${categorie.noCategorie}" 
-				                      th:text="${categorie.libelle}">
-			                      </option>
-		                 </select> 	                               
-		           	</div>
-		      	</div>  
-					
-		            	<button class="search-button">Rechercher</button>
-	 		 </div>
-	     	
-        
-        
-	        	<fieldset sec:authorize="isAuthenticated()">
-	        	
-		        	<div>
-			            <div>
-			                <input type="radio" id="achat" name="transactionType" value="achat" checked onchange="toggleCriteria()"/>
-			                <label for="achat">Achat</label>
-			            </div>
-		            	<div>
-		                	<input type="radio" id="ventes" name="transactionType" value="ventes" onchange="toggleCriteria()"/>
-		                	<label for="ventes">Mes ventes</label>
-		            	</div>
-		          	
-		           </div> 
-		            
-		           <div id="achatCriteria" class="criteria">
-			                <input type="checkbox" id="encheresOuvertes" name="encheresOuvertes" value="1" checked>
-			                <label for="encheresOuvertes">Enchères ouvertes</label><br>
-			                <input type="checkbox" id="encheresEnCours" name="encheresEnCours" value="2">
-			                <label for="encheresEnCours">Mes enchères en cours</label><br>
-			                <input type="checkbox" id="encheresRemportees" name="encheresRemportees" value="4">
-			                <label for="encheresRemportees">Mes enchères remportées</label><br>
-		       	  </div>
-		          <div id="ventesCriteria" class="criteria" style="display: none;">
-		                <input type="checkbox" id="venteCours" name="venteCours" value="1">
-		                <label for="venteCours">Mes ventes en cours</label><br>
-		                <input type="checkbox" id="venteNonDebute" name="venteNonDebute" value="2">
-		                <label for="venteNonDebute">Ventes non débutées</label><br>
-		                <input type="checkbox" id="venteTerminees" name="venteTerminees" value="4">
-		                <label for="venteTerminees">Ventes terminées</label><br>
-		        </div>
-	        </fieldset> 
-	   </form>
-	  
- 	</div>
+<div th:replace="~{/fragments/fragment-header :: frag-header}"></div>
+<main>
+	<h1>Liste des enchères</h1>
+	<div class="filter-container">
+		<form id="searchForm" th:action="@{/home}" method="post" class="filters" th:object="${article}">
+			<div class="filtersFlex">
+				<div class="boxEnsemble">
+					<div>
+						<label for="filtre" class="blod">Filtres :</label>
+						<input id="filtre" name="filtre" type="text" placeholder="Rechercher">
+					</div>
+					<div>
+						<label for="categorie" class="blod">Catégorie :</label>
+						<select id="categorie" name="categorie" class="box300">
+							<option value="0">Tous</option>
+							<option th:each="categorie : ${categories}" th:value="${categorie.noCategorie}" th:text="${categorie.libelle}">
+							</option>
+						</select>
+					</div>
+				</div>
+				<button class="search-button">Rechercher</button>
+			</div>
+			<fieldset sec:authorize="isAuthenticated()">
+				<div>
+					<div>
+						<input type="radio" id="achat" name="transactionType" value="achat" checked onchange="toggleCriteria()" />
+						<label for="achat">Achat</label>
+					</div>
+					<div>
+						<input type="radio" id="ventes" name="transactionType" value="ventes" onchange="toggleCriteria()" />
+						<label for="ventes">Mes ventes</label>
+					</div>
+				</div>
+				<div id="achatCriteria" class="criteria">
+					<input type="checkbox" id="encheresOuvertes" name="encheresOuvertes" value="1">
+					<label for="encheresOuvertes">Enchères ouvertes</label><br>
+					<input type="checkbox" id="encheresEnCours" name="encheresEnCours" value="2">
+					<label for="encheresEnCours">Mes enchères en cours</label><br>
+					<input type="checkbox" id="encheresRemportees" name="encheresRemportees" value="4">
+					<label for="encheresRemportees">Mes enchères remportées</label><br>
+				</div>
+				<div id="ventesCriteria" class="criteria" style="display: none;">
+					<input type="checkbox" id="venteCours" name="venteCours" value="1">
+					<label for="venteCours">Mes ventes en cours</label><br>
+					<input type="checkbox" id="venteNonDebute" name="venteNonDebute" value="2">
+					<label for="venteNonDebute">Ventes non débutées</label><br>
+					<input type="checkbox" id="venteTerminees" name="venteTerminees" value="4">
+					<label for="venteTerminees">Ventes terminées</label><br>
+				</div>
+			</fieldset>
+		</form>
+	</div>
 
+	<div class="auction-item" th:each="article : ${articles}" >
+		<div>
+			<img class="rectangle" th:src="@{'images/articles/'+${article.noArticle}+'.jpg'}" alt="image produit" />
+		</div>
+		<div>
+			<p th:if="${not #authentication.authenticated}" th:text="${article.nomArticle}">Fauteuil</p>
+			<a th:if="${#authentication.authenticated}" th:href="@{/view-encher-detail(id=${article.noArticle})}" th:text="${article.nomArticle}">
+			</a>
+			<p>Prix : <span th:text="${article.prixInitial}"> 310 </span> points </p>
+			<p>Fin de l'enchère : <span th:text="${article.dateFinEnchere}">01/09/2018</span></p>
+			<p th:if="${not #authentication.authenticated}" th:text="'Vendeur : '+ ${article.vendeur.pseudo}"></p>
+			<a th:if="${#authentication.authenticated}" th:href="@{/utilisateurs/afficher(id=${article.noArticle})}" th:text=" 'Vendeur : '+ ${article.vendeur.pseudo}">
+			</a>
+		</div>
+	</div>
+</main>
 
-	     <div class="auction-item" th:each="article : ${articles}">
-   
-    		<div>
-    		 <img class="rectangle" th:src="@{'images/articles/'+${article.noArticle}+'.jpg'}" alt="image produit" />
-            </div>
-             <div>	
-                
-                <p th:if="${not #authentication.authenticated}" th:text="${article.nomArticle}">Fauteuil</p>
+<div th:replace="~{/fragments/fragment-footer :: frag-footer}"></div>
+<script>
+	function toggleCriteria() {
+		const achatCriteria = document.getElementById('achatCriteria');
+		const ventesCriteria = document.getElementById('ventesCriteria');
+		const isAchatChecked = document.getElementById('achat').checked;
 
-				<a th:if="${#authentication.authenticated}" th:href="@{/view-encher-detail(id=${article.noArticle})}" th:text="${article.nomArticle}">
-				</a>
-                <p>Prix : <span  th:text="${article.prixInitial}"> 310 </span> points </p>
-                <p>Fin de l'enchère : <span th:text="${article.dateFinEnchere}">01/09/2018</span></p>
-              
-                <p th:if="${not #authentication.authenticated}" th:text="'Vendeur : '+ ${article.vendeur.pseudo}"></p>
-				<a th:if="${#authentication.authenticated}" th:href="@{/utilisateurs/afficher(id=${article.noArticle})}" th:text=" 'Vendeur : '+ ${article.vendeur.pseudo}">
-				</a> 
-    	    </div>
- 		 </div>
-    
-    </main>
-    
+		if (isAchatChecked) {
+			achatCriteria.style.display = 'block';
+			ventesCriteria.style.display = 'none';
+		} else {
+			achatCriteria.style.display = 'none';
+			ventesCriteria.style.display = 'block';
+		}
+	}
 
-    <div th:replace="~{/fragments/fragment-footer :: frag-footer}"></div>
+	document.getElementById('searchForm').addEventListener('submit', function (event) {
+		// Get the form values
+		var filtre = document.getElementById('filtre').value;
+		var categorie = document.getElementById('categorie').value;
+		var transactionType = document.querySelector('input[name="transactionType"]:checked').value;
+		var encheresOuvertes = document.getElementById('encheresOuvertes').checked ? 1 : 0;
+		var encheresEnCours = document.getElementById('encheresEnCours').checked ? 1 : 0;
+		var encheresRemportees = document.getElementById('encheresRemportees').checked ? 1 : 0;
+		var venteCours = document.getElementById('venteCours').checked ? 1 : 0;
+		var venteNonDebute = document.getElementById('venteNonDebute').checked ? 1 : 0;
+		var venteTerminees = document.getElementById('venteTerminees').checked ? 1 : 0;
 
-    <script>
-        function toggleCriteria() {
-            const achatCriteria = document.getElementById('achatCriteria');
-            const ventesCriteria = document.getElementById('ventesCriteria');
-            const isAchatChecked = document.getElementById('achat').checked;
+		// Store the values in localStorage
+		localStorage.setItem('filtre', filtre);
+		localStorage.setItem('categorie', categorie);
+		localStorage.setItem('transactionType', transactionType);
+		localStorage.setItem('encheresOuvertes', encheresOuvertes);
+		localStorage.setItem('encheresEnCours', encheresEnCours);
+		localStorage.setItem('encheresRemportees', encheresRemportees);
+		localStorage.setItem('venteCours', venteCours);
+		localStorage.setItem('venteNonDebute', venteNonDebute);
+		localStorage.setItem('venteTerminees', venteTerminees);
+	});
 
-            if (isAchatChecked) {
-                achatCriteria.style.display = 'block';
-                ventesCriteria.style.display = 'none';
-            } else {
-                achatCriteria.style.display = 'none';
-                ventesCriteria.style.display = 'block';
-            }
-        }
+	function restoreFormValues() {
+		if (localStorage.getItem('filtre')) document.getElementById('filtre').value = localStorage.getItem('filtre');
+		if (localStorage.getItem('categorie')) document.getElementById('categorie').value = localStorage.getItem('categorie');
+		if (localStorage.getItem('transactionType')) {
+			const transactionType = localStorage.getItem('transactionType');
+			document.querySelector(`input[name="transactionType"][value="${transactionType}"]`).checked = true;
+		}
+		if (localStorage.getItem('encheresOuvertes') == 1) document.getElementById('encheresOuvertes').checked = true;
+		if (localStorage.getItem('encheresEnCours') == 1) document.getElementById('encheresEnCours').checked = true;
+		if (localStorage.getItem('encheresRemportees') == 1) document.getElementById('encheresRemportees').checked = true;
+		if (localStorage.getItem('venteCours') == 1) document.getElementById('venteCours').checked = true;
+		if (localStorage.getItem('venteNonDebute') == 1) document.getElementById('venteNonDebute').checked = true;
+		if (localStorage.getItem('venteTerminees') == 1) document.getElementById('venteTerminees').checked = true;
 
-        // Initialize criteria display based on the default selected radio button
-        window.onload = toggleCriteria;
-    </script>
+		// Call toggleCriteria to show/hide the correct criteria section based on stored transactionType
+		toggleCriteria();
+	}
+
+	// Pre-fill the form with stored values if available
+	window.onload = restoreFormValues;
+
+	window.onpopstate = function () {
+		// Restore the form values when navigating back
+		restoreFormValues();
+	};
+</script>
 </body>
 </html>
