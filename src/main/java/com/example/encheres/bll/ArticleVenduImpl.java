@@ -14,6 +14,7 @@ import com.example.encheres.exception.BusinessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,6 +36,9 @@ public class ArticleVenduImpl implements ArticleVenduService {
 	private RetraitDAO retraitDAO;
 	private EnchereDAO enchereDAO;
 	Logger logger =LoggerFactory.getLogger(ArticleVenduImpl.class);
+	
+	private final static String ACHAT   = "achat";
+	private final static String VENTES  = "ventes";
 
 
 	@Value("${upload.path}")
@@ -182,22 +186,45 @@ public class ArticleVenduImpl implements ArticleVenduService {
 		}
 	}
 
-	public List<ArticleVendu> findAllComplexe(String transactionType, int requete,  String nomArticle, int noCategorie, int noUtilisateurVendeur, int noUtilisateurAcheteur) {
-		List<ArticleVendu> articles = articleVenduDynamiqueDAO.findDynamique(transactionType, requete, nomArticle, noCategorie, noUtilisateurVendeur, noUtilisateurAcheteur);
+	public List<ArticleVendu> findAllComplexe(String transactionType, int requete,  String nomArticle, int noCategorie, int noUtilisateurVendeur, int noUtilisateurAcheteur) throws BusinessException {
+	// controle donnée
+		BusinessException be = new BusinessException();
+		
+		if ( ! transactionType.equals(ACHAT) && ! transactionType.equals(VENTES)) {
+			this.logger.error(BusinessException.LOGGER_16 +  transactionType);
+			be.addError(BusinessException.ERREUR_1);
+			throw be;
+		} else {
+			if (requete < 1 || requete > 7) {
+				this.logger.error(BusinessException.LOGGER_16 +  requete);
+				be.addError(BusinessException.ERREUR_1);
+				throw be;
+				} else {		
+			
+		
+					List<ArticleVendu> articles = articleVenduDynamiqueDAO.findDynamique(transactionType, requete, nomArticle, noCategorie, noUtilisateurVendeur, noUtilisateurAcheteur);
 
+					for(ArticleVendu a : articles ) {
+						a.setVendeur(utilisateurDAO.read(a.getVendeur().getNoUtilisateur()));
+					}
 
-		for(ArticleVendu a : articles ) {
-    		a.setVendeur(utilisateurDAO.read(a.getVendeur().getNoUtilisateur()));
-    	}
-
-		return articles;
+					return articles;
+				}
+		}
 	}
 
 
 	@Override
 	public void retirerArticle(int noArticle) throws BusinessException {
-
-		articleVenduDAO.updateRetrait(noArticle);
+		BusinessException be = new BusinessException();
+		try {
+			articleVenduDAO.updateRetrait(noArticle);
+			this.logger.debug(BusinessException.LOGGER_14 + noArticle);
+		} catch (DataAccessException e) {
+				this.logger.error(BusinessException.LOGGER_15 + noArticle);
+				be.addError(BusinessException.ERREUR_1);
+				throw be;
+		}
 
 
 	}

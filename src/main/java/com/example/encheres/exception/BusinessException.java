@@ -10,16 +10,18 @@ public class BusinessException extends Exception {
 	private static final long serialVersionUID = 1L;
 	private List<String> erreurs;
 	
-	public static final String ERREUR_0 = "Un probleme est survenu lors de la connexion à la table";
-	public static final String ERREUR_1 = "Nom/prenom deja existants";
-	public static final String ERREUR_2 = "Pseudo deja existant";
-	public static final String ERREUR_3 = "Article inexistant";
-	public static final String ERREUR_4 = "Utilisateur inexistant";
-	public static final String ERREUR_5 = "Montant enchere trop basse";
-	public static final String ERREUR_6 = "La confirmation est différente du nouveau mot de passe";
-	public static final String ERREUR_7 = "Le mail est deja existant";
-	public static final String ERREUR_8 = "Le mot de passe actuel est incorrect";
-	public static final String ERREUR_9 = "La saisie du mot de passe est obligatoire";
+	public static final String ERREUR_0  = "Un probleme est survenu lors de la connexion à la table";
+	public static final String ERREUR_1  = "Nom/prenom deja existants";
+	public static final String ERREUR_2  = "Pseudo deja existant";
+	public static final String ERREUR_3  = "Article inexistant";
+	public static final String ERREUR_4  = "Utilisateur inexistant";
+	public static final String ERREUR_5  = "Montant enchere trop basse";
+	public static final String ERREUR_6  = "La confirmation est différente du nouveau mot de passe";
+	public static final String ERREUR_7  = "Le mail est deja existant";
+	public static final String ERREUR_8  = "Le mot de passe actuel est incorrect";
+	public static final String ERREUR_9  = "La saisie du mot de passe est obligatoire";
+	public static final String ERREUR_10 = "Un probleme est survenu lors du retrait de l' article";
+	public static final String ERREUR_11 = "Probleme requete articleVendu dynamique";
 	
 	public static final String LOGGER_0  = "Réussite suppression categorie : ";
 	public static final String LOGGER_1  = "Probleme suppression categorie : ";
@@ -35,6 +37,9 @@ public class BusinessException extends Exception {
 	public static final String LOGGER_11 = "Probleme suppression utilisateur : "; 
 	public static final String LOGGER_12 = "Réussite historisation utilisateur : ";
 	public static final String LOGGER_13 = "Probleme historisation utilisateur : "; 
+	public static final String LOGGER_14 = "Réussite retrait article : ";
+	public static final String LOGGER_15 = "Probleme retrait article : "; 
+	public static final String LOGGER_16 = "Probleme requete articleVendu dynamique : "; 
 
 	public BusinessException() {
 		super();
