@@ -112,3 +112,23 @@ p, label {
     padding-top: 20px;
     font-weight: bold;
 }
+
+#supprimer,
+#retrait {
+	background-color:#007BFF;
+	color: white;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	border: none;
+	border-radius: 4px;}
+	
+#supprimer:hover,
+#retrait:hover {
+    background-color: white;
+    color: #007BFF; /* Optionnel: changer la couleur du texte pour un meilleur contraste */	
+    border:2px solid;
+    border-color: #007BFF;
+    border-radius: 4px;}
+    
