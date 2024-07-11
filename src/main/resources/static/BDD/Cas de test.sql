@@ -1,4 +1,3 @@
-
 -- table categorie
 INSERT INTO CATEGORIES (libelle) VALUES ('Informatique');
 INSERT INTO CATEGORIES (libelle) VALUES ('Ameublement');
@@ -19,7 +18,9 @@ INSERT INTO UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_posta
 INSERT INTO UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur )
            VALUES ('ENILilian', 'Boumendil', 'Lilian', 'lilian.boumendil2024@campus-eni.fr', '0725140322', 'rue du chene', '44000', 'Reze', '{bcrypt}$2a$12$WDC/wP0BYuohJ1PYqgo9LeD2Ubm7qOYIk1JILFm1kdgmwI.hM.dU2',500,1) ;
 INSERT INTO UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur )
-           VALUES ('ENISimon', 'Kervadec', 'Simon', 'simon.kervadec024@campus-eni.fr', '0625140322', 'rue de la foret de broceliande', '29000', 'Brest', '{bcrypt}$2a$12$ZL.5u7QmKc7Ver/XTt/z4.kKgJGOX7o4.3.d7EFrWZ7La8uRAk/.a',500,1) ;
+           VALUES ('ENISimon', 'Kervadec', 'Simon', 'simon.kervadec024@campus-eni.fr', '0625140322', 'rue de la foret de broceliande', '29000', 'Brest', '{bcrypt}$2a$12$ZL.5u7QmKc7Ver/XTt/z4.kKgJGOX7o4.3.d7EFrWZ7La8uRAk/.a',500,1);
+INSERT INTO UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur )
+		   VALUES ('ENIUtilisateur', 'utilisateur', 'utilisateur', 'utilisateur@campus-eni.fr', '0625140323', 'rue Faraday', '44000', 'Nantes', '{bcrypt}$2a$12$ZL.5u7QmKc7Ver/XTt/z4.kKgJGOX7o4.3.d7EFrWZ7La8uRAk/.a',500,0); -- mdp : Simon
 
 
 -- table ARTICLE_VENDUS
@@ -46,8 +47,6 @@ INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere 
 INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere ) VALUES (2,1,'2024-07-02','140');
 INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere ) VALUES (3,1,'2024-07-02','150');
 INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere ) VALUES (3,2,'2024-07-02','110');
-
-
 
 
 

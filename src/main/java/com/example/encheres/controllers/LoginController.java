@@ -34,7 +34,7 @@ public class LoginController {
 
 
 		Utilisateur utilisateur = this.contexteService.charger(currentPrincipalName);
-
+				
 		if(utilisateur != null) {
 			//mettre à jour utilisateurSession avec l'utilisateur chargé
 			utilisateurSession.setNoUtilisateur(utilisateur.getNoUtilisateur());
@@ -64,7 +64,7 @@ public class LoginController {
 			utilisateurSession.setMotDePasse(null);
 			utilisateurSession.setCredit(0);
 			utilisateurSession.setAdministrateur(false);
-		}
+		}		
 
 		return "redirect:/home";
 	}

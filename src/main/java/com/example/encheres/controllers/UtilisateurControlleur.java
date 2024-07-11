@@ -88,7 +88,6 @@ public class UtilisateurControlleur {
 
 		// Si aucun utilisateur en session mais un ID est fourni
 		if (utilisateurSession == null) {
-
 			Utilisateur utilisateur = this.utilisateurService.lectureUtilisateur(noUtilisateur);
 			model.addAttribute("utilisateur", utilisateur);
 			model.addAttribute("isDifferentUser", true); // Ajoutez cette variable
