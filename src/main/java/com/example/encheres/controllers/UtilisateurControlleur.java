@@ -81,6 +81,9 @@ public class UtilisateurControlleur {
 			@RequestParam(value = "id", required = false) Integer noUtilisateur // Utilisez Integer au lieu de int
 	) {
 
+		System.out.println("SESSION : " + utilisateurSession);
+		System.out.println("PARAMETRE : " + noUtilisateur);
+
 		// Si aucun utilisateur en session et aucun ID fourni, redirigez vers la page de connexion
 		if (utilisateurSession == null && noUtilisateur == null) {
 			return "redirect:/login";
@@ -97,7 +100,6 @@ public class UtilisateurControlleur {
 		Utilisateur utilisateur;
 		boolean isDifferentUser = false;
 		if (noUtilisateur == null || noUtilisateur.equals(utilisateurSession.getNoUtilisateur())) {
-
 			utilisateur = this.utilisateurService.lectureUtilisateur(utilisateurSession.getNoUtilisateur());
 		} else {
 			utilisateur = this.utilisateurService.lectureUtilisateur(noUtilisateur);
