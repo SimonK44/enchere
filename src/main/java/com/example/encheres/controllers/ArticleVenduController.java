@@ -2,6 +2,8 @@ package com.example.encheres.controllers;
 
 import com.example.encheres.bll.ArticleVenduService;
 import com.example.encheres.bll.CategorieService;
+import com.example.encheres.bll.EnchereService;
+import com.example.encheres.bll.EnchereServiceImpl;
 import com.example.encheres.bll.RetraitService;
 import com.example.encheres.bll.UtilisateurService;
 import com.example.encheres.bo.*;
@@ -18,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @SessionAttributes({"utilisateurSession"})
@@ -26,18 +29,22 @@ public class ArticleVenduController {
 	private CategorieService categorieService;
 	private UtilisateurService utilisateurService;
 	private RetraitService retraitService;
+	private EnchereService enchereService;
 
+	
 	@Autowired
 	public ArticleVenduController(
 			ArticleVenduService articleVenduService,
-			CategorieService categorieService,
-			UtilisateurService utilisateurService,
-			RetraitService retraitService
+			CategorieService    categorieService,
+			UtilisateurService  utilisateurService,
+			RetraitService      retraitService,
+			EnchereService      enchereService
 	) {
 		this.articleVenduService = articleVenduService;
-		this.categorieService = categorieService;
-		this.utilisateurService = utilisateurService;
-		this.retraitService = retraitService;
+		this.categorieService    = categorieService;
+		this.utilisateurService  = utilisateurService;
+		this.retraitService      = retraitService;
+		this.enchereService      = enchereService;
 	}
 
 	@GetMapping("/vendre-article")
@@ -191,8 +198,36 @@ public class ArticleVenduController {
 			);
 
 		return "redirect:/view-encher-detail?id=" + noArticle;
+		}
+
 	}
-
-
+	
+	@GetMapping("supprimer")
+	public String supprimer (@RequestParam("noArticle") int noArticle,
+			@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession,
+			BindingResult bingingResult) {
+		
+		ArticleVendu articleVendu = articleVenduService.lectureArticleVendu(noArticle);
+		System.out.println("supprimer articleVendu    : " + articleVendu);
+		Utilisateur DernierAcheteur = utilisateurService.lectureUtilisateur(articleVendu.getAcheteur().getNoUtilisateur());
+		System.out.println("supprimer DernierAcheteur : " + DernierAcheteur);
+		Optional<Enchere> lastEnchereMax = enchereService.enchereMontantMax(noArticle);
+		System.out.println("supprimer lastEnchereMax  : " + lastEnchereMax);
+		
+		
+		
+		
+// si pas d' enchere		
+		if (lastEnchereMax.isEmpty()  ) {
+			articleVenduService.supprimerArticleVendu(noArticle);
+		} else {
+			   int montant =  lastEnchereMax.get().getMontantEnchere() + DernierAcheteur.getCredit();				
+			   utilisateurService.modifierUtilisateurCredit(articleVendu.getAcheteur().getNoUtilisateur(),
+					                                        montant);	
+			   articleVenduService.supprimerArticleVendu(noArticle);
+		}
+	
+		return "home";		
+		
 	}
 }

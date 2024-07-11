@@ -3,8 +3,8 @@ package com.example.encheres.bll;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.encheres.bo.Enchere;
@@ -13,11 +13,17 @@ import com.example.encheres.dal.EnchereDAO;
 import com.example.encheres.dal.UtilisateurDAO;
 import com.example.encheres.exception.BusinessException;
 
+@Service
 public class EnchereServiceImpl implements EnchereService {
 	private EnchereDAO      enchereDAO;
 	private ArticleVenduDAO articleVenduDAO;
 	private UtilisateurDAO  utilisateurDAO;
 
+public EnchereServiceImpl(EnchereDAO enchereDAO, ArticleVenduDAO articleVenduDAO, UtilisateurDAO utilisateurDAO) {		
+		this.enchereDAO      = enchereDAO;
+		this.articleVenduDAO = articleVenduDAO;
+		this.utilisateurDAO  = utilisateurDAO;
+	}
 
 /**
  *  creation d' une enchere
