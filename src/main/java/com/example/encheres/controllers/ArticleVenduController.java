@@ -97,7 +97,7 @@ public class ArticleVenduController {
 		Retrait adresse = this.retraitService.read(article.getNoArticle());		
 		
 		if  (article.getVendeur().getNoUtilisateur() == user.getNoUtilisateur() && !article.isRetrait()) {
-			System.out.println("articleVenduController boolVendeur : ");
+			
 			model.addAttribute("isVendeur", true);
 		} else {
 			model.addAttribute("isVendeur", false);
