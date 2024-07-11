@@ -34,7 +34,11 @@ public class LoginController {
 
 
 		Utilisateur utilisateur = this.contexteService.charger(currentPrincipalName);
+<<<<<<< Updated upstream
 						
+=======
+				
+>>>>>>> Stashed changes
 		if(utilisateur != null) {
 			//mettre à jour utilisateurSession avec l'utilisateur chargé
 			utilisateurSession.setNoUtilisateur(utilisateur.getNoUtilisateur());
