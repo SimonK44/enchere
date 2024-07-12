@@ -60,7 +60,7 @@ public class ArticleVenduDynamiqueDAOImpl implements ArticleVenduDynamiqueDAO {
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
 
 		mapParameterSource.addValue("noCategorie",noCategorie);
-		mapParameterSource.addValue("nomArticle",nomArticle + POURCENT);
+		mapParameterSource.addValue("nomArticle",POURCENT + nomArticle + POURCENT);
 		mapParameterSource.addValue("noUtilisateurVendeur",noUtilisateurVendeur);
 		mapParameterSource.addValue("noUtilisateurAcheteur",noUtilisateurAcheteur);
 		
