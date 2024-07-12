@@ -211,12 +211,12 @@ public class ArticleVenduController {
 			@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession,
 			BindingResult bingingResult) {
 		ArticleVendu articleVendu = articleVenduService.lectureArticleVendu(noArticle);
-		Utilisateur DernierAcheteur = utilisateurService.lectureUtilisateur(articleVendu.getAcheteur().getNoUtilisateur());
 		Optional<Enchere> lastEnchereMax = enchereService.enchereMontantMax(noArticle);
 // si pas d' enchere
 		if (lastEnchereMax.isEmpty()  ) {
 			articleVenduService.supprimerArticleVendu(noArticle);
 		} else {
+				Utilisateur DernierAcheteur = utilisateurService.lectureUtilisateur(articleVendu.getAcheteur().getNoUtilisateur());
 			   int montant =  lastEnchereMax.get().getMontantEnchere() + DernierAcheteur.getCredit();
 			   utilisateurService.modifierUtilisateurCredit(articleVendu.getAcheteur().getNoUtilisateur(),
 					                                        montant);
