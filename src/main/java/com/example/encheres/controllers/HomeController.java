@@ -82,7 +82,7 @@ public class HomeController {
     		Model model,
     		BindingResult bingingResult
    ) {
-	   System.out.println("debut home post mapping");
+//	   System.out.println("debut home post mapping");
 		int requete = 0;
 		if ( transactionType.equals("achat") ) {
 			requete = encheresOuvertes + encheresEnCours + encheresRemportees;
@@ -91,13 +91,13 @@ public class HomeController {
 		}
 		List<ArticleVendu> articles;
 		try {
-			System.out.println("utilisateurSession : " + utilisateurSession);   
+//			System.out.println("utilisateurSession : " + utilisateurSession);   
 			if (utilisateurSession.getNoUtilisateur() != 0) {
 			articles = this.articleVenduService.findAllComplexe(transactionType, requete, nomArticle, noCategorie,
 			utilisateurSession.getNoUtilisateur(), utilisateurSession.getNoUtilisateur());
 			} else {
-			System.out.println("lil nomArticle " + nomArticle);
-			System.out.println("lil noCategorie " + noCategorie);
+//			System.out.println("lil nomArticle " + nomArticle);
+//			System.out.println("lil noCategorie " + noCategorie);
 			articles = this.articleVenduService.findFilter(nomArticle, noCategorie);
 			}
 			List<Categorie> categories = this.categorieService.findAll();
