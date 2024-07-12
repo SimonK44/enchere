@@ -58,8 +58,8 @@ public class AdministrateurController {
 			BindingResult bingingResult
 			) {
 		try {
-			utilisateurService.historiserUtilisateur(noUtilisateur);
-			return "redirect: " +LIST_UTILISATEUR;
+			utilisateurService.historiserUtilisateur(noUtilisateur);			
+			return "redirect:liste";
 		} catch (BusinessException e) {
 			e.getErreurs().forEach(err -> {
 				ObjectError error = new ObjectError("globalError", err);
