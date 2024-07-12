@@ -113,6 +113,7 @@ p, label {
     font-weight: bold;
 }
 
+#modifier,
 #supprimer,
 #retrait {
 	background-color:#007BFF;
@@ -122,13 +123,14 @@ p, label {
 	text-decoration: none;
 	display: inline-block;
 	border: none;
-	border-radius: 4px;}
-	
+	border-radius: 4px;
+}
+
+#modifier:hover,
 #supprimer:hover,
 #retrait:hover {
     background-color: white;
-    color: #007BFF; /* Optionnel: changer la couleur du texte pour un meilleur contraste */	
+    color: #007BFF; /* Optionnel: changer la couleur du texte pour un meilleur contraste */
     border:2px solid;
     border-color: #007BFF;
     border-radius: 4px;}
-    
