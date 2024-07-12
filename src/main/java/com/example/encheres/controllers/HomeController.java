@@ -1,7 +1,5 @@
 package com.example.encheres.controllers;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,18 +12,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.example.encheres.bll.ArticleVenduService;
 import com.example.encheres.bll.CategorieService;
-import com.example.encheres.bll.EnchereService;
 import com.example.encheres.bll.UtilisateurService;
 import com.example.encheres.bo.ArticleVendu;
 import com.example.encheres.bo.Categorie;
-import com.example.encheres.bo.Enchere;
 import com.example.encheres.bo.Utilisateur;
-import com.example.encheres.dal.ArticleVenduDynamiqueDAO;
 import com.example.encheres.exception.BusinessException;
 
 @Controller
@@ -77,7 +71,7 @@ public class HomeController {
 	public String homeRecherche(
     		@RequestParam("filtre")String nomArticle,
     		@RequestParam("categorie") int noCategorie,
-    		@RequestParam("transactionType")String transactionType,
+    		@RequestParam(name="transactionType", required = false, defaultValue = " ")String transactionType,
     		@RequestParam(name="encheresOuvertes", required = false, defaultValue = "0") int encheresOuvertes,
     		@RequestParam(name="encheresEnCours", required = false, defaultValue="0") int encheresEnCours,
     		@RequestParam(name="encheresRemportees",required = false, defaultValue="0") int encheresRemportees,
@@ -88,6 +82,7 @@ public class HomeController {
     		Model model,
     		BindingResult bingingResult
    ) {
+	   System.out.println("debut home post mapping");
 		int requete = 0;
 		if ( transactionType.equals("achat") ) {
 			requete = encheresOuvertes + encheresEnCours + encheresRemportees;
@@ -96,11 +91,22 @@ public class HomeController {
 		}
 		List<ArticleVendu> articles;
 		try {
-			articles = this.articleVenduService.findAllComplexe(transactionType, requete, nomArticle,noCategorie,utilisateurSession.getNoUtilisateur() , utilisateurSession.getNoUtilisateur());
-			List<Categorie> categories = this.categorieService.findAll();			
-			model.addAttribute("articles", articles);
-			model.addAttribute("categories", categories);
-			return "home";
+			System.out.println("utilisateurSession : " + utilisateurSession);   
+			if (utilisateurSession.getNoUtilisateur() != 0) {
+			articles = this.articleVenduService.findAllComplexe(transactionType, requete, nomArticle, noCategorie,
+			utilisateurSession.getNoUtilisateur(), utilisateurSession.getNoUtilisateur());
+			} else {
+			System.out.println("lil nomArticle " + nomArticle);
+			System.out.println("lil noCategorie " + noCategorie);
+			articles = this.articleVenduService.findFilter(nomArticle, noCategorie);
+			}
+			List<Categorie> categories = this.categorieService.findAll();
+
+
+			  model.addAttribute("articles", articles);
+			    model.addAttribute("categories", categories);
+
+			  return "home";
 		} catch (BusinessException e) {
 			e.getErreurs().forEach(err -> {
 				ObjectError error = new ObjectError("globalError", err);
@@ -110,5 +116,3 @@ public class HomeController {
 		}
 	}
 }
-
-

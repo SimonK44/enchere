@@ -232,8 +232,14 @@ public class ArticleVenduImpl implements ArticleVenduService {
 
 	@Override
 	public List<ArticleVendu> findFilter(String nomArticle, int categorie) {
-		
-		return articleVenduDAO.findFilter(nomArticle, categorie);
+		List<ArticleVendu> articles = articleVenduDAO.findFilter(nomArticle, categorie);
+
+		for(ArticleVendu a : articles ) {
+			a.setVendeur(utilisateurDAO.read(a.getVendeur().getNoUtilisateur()));
+		}
+
+		return articles;			
+	
 	}
 
 }
