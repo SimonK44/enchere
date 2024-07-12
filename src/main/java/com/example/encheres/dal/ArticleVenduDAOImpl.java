@@ -145,7 +145,7 @@ public class ArticleVenduDAOImpl implements ArticleVenduDAO {
 	
 	@Override
 	public List<ArticleVendu> findFilter(String nomArticle, int noCategorie ) {
-		String nomArticle2 = nomArticle + "%";
+		String nomArticle2 = "%" + nomArticle + "%";
 		MapSqlParameterSource mapParameterSource = new MapSqlParameterSource();
 		mapParameterSource.addValue("nomArticle",nomArticle);
 		mapParameterSource.addValue("nomArticle2",nomArticle2);
