@@ -53,6 +53,7 @@ public class securityConfig {
 		    .requestMatchers("/image/**").permitAll() //Accès aux images pour tous le monde
 		    .requestMatchers("/").permitAll() //Accès à l'index pour tous le monde
 		    .requestMatchers("/home").permitAll() //Accès à l'index pour tous le monde
+		    .requestMatchers("/home**").permitAll() //Accès à l'index pour tous le monde
 		    .requestMatchers("/listes-articles").permitAll() //Accès à l'index pour tous le monde
 		    .requestMatchers("/session").permitAll()
 		    .requestMatchers("/login").permitAll() //Accès au login
