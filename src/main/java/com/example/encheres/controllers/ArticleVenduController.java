@@ -51,7 +51,7 @@ public class ArticleVenduController {
 	@GetMapping("/vendre-article")
 	public String vendreArticle(Model model) {
 		ArticleVendu articleVendu = new ArticleVendu();
-		articleVendu.setNomArticle("LocalDate.now()");
+		articleVendu.setNomArticle("");
 		articleVendu.setDateDebutEnchere(LocalDate.now());
 		articleVendu.setDateFinEnchere(LocalDate.now().plusMonths(1));
 		model.addAttribute("article", articleVendu);
@@ -98,10 +98,11 @@ public class ArticleVenduController {
 		Retrait adresse = this.retraitService.read(article.getNoArticle());
 
 		if  (article.getVendeur().getNoUtilisateur() == user.getNoUtilisateur() && !article.isRetrait()) {
-
+			model.addAttribute("beforeDateDebutEnchere", article.getDateDebutEnchere().isAfter(LocalDate.now()));
 			model.addAttribute("isVendeur", true);
 		} else {
 			model.addAttribute("isVendeur", false);
+			model.addAttribute("beforeDateDebutEnchere", false);
 		}
 
 		if (article.getAcheteur().getNoUtilisateur() == user.getNoUtilisateur()) {
